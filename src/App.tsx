@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Timer, CheckCircle2, XCircle, Sun, Moon } from 'lucide-react';
 import questionsData from './data/questions.json';
+import VaaAnnamalai from './assets/VaaAnnamalai.jpg';
 
 // Motivational messages arrays
 const correctMessages = [
@@ -151,7 +152,7 @@ function App() {
             <div className="mb-12 flex justify-center">
               <div className="relative w-128 h-64 rounded-lg overflow-hidden">
                 <img 
-                  src="src\Vaa Annamalai.jpg" 
+                  src={VaaAnnamalai} 
                   alt="Cybersecurity Quiz" 
                   className="object-cover w-full h-full"
                 />

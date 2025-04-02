@@ -146,8 +146,8 @@ function App() {
 
         <div className="flex-1 flex flex-col items-center justify-center p-6">
           <div className={`max-w-4xl w-full ${cardBg} rounded-lg shadow-2xl border ${cardBorder} p-8 text-center`}>
-            <h1 className="text-4xl font-bold mb-4">Cybersecurity Quiz</h1>
-            <p className="text-xl mb-8">Test your knowledge with our comprehensive cybersecurity challenge!</p>
+            <h1 className="text-4xl font-bold mb-4">Cybersecurity Quizzz</h1>
+            <p className="text-xl mb-8">Parama Padi da!</p>
             
             <div className="mb-12 flex justify-center">
               <div className="relative w-128 h-64 rounded-lg overflow-hidden">
@@ -160,10 +160,10 @@ function App() {
             </div>
             
             <div className="text-lg mb-8">
-              <p className="mb-2">• 80 challenging questions</p>
-              <p className="mb-2">• Timed responses (30 seconds per question)</p>
-              <p className="mb-2">• Detailed explanations</p>
-              <p>• Track your score and progress</p>
+              <p className="mb-2">• 80+ mcq questions</p>
+              <p className="mb-2">• Timed responses & - scores for wrong answers</p>
+              <p className="mb-2">• Ellarum Nanmai Adaika!</p>
+              <p>• Konichuwa</p>
             </div>
             
             <button

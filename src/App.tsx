@@ -128,7 +128,7 @@ function App() {
   const optionBg = darkMode ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-50 hover:bg-gray-100';
   const correctBg = darkMode ? 'bg-green-900 border-green-700' : 'bg-green-100 border-green-500';
   const incorrectBg = darkMode ? 'bg-red-900 border-red-700' : 'bg-red-100 border-red-500';
-  const explanationBg = darkMode ? 'bg-gray-800' : 'bg-blue-50';
+  const explanationBg = darkMode ? 'bg-gray-900' : 'bg-blue-50';
 
   // Welcome page content
   if (!quizStarted) {
@@ -253,8 +253,8 @@ function App() {
           </div>
 
           {showExplanation && (
-            <div className={`mb-6 p-4 ${explanationBg} rounded-lg`}>
-              <h3 className="font-semibold mb-2">Explanation:</h3>
+            <div className={`mb-6 p-4 ${explanationBg} rounded-lg border ${darkMode ? 'border-indigo-700' : 'border-indigo-200'}`}>
+              <h3 className={`font-semibold mb-2 ${darkMode ? 'text-indigo-300' : 'text-indigo-700'}`}>Explanation:</h3>
               <p>{questions[currentQuestion].explanation}</p>
             </div>
           )}

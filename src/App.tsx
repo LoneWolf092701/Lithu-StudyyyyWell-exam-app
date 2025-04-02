@@ -5,19 +5,19 @@ import VaaAnnamalai from './assets/VaaAnnamalai.jpg';
 
 // Motivational messages arrays
 const correctMessages = [
-  "Yippee! You got it! 🎉",
-  "Fantastic work! 🌟",
-  "You're on fire! 🔥",
-  "Brilliant answer! ⭐",
-  "Keep crushing it! 💪"
+  "Yippee!🎉",
+  "Lucky huh?! 🌟",
+  "You're on fire! Nerupu daaa 🔥",
+  "Studied huh?! ⭐",
+  "Apudi than! 💪"
 ];
 
 const incorrectMessages = [
-  "Don't be sad, keep going! 💪",
-  "You can do it! Try again! 🌟",
-  "Every mistake is a learning opportunity! 📚",
-  "Keep your head up! You're learning! 🎯",
-  "Stay positive! You've got this! ✨"
+  "Don't be sad, sad backwards is das and das not good! 💪",
+  "Charter! Try again! 🌟",
+  "NOOOOOOOOOOOOOOOB! 📚",
+  "Podangu! 🎯",
+  "Poda poi maadu mei! ✨"
 ];
 
 // Fisher-Yates shuffle algorithm

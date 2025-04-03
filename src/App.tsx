@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Timer, CheckCircle2, XCircle, Sun, Moon } from 'lucide-react';
-import questionsData from './data/questions.json';
 import VaaAnnamalai from './assets/VaaAnnamalai.jpg';
+
+// Import all the different question data sets
+import questions1_4 from './data/questions1_4.json';
+import questionsData2 from './data/questions5_6.json';
+import questionsData3 from './data/questions7_9.json';
+import questionsData4 from './data/questions10_12.json';
+import questionsDataAll from './data/questionsAll.json';
 
 // Motivational messages arrays
 const correctMessages = [
@@ -30,30 +36,83 @@ function shuffleArray<T>(array: T[]): T[] {
   return shuffled;
 }
 
+console.log(questions1_4.questions);
+// Define week option type
+type WeekOption = {
+  id: number;
+  title: string;
+  description: string;
+  data: any;
+};
+
 function App() {
-  const [questions, setQuestions] = useState(() => 
-    shuffleArray(questionsData.questions)
-  );
+  // Define all week options
+  const weekOptions: WeekOption[] = [
+    { 
+      id: 1, 
+      title: "Week 1 - 4", 
+      description: "Foundations of Cybersecurity", 
+      data: questions1_4 
+    },
+    { 
+      id: 2, 
+      title: "Week 5 - 6", 
+      description: "Network Security", 
+      data: questions1_4 
+    },
+    { 
+      id: 3, 
+      title: "Week 7 - 9", 
+      description: "Application Security", 
+      data: questions1_4 
+    },
+    { 
+      id: 4, 
+      title: "Week 10 - 12", 
+      description: "Advanced Topics", 
+      data: questions1_4 
+    },
+    { 
+      id: 5, 
+      title: "Give me God of War", 
+      description: "All weeks combined", 
+      data: questions1_4 
+    }
+  ];
+
+  // States for managing the application
+  const [selectedWeek, setSelectedWeek] = useState<WeekOption | null>(null);
+  const [questions, setQuestions] = useState<any[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [scoreText, setScoreText] = useState('');
   const [showExplanation, setShowExplanation] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(30);
-  const [isActive, setIsActive] = useState(false); // Changed to false so quiz doesn't start automatically
+  const [timeLeft, setTimeLeft] = useState(selectedWeek?.title === "Give me God of War" ? 30 : 60);
+  const [isActive, setIsActive] = useState(false);
   const [shuffledOptions, setShuffledOptions] = useState<string[]>([]);
   const [message, setMessage] = useState('');
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   
-  // New states for welcome page and theme
-  const [quizStarted, setQuizStarted] = useState(false);
-  const [darkMode, setDarkMode] = useState(true); // Default to dark mode
+  // App state management
+  const [appState, setAppState] = useState<'welcome' | 'weekSelect' | 'quiz'>('welcome');
+  const [darkMode, setDarkMode] = useState(true);
 
+  // Initialize questions when a week is selected
   useEffect(() => {
-    if (quizStarted) {
+    if (selectedWeek) {
+      setQuestions(shuffleArray(selectedWeek.data.questions));
+      setTimeLeft(selectedWeek?.title === "Give me God of War" ? 30 : 60);
+    }
+  }, [selectedWeek]);
+
+  // Set up shuffled options when current question changes
+  useEffect(() => {
+    if (appState === 'quiz' && questions.length > 0) {
       setShuffledOptions(shuffleArray(questions[currentQuestion].options));
     }
-  }, [currentQuestion, questions, quizStarted]);
+  }, [currentQuestion, questions, appState]);
 
+  // Timer effect
   useEffect(() => {
     let interval: number | undefined;
     
@@ -98,40 +157,65 @@ function App() {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion((prev) => prev + 1);
       setShowExplanation(false);
-      setTimeLeft(30);
+      setTimeLeft(selectedWeek?.title === "Give me God of War" ? 30 : 60);
       setIsActive(true);
       setMessage('');
       setSelectedOption(null);
     }
   };
 
-  const startQuiz = () => {
-    setQuizStarted(true);
-    setIsActive(true);
+  const goToWeekSelect = () => {
+    setAppState('weekSelect');
   };
 
-  const resetQuiz = () => {
-    setQuestions(shuffleArray(questionsData.questions));
+  const selectWeek = (week: WeekOption) => {
+    setSelectedWeek(week);
     setCurrentQuestion(0);
     setScore(0);
+    setScoreText('');
     setShowExplanation(false);
-    setTimeLeft(30);
+    setTimeLeft(selectedWeek?.title === "Give me God of War" ? 30 : 60);
     setIsActive(true);
     setMessage('');
     setSelectedOption(null);
+    setAppState('quiz');
+  };
+
+  const resetQuiz = () => {
+    if (selectedWeek) {
+      setQuestions(shuffleArray(selectedWeek.data.questions));
+    }
+    setCurrentQuestion(0);
+    setScore(0);
+    setScoreText('');
+    setShowExplanation(false);
+    setTimeLeft(selectedWeek?.title === "Give me God of War" ? 30 : 60);
+    setIsActive(true);
+    setMessage('');
+    setSelectedOption(null);
+  };
+
+  const backToWeekSelect = () => {
+    setAppState('weekSelect');
+    setIsActive(false);
   };
 
   const toggleTheme = () => {
     setDarkMode(!darkMode);
   };
 
-  // Define background and text colors based on theme
+  console.log(selectedWeek?.title === "Give me God of War" ? 30 : 60);
+
+  // Define styles based on theme
   const bgColor = darkMode ? 'bg-black' : 'bg-gray-100';
   const textColor = darkMode ? 'text-white' : 'text-gray-900';
   const cardBg = darkMode ? 'bg-gray-900' : 'bg-white';
   const cardBorder = darkMode ? 'border-gray-700' : 'border-gray-200';
   const btnPrimary = darkMode ? 'bg-blue-600 hover:bg-blue-700' : 'bg-blue-500 hover:bg-blue-600';
+  const btnSecondary = darkMode ? 'bg-purple-600 hover:bg-purple-700' : 'bg-purple-500 hover:bg-purple-600';
   const btnSuccess = darkMode ? 'bg-green-600 hover:bg-green-700' : 'bg-green-500 hover:bg-green-600';
+  const btnDanger = darkMode ? 'bg-red-400 hover:bg-red-500' : 'bg-red-200 hover:bg-red-400';
+  const btnWarning = darkMode ? 'bg-yellow-600 hover:bg-yellow-700' : 'bg-yellow-500 hover:bg-yellow-600';
   const optionBg = darkMode ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-50 hover:bg-gray-100';
   const correctBg = darkMode ? 'bg-green-900 border-green-700' : 'bg-green-100 border-green-500';
   const incorrectBg = darkMode ? 'bg-red-900 border-red-700' : 'bg-red-100 border-red-500';
@@ -139,18 +223,23 @@ function App() {
   // Define score color based on score value
   const scoreColor = score < 0 ? 'text-red-500' : darkMode ? 'text-white' : 'text-gray-900';
 
-  // Welcome page content
-  if (!quizStarted) {
+  // Theme toggle button component
+  const ThemeToggleButton = ({ className = "" }) => (
+    <button 
+      onClick={toggleTheme} 
+      className={`p-2 rounded-full ${darkMode ? 'bg-gray-800' : 'bg-gray-200'} ${className}`}
+      aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
+    >
+      {darkMode ? <Sun className="w-6 h-6 text-yellow-300" /> : <Moon className="w-6 h-6 text-gray-700" />}
+    </button>
+  );
+
+  // Render welcome page
+  if (appState === 'welcome') {
     return (
       <div className={`min-h-screen ${bgColor} ${textColor} flex flex-col`}>
         <div className="absolute top-4 right-4">
-          <button 
-            onClick={toggleTheme} 
-            className={`p-2 rounded-full ${darkMode ? 'bg-gray-800' : 'bg-gray-200'}`}
-            aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
-          >
-            {darkMode ? <Sun className="w-6 h-6 text-yellow-300" /> : <Moon className="w-6 h-6 text-gray-700" />}
-          </button>
+          <ThemeToggleButton />
         </div>
 
         <div className="flex-1 flex flex-col items-center justify-center p-6">
@@ -159,7 +248,7 @@ function App() {
             <p className="text-xl mb-8">Parama Padi da!</p>
             
             <div className="mb-12 flex justify-center">
-              <div className="relative w-128 h-64 rounded-lg overflow-hidden">
+              <div className="relative rounded-lg overflow-hidden" style={{ maxWidth: "100%", height: "300px" }}>
                 <img 
                   src={VaaAnnamalai} 
                   alt="Cybersecurity Quiz" 
@@ -176,7 +265,7 @@ function App() {
             </div>
             
             <button
-              onClick={startQuiz}
+              onClick={goToWeekSelect}
               className={`px-8 py-3 ${btnPrimary} text-white rounded-lg text-xl font-semibold transition-colors`}
             >
               Start Quiz
@@ -187,21 +276,67 @@ function App() {
     );
   }
 
-  // Quiz content
+  // Render week selection page
+  if (appState === 'weekSelect') {
+    return (
+      <div className={`min-h-screen ${bgColor} ${textColor} flex flex-col`}>
+        <div className="absolute top-4 right-4">
+          <ThemeToggleButton />
+        </div>
+
+        <div className="flex-1 flex flex-col items-center justify-center p-6">
+          <div className={`max-w-4xl w-full ${cardBg} rounded-lg shadow-2xl border ${cardBorder} p-8`}>
+            <h1 className="text-3xl font-bold mb-6 text-center">Select Week Range</h1>
+            
+            <div className="space-y-4 mb-8">
+              {weekOptions.map((week) => (
+                <button
+                  key={week.id}
+                  onClick={() => selectWeek(week)}
+                  className={`w-full p-4 rounded-lg transition-colors border ${
+                    week.id === 5 
+                      ? `${btnDanger} text-white` 
+                      : `${cardBg} ${textColor} hover:bg-opacity-80 border-${darkMode ? 'gray-700' : 'gray-300'}`
+                  } flex flex-col items-start`}
+                >
+                  <span className="text-xl font-bold mb-1">{week.title}</span>
+                  <span className="text-sm opacity-80">{week.description}</span>
+                </button>
+              ))}
+            </div>
+            
+            <div className="flex justify-center">
+              <button
+                onClick={() => setAppState('welcome')}
+                className={`px-6 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors`}
+              >
+                Back to Welcome
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Render quiz content
   return (
     <div className={`min-h-screen ${bgColor} py-8`}>
       <div className="max-w-3xl mx-auto px-4">
         <div className={`${cardBg} rounded-lg shadow-lg p-6 ${textColor} border ${cardBorder}`}>
           <div className="flex justify-between items-center mb-6">
-            <div className={`text-xl font-semibold ${scoreColor}`}>Score: {score} {scoreText}</div>
+            <div>
+              <div className={`text-xl font-semibold ${scoreColor}`}>Score: {score} {scoreText}</div>
+              <div className="text-sm opacity-70 mt-1">{selectedWeek?.title}</div>
+            </div>
             <div className="flex items-center gap-4">
-              <button 
-                onClick={toggleTheme} 
-                className={`p-2 rounded-full ${darkMode ? 'bg-gray-800' : 'bg-gray-200'}`}
-                aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
+              <button
+                onClick={backToWeekSelect}
+                className={`px-3 py-1 ${btnSecondary} text-white rounded-lg text-sm transition-colors`}
               >
-                {darkMode ? <Sun className="w-5 h-5 text-yellow-300" /> : <Moon className="w-5 h-5 text-gray-700" />}
+                Change Week
               </button>
+              <ThemeToggleButton className="w-10 h-10" />
               <div className="flex items-center text-lg">
                 <Timer className="w-5 h-5 mr-2" />
                 {timeLeft}s
@@ -213,7 +348,7 @@ function App() {
             <h2 className="text-xl font-semibold mb-4">
               Question {currentQuestion + 1} of {questions.length}
             </h2>
-            <p className="text-lg mb-6">{questions[currentQuestion].question}</p>
+            <p className="text-lg mb-6">{questions[currentQuestion]?.question}</p>
 
             {message && (
               <div className={`mb-4 p-3 rounded-lg text-center font-medium ${
@@ -227,7 +362,7 @@ function App() {
 
             <div className="space-y-3">
               {shuffledOptions.map((option, index) => {
-                const isCorrectAnswer = option === questions[currentQuestion].options[questions[currentQuestion].correctAnswer];
+                const isCorrectAnswer = option === questions[currentQuestion]?.options[questions[currentQuestion]?.correctAnswer];
                 const isSelected = option === selectedOption;
                 const showWrongAnswer = showExplanation && isSelected && !isCorrectAnswer;
 
@@ -261,10 +396,10 @@ function App() {
             </div>
           </div>
 
-          {showExplanation && (
+          {showExplanation && questions[currentQuestion]?.explanation && (
             <div className={`mb-6 p-4 ${explanationBg} rounded-lg border ${darkMode ? 'border-indigo-700' : 'border-indigo-200'}`}>
               <h3 className={`font-semibold mb-2 ${darkMode ? 'text-indigo-300' : 'text-indigo-700'}`}>Explanation:</h3>
-              <p>{questions[currentQuestion].explanation}</p>
+              <p>{questions[currentQuestion]?.explanation}</p>
             </div>
           )}
 

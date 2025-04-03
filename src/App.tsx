@@ -12,7 +12,7 @@ import questionsDataAll from './data/questionsAll.json';
 // Motivational messages arrays
 const correctMessages = [
   "Yippee!🎉",
-  "Lucky huh?! 🌟",
+  "Lucky huh?! 🌚",
   "You're on fire! Nerupu daaa 🔥",
   "Studied huh?! ⭐",
   "Apudi than! 💪"
@@ -20,10 +20,10 @@ const correctMessages = [
 
 const incorrectMessages = [
   "Don't be sad, sad backwards is das and das not good! 💪",
-  "Charter! Try again! 🌟",
-  "NOOOOOOOOOOOOOOOB! 📚",
-  "Podangu! 🎯",
-  "Poda poi maadu mei! ✨"
+  "Charter! Try again! 🍌",
+  "NOOOOOOOOOOOOOOOB! 🐒",
+  "Podangu! 🍆💦",
+  "Poda poi maadu mei! 🐄"
 ];
 
 // Fisher-Yates shuffle algorithm
@@ -258,10 +258,9 @@ function App() {
             </div>
             
             <div className="text-lg mb-8">
-              <p className="mb-2">• 80+ mcq questions</p>
+              <p>• Konichuwa 🙌🏽</p>
               <p className="mb-2">• Timed responses & negative scores for wrong answers</p>
               <p className="mb-2">• Ellarum Nanmai Adaika!</p>
-              <p>• Konichuwa</p>
             </div>
             
             <button

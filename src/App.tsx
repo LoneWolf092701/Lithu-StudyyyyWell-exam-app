@@ -36,6 +36,7 @@ function App() {
   );
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
+  const [scoreText, setScoreText] = useState('');
   const [showExplanation, setShowExplanation] = useState(false);
   const [timeLeft, setTimeLeft] = useState(30);
   const [isActive, setIsActive] = useState(false); // Changed to false so quiz doesn't start automatically
@@ -75,18 +76,24 @@ function App() {
     setSelectedOption(option);
     const correct = option === questions[currentQuestion].options[questions[currentQuestion].correctAnswer];
     
+    let newScore;
     if (correct) {
-      setScore((prev) => prev + 1);
+      newScore = score + 1;
+      setScore(newScore);
       setMessage(correctMessages[Math.floor(Math.random() * correctMessages.length)]);
     } else {
-      setScore((prev) => Math.max(0, prev - 1)); // Prevent negative scores
+      newScore = score - 1;
+      setScore(newScore);
       setMessage(incorrectMessages[Math.floor(Math.random() * incorrectMessages.length)]);
     }
+    
+    // Set score text based on the new score value
+    setScoreText(newScore === 0 ? "" : newScore >= 1 ? "Come on Velu!" : "IIT bathroom cleaner vacancy available!");
     
     setShowExplanation(true);
     setIsActive(false);
   };
-
+  
   const nextQuestion = () => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion((prev) => prev + 1);
@@ -129,6 +136,8 @@ function App() {
   const correctBg = darkMode ? 'bg-green-900 border-green-700' : 'bg-green-100 border-green-500';
   const incorrectBg = darkMode ? 'bg-red-900 border-red-700' : 'bg-red-100 border-red-500';
   const explanationBg = darkMode ? 'bg-gray-900' : 'bg-blue-50';
+  // Define score color based on score value
+  const scoreColor = score < 0 ? 'text-red-500' : darkMode ? 'text-white' : 'text-gray-900';
 
   // Welcome page content
   if (!quizStarted) {
@@ -161,7 +170,7 @@ function App() {
             
             <div className="text-lg mb-8">
               <p className="mb-2">• 80+ mcq questions</p>
-              <p className="mb-2">• Timed responses & - scores for wrong answers</p>
+              <p className="mb-2">• Timed responses & negative scores for wrong answers</p>
               <p className="mb-2">• Ellarum Nanmai Adaika!</p>
               <p>• Konichuwa</p>
             </div>
@@ -184,7 +193,7 @@ function App() {
       <div className="max-w-3xl mx-auto px-4">
         <div className={`${cardBg} rounded-lg shadow-lg p-6 ${textColor} border ${cardBorder}`}>
           <div className="flex justify-between items-center mb-6">
-            <div className="text-xl font-semibold">Score: {score}</div>
+            <div className={`text-xl font-semibold ${scoreColor}`}>Score: {score} {scoreText}</div>
             <div className="flex items-center gap-4">
               <button 
                 onClick={toggleTheme} 

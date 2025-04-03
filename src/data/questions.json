@@ -959,6 +959,486 @@
       ],
       "correctAnswer": 2,
       "explanation": "The OSI model mapping in the sources places Ping of Death (PoD) attack and Smurf attack under the Network layer threats."
+    },
+    {
+      "id": 81,
+      "question": "Which of the following network security attack aims to disrupt access to a system or its services by legitimate users?",
+      "options": [
+        "Session Hijacking",
+        "IP Spoofing",
+        "Denial-of-Service (DoS)",
+        "Man-in-the-Middle (MITM)"
+      ],
+      "correctAnswer": 2,
+      "explanation": "This type of attack prevents legitimate users from accessing and/or using the system and its services."
+    },
+    {
+      "id": 82,
+      "question": "In which layer of the OSI model do DNS attacks primarily occur?",
+      "options": [
+        "Transport Layer",
+        "Network Layer",
+        "Application Layer",
+        "Physical Layer"
+      ],
+      "correctAnswer": 2,
+      "explanation": "DNS is explicitly listed under Application layer attacks in the provided sources."
+    },
+    {
+      "id": 83,
+      "question": "What is the main goal of DNS cache poisoning?",
+      "options": [
+        "To intercept user credentials during authentication",
+        "To flood DNS servers with excessive requests",
+        "To give DNS servers false records and get them cached",
+        "To disrupt the resolution of domain names"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The source clearly states that the basic idea of DNS cache poisoning is to give DNS servers false records so they are stored in the cache."
+    },
+    {
+      "id": 84,
+      "question": "During the scanning and enumeration phase, what is the purpose of banner grabbing?",
+      "options": [
+        "To flood network ports with unsolicited requests",
+        "To bypass firewall rules and gain unauthorized access",
+        "To identify and probe services and Operating Systems running behind open ports",
+        "To capture network traffic and analyze packet headers"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Banner grabbing is used to obtain information about the services and Operating Systems running on target ports."
+    },
+    {
+      "id": 85,
+      "question": "What response from a server to a TCP SYN request typically indicates that the port is open?",
+      "options": [
+        "RST (Reset) message",
+        "No response",
+        "ICMP type 3 response",
+        "SYN/ACK (Synchronize-Acknowledge) packet"
+      ],
+      "correctAnswer": 3,
+      "explanation": "A server responding with a SYN/ACK packet after receiving a SYN request indicates an open port."
+    },
+    {
+      "id": 86,
+      "question": "Which type of port scan completes the full TCP handshake, making it reliable but also very noisy?",
+      "options": [
+        "SYN Scan",
+        "FIN Scan",
+        "Connect Scan",
+        "Ping Scan"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The connect scan fully connects to the target IP address and port in a complete TCP handshake and is described as reliable but very noisy."
+    },
+    {
+      "id": 87,
+      "question": "What is the primary goal of session hijacking?",
+      "options": [
+        "To eavesdrop on network communications without being detected",
+        "To take over a session that has authenticated access to a resource",
+        "To modify data in transit between two communicating hosts",
+        "To prevent legitimate users from accessing network resources"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Session hijacking aims to take control of an already authenticated session to gain unauthorized access."
+    },
+    {
+      "id": 88,
+      "question": "In a session hijacking attack, what is the attacker typically trying to predict or determine?",
+      "options": [
+        "The encryption algorithm being used",
+        "The server's operating system",
+        "The sequence numbers of the packets",
+        "The user's login credentials"
+      ],
+      "correctAnswer": 2,
+      "explanation": "For a session hijack to be successful, the attacker must successfully determine or guess the sequence numbers."
+    },
+    {
+      "id": 89,
+      "question": "Which type of session hijacking attack involves the attacker positioning themselves between two communicating hosts and intercepting all communications?",
+      "options": [
+        "Session Replay Attack",
+        "Blind Hijack Attack",
+        "Man in the Middle Attack (MITM)",
+        "Session Hijack Attack"
+      ],
+      "correctAnswer": 2,
+      "explanation": "In a Man in the Middle attack, the attacker intercepts all communications by positioning themselves between the client and the server."
+    },
+    {
+      "id": 90,
+      "question": "What is the fundamental vulnerability that IP spoofing attacks exploit?",
+      "options": [
+        "Weak encryption of network traffic",
+        "Lack of source authentication in IP packets",
+        "Predictable TCP sequence numbers",
+        "Insecure routing protocols"
+      ],
+      "correctAnswer": 1,
+      "explanation": "IP vulnerabilities include the lack of source authentication, allowing senders to spoof the source address."
+    },
+    {
+      "id": 91,
+      "question": "What is a key requirement for a successful IP spoofing attack?",
+      "options": [
+        "The attacker must be on the same network segment as the victim",
+        "The attacker must know the victim's login credentials",
+        "The spoofed IP address cannot be in use by another active device on the network",
+        "The attacker must have physical access to the network infrastructure"
+      ],
+      "correctAnswer": 2,
+      "explanation": "For IP spoofing to succeed, the spoofed IP cannot exist with another user on the network."
+    },
+    {
+      "id": 92,
+      "question": "What is the function of a network sniffer?",
+      "options": [
+        "To actively block malicious network traffic",
+        "To generate and send network packets",
+        "To capture network traffic as it moves across the network",
+        "To route network packets to their intended destination"
+      ],
+      "correctAnswer": 2,
+      "explanation": "A sniffer is designed to capture, or \"sniff,\" network traffic as it moves across the network."
+    },
+    {
+      "id": 93,
+      "question": "Placing a network adapter in which mode allows a sniffer to capture all traffic regardless of the destination address?",
+      "options": [
+        "Normal mode",
+        "Filtered mode",
+        "Restricted mode",
+        "Promiscuous mode (monitor mode)"
+      ],
+      "correctAnswer": 3,
+      "explanation": "When a network adapter is put in promiscuous mode, a sniffer can sniff all traffic regardless of the destination address."
+    },
+    {
+      "id": 94,
+      "question": "Which of the following protocols transmits information in the clear and is thus a good target for sniffing?",
+      "options": [
+        "Secure Shell (SSH)",
+        "Transport Layer Security (TLS)",
+        "Hypertext Transfer Protocol (HTTP)",
+        "Internet Protocol Security (IPsec)"
+      ],
+      "correctAnswer": 2,
+      "explanation": "HTTP is designed to send information in the clear without any protection, making it a good target for sniffing."
+    },
+    {
+      "id": 95,
+      "question": "What is the primary goal of a MAC flooding attack?",
+      "options": [
+        "To overwhelm a router's routing table",
+        "To fill the switch's Content Addressable Memory (CAM) table with fake MAC addresses",
+        "To disrupt wireless communication by jamming signals",
+        "To gain unauthorized access to network devices via MAC addresses"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The goal of MAC flooding is to flood the switch with fake MAC addresses to fill its CAM table."
+    },
+    {
+      "id": 96,
+      "question": "What fundamental property of the ARP protocol is exploited in ARP spoofing?",
+      "options": [
+        "The requirement for mutual authentication before ARP communication",
+        "The encryption of ARP request and response packets",
+        "The fact that ARP tables are updated whenever an ARP response is received, even unsolicited ones",
+        "The tracking of ARP Requests by network devices"
+      ],
+      "correctAnswer": 2,
+      "explanation": "ARP spoofing works because the ARP table updates whenever an ARP response is received, and ARP Requests are not authenticated."
+    },
+    {
+      "id": 97,
+      "question": "What is the key characteristic that distinguishes a Distributed Denial of Service (DDoS) attack from a Denial of Service (DoS) attack?",
+      "options": [
+        "DDoS attacks target application-layer vulnerabilities, while DoS attacks target network-layer vulnerabilities",
+        "DDoS attacks are easier to trace back to the source than DoS attacks",
+        "DDoS attacks utilize multiple compromised hosts to generate attack traffic",
+        "DoS attacks are always more impactful than DDoS attacks"
+      ],
+      "correctAnswer": 2,
+      "explanation": "A DDoS attack amplifies a DoS attack by using multiple hosts to generate enough traffic to disrupt the target."
+    },
+    {
+      "id": 98,
+      "question": "Which type of network-level DDoS attack involves sending a large number of ICMP echo request packets to the victim?",
+      "options": [
+        "Smurf attack",
+        "Reflected attack",
+        "DHCP starvation",
+        "ICMP flood (Ping flood)"
+      ],
+      "correctAnswer": 3,
+      "explanation": "An ICMP flood, also known as a ping flood, is carried out by sending a large number of ping packets to the victim."
+    },
+    {
+      "id": 99,
+      "question": "What is the underlying mechanism of a Smurf attack?",
+      "options": [
+        "Exploiting vulnerabilities in the TCP three-way handshake",
+        "Sending fragmented IP packets that cause the target system to crash upon reassembly",
+        "Sending an ICMP broadcast with a spoofed source IP address of the victim, causing many devices to respond to the victim",
+        "Exhausting the DHCP server's IP address pool"
+      ],
+      "correctAnswer": 2,
+      "explanation": "In a Smurf attack, the hacker sends an ICMP broadcast with the victim's spoofed IP, causing all network devices to respond to the victim."
+    },
+    {
+      "id": 100,
+      "question": "Which transport layer DDoS attack exploits the TCP three-way handshake by sending numerous SYN packets without completing the connection?",
+      "options": [
+        "UDP flood",
+        "ICMP flood",
+        "SYN flood",
+        "FIN flood"
+      ],
+      "correctAnswer": 2,
+      "explanation": "A SYN flood uses forged packets with the SYN flag set, overwhelming the victim's system by consuming connection resources."
+    },
+    {
+      "id": 101,
+      "question": "What is the primary characteristic of a Slowloris attack?",
+      "options": [
+        "It floods the target with a high volume of complete HTTP requests",
+        "It exploits programming defects in the web server software",
+        "It attempts to monopolize the web server's connection capacity by sending HTTP requests that are never completed",
+        "It targets the DNS infrastructure associated with the web server"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Slowloris attempts to monopolize by sending HTTP requests that never complete, eventually consuming the web server's connection capacity."
+    },
+    {
+      "id": 102,
+      "question": "Which type of attack involves sending oversized IP packets that some systems cannot handle, leading to a crash upon reassembly?",
+      "options": [
+        "Teardrop Attack",
+        "Smurf Attack",
+        "Ping of Death (PoD)",
+        "Land DoS"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The Ping of Death (PoD) involves sending oversized packets that can cause some systems to crash when reassembled."
+    },
+    {
+      "id": 103,
+      "question": "What is a botnet?",
+      "options": [
+        "A collection of network security tools used by ethical hackers",
+        "A type of firewall that filters malicious traffic",
+        "A network of compromised devices (zombies) controlled by an attacker",
+        "A secure communication protocol for IoT devices"
+      ],
+      "correctAnswer": 2,
+      "explanation": "A botnet is a network of zombie devices, which are malicious code implanted on victim systems."
+    },
+    {
+      "id": 104,
+      "question": "What is the primary purpose of cryptography?",
+      "options": [
+        "To physically secure computer hardware",
+        "To store and transmit data in a form that only those it is intended for can read and process",
+        "To prevent unauthorized physical access to networks",
+        "To detect and remove malware from infected systems"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Cryptography is defined as a method of storing and transmitting data in a form readable only by the intended recipients."
+    },
+    {
+      "id": 105,
+      "question": "Which of the following is the process of scrambling plaintext into ciphertext?",
+      "options": [
+        "Decryption",
+        "Cryptanalysis",
+        "Encryption (Enciphering)",
+        "Hashing"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Encryption, also known as enciphering, is the process of scrambling plaintext into ciphertext."
+    },
+    {
+      "id": 106,
+      "question": "Ensuring that data is not altered without authorization relates to which goal of cryptography?",
+      "options": [
+        "Confidentiality",
+        "Authentication",
+        "Non-Repudiation",
+        "Integrity"
+      ],
+      "correctAnswer": 3,
+      "explanation": "Integrity ensures that data is not altered without authorization."
+    },
+    {
+      "id": 107,
+      "question": "Verifying the claimed identity of system users is the primary function of which security goal achieved by cryptosystems?",
+      "options": [
+        "Confidentiality",
+        "Authentication",
+        "Integrity",
+        "Non-Repudiation"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Authentication verifies the claimed identity of system users."
+    },
+    {
+      "id": 108,
+      "question": "What does non-repudiation in cryptography provide?",
+      "options": [
+        "Guarantee that encrypted data cannot be decrypted by unauthorized parties",
+        "Assurance that the data was not altered during transmission",
+        "Assurance to the recipient that the message was originated by the sender and cannot be denied later",
+        "Verification of the sender's identity through a shared secret"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Non-Repudiation provides assurance that the message was originated by the sender, who cannot later deny sending it."
+    },
+    {
+      "id": 109,
+      "question": "Which mathematical operation is fundamental to many cryptographic algorithms, especially in public-key cryptography, as it allows operations on very large numbers in a manageable range?",
+      "options": [
+        "Boolean AND",
+        "Prime factorization",
+        "Modulo operation",
+        "Integer division"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The modulo operation is a fundamental operation in many cryptographic algorithms, particularly in public-key cryptography, as it allows operations on very large numbers in a manageable range."
+    },
+    {
+      "id": 110,
+      "question": "What is a key characteristic of prime numbers that makes them useful in cryptography?",
+      "options": [
+        "They are easily divisible by many other numbers",
+        "The difficulty of factorizing the product of two large primes",
+        "They follow predictable patterns",
+        "They are always even numbers (except for 2)"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The difficulty of factorizing the product of two large primes is central to the security of public-key cryptography."
+    },
+    {
+      "id": 111,
+      "question": "In cryptography, what is entropy a measure of?",
+      "options": [
+        "The length of the encryption key",
+        "The speed of the encryption algorithm",
+        "The level of randomness or unpredictability associated with a random system",
+        "The complexity of the ciphertext"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Entropy is defined as the level of randomness or the measure of unpredictability associated with a random system."
+    },
+    {
+      "id": 112,
+      "question": "What is a characteristic of a substitution cipher?",
+      "options": [
+        "It rearranges the order of plaintext letters",
+        "It replaces plaintext letters with other letters, numbers, or symbols",
+        "It processes plaintext in fixed-size blocks",
+        "It operates on plaintext one bit at a time"
+      ],
+      "correctAnswer": 1,
+      "explanation": "A substitution cipher is one in which the letters of plaintext are replaced by other letters or by numbers or symbols."
+    },
+    {
+      "id": 113,
+      "question": "Which type of cipher rearranges the letters of a plaintext message to form the ciphertext message?",
+      "options": [
+        "Substitution cipher",
+        "Stream cipher",
+        "Block cipher",
+        "Transposition cipher"
+      ],
+      "correctAnswer": 3,
+      "explanation": "Transposition ciphers use an encryption algorithm to rearrange the letters of a plain-text message."
+    },
+    {
+      "id": 114,
+      "question": "What is the primary difference in how block ciphers and stream ciphers process plaintext?",
+      "options": [
+        "Block ciphers use a public key, while stream ciphers use a private key",
+        "Block ciphers encrypt one bit at a time, while stream ciphers encrypt in fixed-size groups",
+        "Block ciphers encrypt fixed-size blocks of plaintext, while stream ciphers treat the message as a continuous stream of bits",
+        "Block ciphers are symmetric, while stream ciphers are asymmetric"
+      ],
+      "correctAnswer": 2,
+      "explanation": "A block cipher encrypts a block of input to a block of output, while a stream cipher treats the message as a stream of bits."
+    },
+    {
+      "id": 115,
+      "question": "Which type of encryption algorithm uses the same key for both encryption and decryption?",
+      "options": [
+        "Asymmetric encryption",
+        "Public-key encryption",
+        "Symmetric encryption",
+        "Two-key encryption"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Symmetric algorithms use the same key for encryption and decryption."
+    },
+    {
+      "id": 116,
+      "question": "Asymmetric encryption algorithms utilize which type of keys?",
+      "options": [
+        "Only a single shared secret key",
+        "Multiple identical keys for all users",
+        "A public key and a private key pair for each user",
+        "Separate encryption and decryption keys that are the same for all users"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Asymmetric algorithms employ two keys, a public key and a private key, making up a key pair."
+    },
+    {
+      "id": 117,
+      "question": "What is a significant advantage of asymmetric encryption over symmetric encryption in terms of key management?",
+      "options": [
+        "Asymmetric encryption is significantly faster",
+        "Asymmetric systems provide for easier and more manageable key distribution",
+        "Asymmetric encryption offers stronger confidentiality",
+        "Asymmetric encryption can solely provide integrity"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Asymmetric systems provide for easier and more manageable key distribution than symmetric systems."
+    },
+    {
+      "id": 118,
+      "question": "What is steganography?",
+      "options": [
+        "A method of making data unintelligible through encryption",
+        "A method of hiding data within another media type so that its existence is concealed",
+        "A cryptographic technique to ensure data integrity",
+        "A protocol for secure key exchange"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Steganography is a method of hiding data in another media type so the very existence of the data is concealed."
+    },
+    {
+      "id": 119,
+      "question": "What is a key property of a cryptographic hash function?",
+      "options": [
+        "It is a two-way function, allowing retrieval of the original input from the hash value",
+        "It is a one-way function, making it infeasible to retrieve the plaintext from the hash value",
+        "It always produces hash values of different lengths for different inputs",
+        "It requires a secret key for generating the hash value"
+      ],
+      "correctAnswer": 1,
+      "explanation": "A hash function is a special mathematical function that performs a one-way function."
+    },
+    {
+      "id": 120,
+      "question": "What is the primary purpose of a Message Authentication Code (MAC)?",
+      "options": [
+        "To encrypt the contents of a message",
+        "To ensure the confidentiality of a message using asymmetric keys",
+        "To authenticate the information exchanged between parties who share a secret key and verify its integrity",
+        "To generate a unique identifier for each message transmitted over a network"
+      ],
+      "correctAnswer": 2,
+      "explanation": "A MAC is typically used between two parties that share a secret key to authenticate information exchanged between those parties."
     }
   ]
 }

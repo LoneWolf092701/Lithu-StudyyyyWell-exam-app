@@ -11,10 +11,10 @@ import questionsDataAll from './data/questionsAll.json';
 
 // Motivational messages arrays
 const correctMessages = [
-  "Yippee!🎉",
+  "Yippee! 🧠",
   "Lucky huh?! 🌚",
   "You're on fire! Nerupu daaa 🔥",
-  "Studied huh?! ⭐",
+  "Studied huh?! 🫦",
   "Apudi than! 💪"
 ];
 

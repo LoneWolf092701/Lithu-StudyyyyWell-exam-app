@@ -1439,6 +1439,486 @@
       ],
       "correctAnswer": 2,
       "explanation": "A MAC is typically used between two parties that share a secret key to authenticate information exchanged between those parties."
+    },
+    {
+      "id": 121,
+      "question": "Which of the following was identified as the top country of origin for cyberattacks in 2020?",
+      "options": [
+        "United States",
+        "Russia",
+        "China",
+        "United Kingdom"
+      ],
+      "correctAnswer": 2,
+      "explanation": "In 2020, China was the top country of origin for cyberattacks, accounting for 41 percent. The United States was second at 10 percent. The other options, Russia and the United Kingdom, are not mentioned in this context in the provided sources."
+    },
+    {
+      "id": 122,
+      "question": "Which of the following is an example of a passive attack at the application layer?",
+      "options": [
+        "DNS Pharming",
+        "HTTP Basic Authentication sniffing",
+        "SYN Flood",
+        "IP Spoofing"
+      ],
+      "correctAnswer": 1,
+      "explanation": "HTTP basic authentication is insecure because full credentials (user ID and password) pass over the wire and are sent in the clear. This allows an attacker to potentially sniff the traffic and obtain these credentials without actively modifying the communication, making it a passive attack. DNS pharming and SYN flood are active attacks. IP spoofing occurs at the network layer."
+    },
+    {
+      "id": 123,
+      "question": "What is the primary goal of DNS pharming?",
+      "options": [
+        "To flood DNS servers with false records.",
+        "To intercept DNS queries and provide fake responses.",
+        "To maliciously change the IP address associated with a server.",
+        "To overwhelm DNS servers with a large number of requests."
+      ],
+      "correctAnswer": 2,
+      "explanation": "DNS pharming is an attacker's attempt to change the IP associated with a server maliciously. DNS cache poisoning involves giving DNS servers false records to be cached. Flooding aims to disrupt service availability. Interception with fake responses is related but not the primary described goal of pharming."
+    },
+    {
+      "id": 124,
+      "question": "What is the basic idea behind DNS cache poisoning?",
+      "options": [
+        "Redirecting the nameserver of the attacker's domain.",
+        "Redirecting the nameserver of another, unrelated domain.",
+        "Giving DNS servers false records and getting them cached.",
+        "Flooding DNS servers with a large number of requests."
+      ],
+      "correctAnswer": 2,
+      "explanation": "The basic idea of DNS cache poisoning: give DNS servers false records and get it cached. The other options describe methods that can be used to achieve this, as mentioned under the ways to perform DNS cache poisoning, but the core idea is the caching of false records."
+    },
+    {
+      "id": 125,
+      "question": "During which phase of penetration testing do transport layer attacks typically begin, according to the source?",
+      "options": [
+        "Exploitation",
+        "Post-exploitation",
+        "Reconnaissance",
+        "Scanning and enumeration"
+      ],
+      "correctAnswer": 3,
+      "explanation": "Transport layer attacks start at the early stages of penetration testing, during the scanning and enumeration phase. This phase involves using various tools to confirm learned information and discover new details, including probing ports and identifying services."
+    },
+    {
+      "id": 126,
+      "question": "What is the purpose of banner grabbing during the scanning and enumeration phase?",
+      "options": [
+        "To block open ports on a target.",
+        "To identify and probe services and operating systems running behind ports.",
+        "To fully connect to the target IP address and port.",
+        "To send a single ICMP echo request to a destination device."
+      ],
+      "correctAnswer": 1,
+      "explanation": "The scanning and enumeration phase aims to identify and probe services and Operating Systems running behind those ports to obtain information them using Banner grabbing, also called fngerprinting. The other options describe different actions or techniques: blocking ports, completing a TCP handshake (connect scan), and sending ICMP requests (ping scan)."
+    },
+    {
+      "id": 127,
+      "question": "In a TCP half-open port scan, what response from the server indicates that the port is open but the connection was possibly blocked by a firewall?",
+      "options": [
+        "No response",
+        "An ACK message",
+        "A SYN/ACK followed by an RST message",
+        "An RST message"
+      ],
+      "correctAnswer": 2,
+      "explanation": "For a TCP half-open port, the server responds with a SYN/ACK frst then terminates the connection by sending a Reset message (RST). This indicates that the port is open however the request was blocked (possibly behind a frewall). An ACK alone indicates an open port where a connection can be established. An RST indicates a closed port. No response for a TCP SYN typically means the port is filtered or there's no host at that IP."
+    },
+    {
+      "id": 128,
+      "question": "What is the main characteristic of a SYN scan?",
+      "options": [
+        "It fully connects to the target IP address and port.",
+        "It sends SYN requests without completing the TCP handshake.",
+        "It sends FIN packets to the target.",
+        "It sends a single ICMP echo request to the destination."
+      ],
+      "correctAnswer": 1,
+      "explanation": "A SYN scan, also called half open, sends SYN requests to the target to gather information about open ports without completing the TCP handshake. A connect scan fully connects. A FIN scan sends FIN packets. A ping scan sends ICMP requests."
+    },
+    {
+      "id": 129,
+      "question": "What is the primary goal of session hijacking?",
+      "options": [
+        "To observe network traffic.",
+        "To take over a session with authenticated access to a resource.",
+        "To flood the network with packets.",
+        "To modify the content of network packets."
+      ],
+      "correctAnswer": 1,
+      "explanation": "The goal of session hijacking is not only to observe traffc and sessions currently active on the network but also to take over a session that has authenticated access to the resource. It occurs when attackers use a valid session to gain unauthorized access."
+    },
+    {
+      "id": 130,
+      "question": "What is a key difference between a session hijack attack and a Man-in-the-Middle (MITM) attack, based on the provided information?",
+      "options": [
+        "A session hijack attack always involves modifying communications, while a MITM attack only intercepts.",
+        "A MITM attack severs the connection between two parties, while a session hijack attack does not.",
+        "In a MITM attack, the attacker intercepts all communications, whereas a session hijack attack aims to take over an existing session.",
+        "A session hijack attack positions the attacker between communicating parties from the beginning, unlike a MITM attack."
+      ],
+      "correctAnswer": 2,
+      "explanation": "In a MITM attack, an attacker intercepts all communications between two hosts and positions themselves so that all communication flows through them. A session hijack attack, on the other hand, targets an already established session and aims to seize control of it after observing the initial authentication."
+    },
+    {
+      "id": 131,
+      "question": "In a blind hijack attack, what is a significant limitation for the attacker?",
+      "options": [
+        "The attacker cannot intercept network traffic.",
+        "The attacker cannot see the response to the injected data.",
+        "The attacker needs to complete a full TCP handshake.",
+        "The attacker must sever the connection between the two parties."
+      ],
+      "correctAnswer": 1,
+      "explanation": "Blind hijacking is when the attacker can only inject data into the communications stream; the attacker cannot see the response to that data, such as 'The command completed successfully'."
+    },
+    {
+      "id": 132,
+      "question": "What is the primary action of an attacker in a session replay attack?",
+      "options": [
+        "Intercepting and modifying ongoing communications.",
+        "Injecting malicious data into an existing session.",
+        "Creating new sessions or utilizing old sessions.",
+        "Severing the connection between two hosts."
+      ],
+      "correctAnswer": 2,
+      "explanation": "In a session replay attack, the attacker is neither intercepting nor injecting data into existing communications between two hosts. Instead, the attacker creates new sessions or utilizes old sessions. The example provided is capturing a web application session ID and replaying it."
+    },
+    {
+      "id": 133,
+      "question": "Which of the following is a vulnerability associated with the IP protocol, as mentioned in the source?",
+      "options": [
+        "Encrypted transmission by default.",
+        "Built-in source authentication.",
+        "Inherent bandwidth constraints.",
+        "No integrity checking."
+      ],
+      "correctAnswer": 3,
+      "explanation": "\"No integrity checking\" is one of the IP vulnerabilities; the entire packet, header and payload, can be modifed en route to destination, enabling content forgeries, redirections, and man-in-the-middle attacks. The other options are incorrect as IP transmission is unencrypted, lacks source authentication, and has no built-in bandwidth constraints in the protocol itself."
+    },
+    {
+      "id": 134,
+      "question": "What is the fundamental action in an IP spoofing attack?",
+      "options": [
+        "Flooding the network with a large number of IP packets.",
+        "Sending packets with a source IP address that appears to originate from a different source.",
+        "Modifying the destination IP address of packets in transit.",
+        "Intercepting IP packets and analyzing their contents."
+      ],
+      "correctAnswer": 1,
+      "explanation": "IP spoofing is an attempt by an intruder to send packets from one IP address that appear to originate at another."
+    },
+    {
+      "id": 135,
+      "question": "What is a key requirement for a successful IP spoofing attack, according to the source?",
+      "options": [
+        "The attacker must be on the same network segment as the target.",
+        "The attacker must know the administrator password of the target system.",
+        "The spoofed IP address cannot exist with another active user on the network.",
+        "The attacker must be able to intercept all traffic between the target and the genuine source."
+      ],
+      "correctAnswer": 2,
+      "explanation": "For both to succeed, the spoofed IP cannot exist with another user on the network. Two devices with the same IP connect exist on a network. For this attack to be successful, the spoofed IP cannot exist on the network."
+    },
+    {
+      "id": 136,
+      "question": "What happens when a network adapter is put into promiscuous mode?",
+      "options": [
+        "It only captures packets destined for its own MAC address.",
+        "It blocks all incoming network traffic.",
+        "It captures all network traffic it can hear, regardless of the destination address.",
+        "It transmits packets with a spoofed MAC address."
+      ],
+      "correctAnswer": 2,
+      "explanation": "In promiscuous mode (also called monitor mode), a sniffer can realize its full potential, including sniffng all traffc regardless of the destination address. In normal mode, the adapter ignores packets not intended for it."
+    },
+    {
+      "id": 137,
+      "question": "Which of the following protocols transmits information in the clear and is therefore a good target for sniffing?",
+      "options": [
+        "SSH",
+        "HTTPS",
+        "HTTP",
+        "SFTP"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Hypertext Transfer Protocol (HTTP) is designed to send information in the clear without any protection and is a good target for sniffng. SSH, HTTPS, and SFTP are designed to provide secure, encrypted communication."
+    },
+    {
+      "id": 138,
+      "question": "What is the primary goal of MAC flooding?",
+      "options": [
+        "To capture network traffic passively.",
+        "To overwhelm the switch's CAM table with fake MAC addresses.",
+        "To associate the attacker's MAC address with a legitimate IP address.",
+        "To filter network traffic based on MAC addresses."
+      ],
+      "correctAnswer": 1,
+      "explanation": "The goal of MAC fooding is to food the switch with fake MAC addresses to all ports. This will cause the switch Content Addressable memory (CAM) to be flled and the switch overwhelmed resulting the switch failing."
+    },
+    {
+      "id": 139,
+      "question": "What is the purpose of ARP spoofing?",
+      "options": [
+        "To flood the network with ARP requests.",
+        "To filter network traffic based on IP addresses.",
+        "To trick devices into associating the attacker's MAC address with a legitimate IP address.",
+        "To prevent devices from obtaining IP addresses from a DHCP server."
+      ],
+      "correctAnswer": 2,
+      "explanation": "ARP spoofng manipulates the ARP cache by sending forged (spoofed) ARP packets, tricking devices on the network into associating the attacker’s MAC address with a legitimate IP address."
+    },
+    {
+      "id": 140,
+      "question": "What is a key reason why ARP spoofing is possible?",
+      "options": [
+        "ARP requests are always encrypted.",
+        "ARP tables are only updated manually.",
+        "ARP responses are not authenticated.",
+        "Machines carefully track all ARP requests."
+      ],
+      "correctAnswer": 2,
+      "explanation": "ARP Responses are not authenticated. This allows a rogue machine to impersonate another machine by sending unverified ARP replies."
+    },
+    {
+      "id": 141,
+      "question": "What is the main objective of a Denial-of-Service (DoS) attack?",
+      "options": [
+        "To steal sensitive information from a system.",
+        "To gain unauthorized administrative access to a server.",
+        "To prevent legitimate users from accessing a system and its services.",
+        "To modify data stored on a target system."
+      ],
+      "correctAnswer": 2,
+      "explanation": "A Denial-of-Service Attack prevents legitimate users from accessing and/or using the system and its services."
+    },
+    {
+      "id": 142,
+      "question": "What is the key difference between a DoS and a DDoS attack?",
+      "options": [
+        "A DoS attack targets the confidentiality of data, while a DDoS attack targets integrity.",
+        "A DDoS attack is easier to trace back to the source than a DoS attack.",
+        "A DDoS attack uses multiple hosts to amplify the attack, while a DoS attack typically uses a single host.",
+        "A DoS attack is more difficult to defend against than a DDoS attack."
+      ],
+      "correctAnswer": 2,
+      "explanation": "A DDoS attack has the same goal as a DoS attack but amplifes the DoS attack by using multiple hosts. Detecting a DDoS is a challenge because traffic comes from several IP addresses."
+    },
+    {
+      "id": 143,
+      "question": "What is the fundamental action in an ICMP flood attack?",
+      "options": [
+        "Sending malformed ICMP packets to cause system crashes.",
+        "Spoofing the source IP address in ICMP packets to reflect attacks off other systems.",
+        "Sending a large number of ping packets to overwhelm the victim.",
+        "Manipulating ICMP error messages to disrupt communication paths."
+      ],
+      "correctAnswer": 2,
+      "explanation": "An ICMP flood (ping flood) is carried out by sending a large number of ping packets to the victim with the intent of overwhelming the victim; very simple attack."
+    },
+    {
+      "id": 144,
+      "question": "In a Smurf attack, how is the victim overwhelmed?",
+      "options": [
+        "By the attacker directly sending a large number of packets to the victim.",
+        "By the attacker sending a broadcast ICMP echo request with the victim's spoofed IP, causing many devices to respond to the victim.",
+        "By the attacker exploiting vulnerabilities in the victim's ICMP handling.",
+        "By the attacker intercepting and dropping the victim's ICMP echo replies."
+      ],
+      "correctAnswer": 1,
+      "explanation": "In a Smurf attack, a hacker sends ICMP broadcast with a spoofed if of the victim. All network devices responds to the victim with an ICMP echo, overwhelming the victim and the network."
+    },
+    {
+      "id": 145,
+      "question": "What is the primary characteristic of a SYN flood attack?",
+      "options": [
+        "It overwhelms the victim with UDP packets sent to random ports.",
+        "It uses forged packets with the SYN flag set to consume connection resources on the victim.",
+        "It sends incomplete HTTP requests to monopolize the web server's connections.",
+        "It exploits oversized IP packets to cause system crashes."
+      ],
+      "correctAnswer": 1,
+      "explanation": "A SYN flood uses forged packets with the SYN fag set; when the victim receives enough of the packets, the result is an overwhelmed system as the SYN food consumes connection resources to the point where no resources are available for legitimate connections."
+    },
+    {
+      "id": 146,
+      "question": "What is a characteristic of a Slowloris attack?",
+      "options": [
+        "It floods the target with a high volume of complete HTTP requests.",
+        "It exploits vulnerabilities in the server's TCP/IP stack.",
+        "It attempts to monopolize the web server's connection capacity by sending HTTP requests that never complete.",
+        "It injects malicious code into the web server through HTTP headers."
+      ],
+      "correctAnswer": 2,
+      "explanation": "Slowloris is a more potent variant of an HTTP flood that attempts to monopolise by sending HTTP requests that never complete. Eventually consumes Web server’s connection capacity."
+    },
+    {
+      "id": 147,
+      "question": "What is the underlying issue that the Ping of Death (PoD) attack exploits?",
+      "options": [
+        "The inability of some systems to handle a high rate of incoming packets.",
+        "The inability of some systems to handle oversized, fragmented packets when reassembled.",
+        "Vulnerabilities in the ping utility itself.",
+        "Misconfiguration of network firewalls allowing large ICMP packets."
+      ],
+      "correctAnswer": 1,
+      "explanation": "In the Ping of Death attack, some systems cannot handle oversized packets; an attacker sends them out in fragments, when fragments reach the system, they are reassembled by the victim; when the maximum size (65,536 bytes) allowed by the IP protocol is reached, some systems will crash."
+    },
+    {
+      "id": 148,
+      "question": "What is the core concept behind a Botnet?",
+      "options": [
+        "A single powerful machine used to launch various cyberattacks.",
+        "A network of security professionals collaborating to defend against attacks.",
+        "A network of compromised devices (zombies) controlled by an attacker to conduct attacks.",
+        "A set of rules implemented in network devices to filter malicious traffic."
+      ],
+      "correctAnswer": 2,
+      "explanation": "Devices participating in DDoS attacks controlled by an attacker are called Zombies, and the network of zombies devices is called a Botnet."
+    },
+    {
+      "id": 149,
+      "question": "According to the source, what was a peak generated traffic rate by IoT devices participating in a DDoS attack on Amazon Web Services in 2020?",
+      "options": [
+        "2.3 Mbps",
+        "2.3 Gbps",
+        "2.3 Tbps",
+        "230 Tbps"
+      ],
+      "correctAnswer": 2,
+      "explanation": "IoT devices participating in botnets have generated at peak 2.3 Tbps during a DDoS attack on Amazon Web Services in 2020."
+    },
+    {
+      "id": 150,
+      "question": "Which OSI layer is primarily associated with IP attacks and IP spoofing?",
+      "options": [
+        "Transport Layer",
+        "Data Link Layer",
+        "Session Layer",
+        "Network Layer"
+      ],
+      "correctAnswer": 3,
+      "explanation": "IP attacks, routing attacks, Ip spoofng, Ping of Death (PoD) attack, DHCP Starvation, and ICMP assaults such as ICMP food and Smurf attack occur at the Network Layer (Layer 3)."
+    },
+    {
+      "id": 151,
+      "question": "What is the fundamental purpose of cryptography?",
+      "options": [
+        "To physically secure computer hardware.",
+        "To manage network infrastructure effectively.",
+        "To store and transmit data in a form that only authorized individuals can understand.",
+        "To prevent software vulnerabilities from being exploited."
+      ],
+      "correctAnswer": 2,
+      "explanation": "Cryptography is a method of storing and transmitting data in a form that only those it is intended for can read and process."
+    },
+    {
+      "id": 152,
+      "question": "Which of the following is NOT a fundamental goal achieved by cryptographic systems, according to the source?",
+      "options": [
+        "Confidentiality",
+        "Integrity",
+        "Authentication",
+        "Availability"
+      ],
+      "correctAnswer": 3,
+      "explanation": "The four fundamental goals that security practitioners use cryptographic systems to meet: Confidentiality, Integrity, Authentication, and Non-Repudiation. Availability is discussed as a type of network threat in the other source."
+    },
+    {
+      "id": 153,
+      "question": "What is the process of scrambling plaintext into ciphertext called?",
+      "options": [
+        "Decryption",
+        "Cryptanalysis",
+        "Encryption (or Enciphering)",
+        "Hashing"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Encryption is the process of scrambling plaintext into ciphertext (or Enciphering). Decryption is the reverse process. Cryptanalysis is deciphering without knowledge of the details. Hashing is a one-way function."
+    },
+    {
+      "id": 154,
+      "question": "What mathematical operation is crucial for bit-level manipulation in cryptography, according to the source?",
+      "options": [
+        "Modulo operation",
+        "Prime factorization",
+        "Boolean maths",
+        "Greatest Common Divisor"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Boolean maths is used in cryptography to provide: Bit-Level Manipulation: Boolean algebra provides a way to manipulate bits logically to produce secure encryption."
+    },
+    {
+      "id": 155,
+      "question": "Which Boolean operation outputs 1 only if both inputs are 1?",
+      "options": [
+        "OR (∨)",
+        "NOT (X̄)",
+        "AND (∧)",
+        "XOR (⊕)"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The AND operation outputs 1 only if both inputs are 1; otherwise, it outputs 0."
+    },
+    {
+      "id": 156,
+      "question": "Why are prime numbers important in public-key cryptography?",
+      "options": [
+        "Because they are easily divisible by many other numbers.",
+        "Because the difficulty of factorizing the product of two large primes ensures the security of key generation.",
+        "Because they are used in simple substitution ciphers.",
+        "Because they are essential for stream cipher operations."
+      ],
+      "correctAnswer": 1,
+      "explanation": "Prime numbers are used for keys generation in Public-Key Cryptography because the difficulty of factorising the product of two large primes ensures that it’s computationally infeasible for an attacker to derive the private key from the public key."
+    },
+    {
+      "id": 157,
+      "question": "What is the result of the modulo operation?",
+      "options": [
+        "The quotient of a division.",
+        "The remainder of a division.",
+        "The product of two numbers.",
+        "The sum of two numbers."
+      ],
+      "correctAnswer": 1,
+      "explanation": "If a is an integer and b is a positive integer, we define c = a mod (b) to be the remainder when a is divided by b."
+    },
+    {
+      "id": 158,
+      "question": "What is Entropy in the context of cryptography?",
+      "options": [
+        "A method for encrypting data using random keys.",
+        "An algorithm for generating pseudo-random numbers.",
+        "The level of randomness or the measure of unpredictability associated with a random system.",
+        "A technique for detecting errors in transmitted data."
+      ],
+      "correctAnswer": 2,
+      "explanation": "Entropy is the level of randomness or the measure of unpredictability associated with a random system."
+    },
+    {
+      "id": 159,
+      "question": "What is a Pseudo Random Number Generator (PRNG)?",
+      "options": [
+        "A device that generates truly random numbers based on physical phenomena.",
+        "An algorithm that generates a sequence of numbers that appears random but is deterministic based on a seed value.",
+        "A cryptographic hash function that produces random output.",
+        "A method for securely exchanging cryptographic keys using randomness."
+      ],
+      "correctAnswer": 1,
+      "explanation": "Pseudo Random Number Generators (PRNG) is an algorithm that generates a sequence of numbers that appears random but is actually deterministic, based on an initial seed value."
+    },
+    {
+      "id": 160,
+      "question": "What is the purpose of padding in hashing functions?",
+      "options": [
+        "To increase the randomness of the hash output.",
+        "To encrypt the message before hashing.",
+        "To ensure the input meets specific length or format requirements of the hash algorithm.",
+        "To add a secret key to the message for authentication."
+      ],
+      "correctAnswer": 2,
+      "explanation": "Padding is the process of adding extra bits to a message before applying the hash function to ensure the input meets specific requirements for length or format."
     }
   ]
 }

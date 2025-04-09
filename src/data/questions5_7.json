@@ -479,6 +479,726 @@
       ],
       "correctAnswer": 0,
       "explanation": "Implementing security earlier in the SDLC, such as during the requirements and design phases, is more cost-effective because vulnerabilities can be addressed before significant development effort is invested."
+    },
+    {
+      "id": 41,
+      "question": "Which of the following cipher modes encrypts each block of plaintext independently using the same key for every block?",
+      "options": [
+        "Cipher Block Chaining (CBC)",
+        "Counter Mode (CTR)",
+        "Electronic Code Book (ECB)",
+        "Galois/Counter Mode (GCM)"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The Electronic Code Book (ECB) mode encrypts each block P[i] into ciphertext block C[i] = EK(P[i])."
+    },
+    {
+      "id": 42,
+      "question": "In Cipher Block Chaining (CBC) mode, what is combined with the current plaintext block before encryption?",
+      "options": [
+        "The encryption key",
+        "A random nonce",
+        "The previous ciphertext block",
+        "The Initialization Vector (IV) only"
+      ],
+      "correctAnswer": 2,
+      "explanation": "In Cipher Block Chaining (CBC) Mode, the previous ciphertext block is combined with the current plaintext block: C[i] = EK(C[i-1] ⊕ P[i])."
+    },
+    {
+      "id": 43,
+      "question": "What is the primary function of the Initialization Vector (IV) in CBC mode?",
+      "options": [
+        "To provide confidentiality to the first block",
+        "To ensure the key is used securely",
+        "To randomize the encryption of the first block and ensure different ciphertexts for identical plaintexts",
+        "To increase the encryption speed"
+      ],
+      "correctAnswer": 2,
+      "explanation": "C[-1] = V, a random block separately transmitted encrypted (known as the initialization vector). This ensures that even if the first plaintext block is the same across multiple encryptions, the resulting ciphertext will be different due to the varying IV."
+    },
+    {
+      "id": 44,
+      "question": "Which cipher mode can turn a block cipher into a stream cipher?",
+      "options": [
+        "Electronic Code Book (ECB)",
+        "Cipher Block Chaining (CBC)",
+        "Counter Mode (CTR)",
+        "Cipher Feedback (CFB)"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The Counter Mode or CTR is a simple counter-based block cipher that encrypts each counter value and uses it as an input to XOR it with plaintext which results in ciphertext block. This turns block cipher into a stream cipher."
+    },
+    {
+      "id": 45,
+      "question": "What is the block size of the Data Encryption Standard (DES) algorithm?",
+      "options": [
+        "128 bits",
+        "64 bits",
+        "56 bits",
+        "256 bits"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Data Encryption Standard (DES) is a block cipher with a block size of 64 bits—64 bits of plaintext outputs 64 bits of ciphertext."
+    },
+    {
+      "id": 46,
+      "question": "What is a key characteristic of a \"weak key\" in the context of DES?",
+      "options": [
+        "It is susceptible to brute-force attacks due to its short length.",
+        "It results in a less secure encryption than the majority of keys in the algorithm's keyspace.",
+        "It is easily predictable by an attacker.",
+        "It is not compatible with standard DES implementations."
+      ],
+      "correctAnswer": 1,
+      "explanation": "Weak key: less secure than the majority of keys allowed in the keyspace of the algorithm."
+    },
+    {
+      "id": 47,
+      "question": "How many times does the DES algorithm get applied in the 3DES encryption process?",
+      "options": [
+        "Once",
+        "Twice",
+        "Three times",
+        "It varies depending on the variant."
+      ],
+      "correctAnswer": 2,
+      "explanation": "Multiple encryption; goes through the DES algorithm three times."
+    },
+    {
+      "id": 48,
+      "question": "Which of the following algorithms is a symmetric stream cipher that was once popular for its speed and simplicity but is now deprecated due to weaknesses?",
+      "options": [
+        "3DES",
+        "AES",
+        "RC4",
+        "RSA"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Rivest Cipher 4 (RC4) was popular for its remarkable speed and simplicity in software-based encryption... It is now deprecated due to its several weaknesses."
+    },
+    {
+      "id": 49,
+      "question": "What is the standard block cipher size used by the Advanced Encryption Standard (AES)?",
+      "options": [
+        "56 bits",
+        "64 bits",
+        "128 bits",
+        "256 bits"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Advanced Encryption Standard (AES) is a Cryptography algorithm that uses Symmetric encryption with block cipher of 128 bits."
+    },
+    {
+      "id": 50,
+      "question": "What is the primary purpose of the Key Expansion process in AES?",
+      "options": [
+        "To encrypt the plaintext blocks.",
+        "To generate the S-Box for byte substitution.",
+        "To generate a set of round keys from the original key.",
+        "To perform the ShiftRows operation."
+      ],
+      "correctAnswer": 2,
+      "explanation": "First, Key Expansion generates a set of round keys from the original key."
+    },
+    {
+      "id": 51,
+      "question": "Which of the following operations is NOT part of the Main Rounds in the AES encryption process?",
+      "options": [
+        "SubBytes",
+        "ShiftRows",
+        "MixColumns",
+        "Initial Round (AddRoundKey only)"
+      ],
+      "correctAnswer": 3,
+      "explanation": "The Main Rounds (repeated 9/11/13 times) involve SubBytes, ShiftRows, MixColumns, and AddRoundKey. The Initial Round only involves AddRoundKey."
+    },
+    {
+      "id": 52,
+      "question": "What type of cryptography uses a pair of keys: a public key and a private key?",
+      "options": [
+        "Symmetric encryption",
+        "Asymmetric encryption",
+        "Hashing",
+        "Digital signatures"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Asymmetric Encryption is commonly known as public key cryptography and uses a pair of keys: a private key that is kept secret and a public key that can be sent to anyone."
+    },
+    {
+      "id": 53,
+      "question": "The security of the RSA algorithm primarily relies on the difficulty of:",
+      "options": [
+        "Calculating modular exponentiation.",
+        "Generating large prime numbers.",
+        "Factoring the product of two very large prime numbers.",
+        "Computing the Euler totient function."
+      ],
+      "correctAnswer": 2,
+      "explanation": "RSA algorithm uses the product of two very large prime numbers and works on the principle of difficulty in factoring such large numbers."
+    },
+    {
+      "id": 54,
+      "question": "In RSA key generation, what is the purpose of calculating φ(n)?",
+      "options": [
+        "To determine the encryption key 'e'.",
+        "To determine the modulus 'n'.",
+        "To calculate the decryption key 'd'.",
+        "To ensure the primality of 'p' and 'q'."
+      ],
+      "correctAnswer": 2,
+      "explanation": "Compute φ(n) = (p − 1)(q − 1)... The modular inverse of e mod φ(n) is d to ensure that e and d are mathematically linked for encryption and decryption in RSA."
+    },
+    {
+      "id": 55,
+      "question": "What condition must be met for a plaintext message 'M' to be valid for RSA encryption?",
+      "options": [
+        "M > n",
+        "M must be a prime number.",
+        "M < n",
+        "M must be an odd number."
+      ],
+      "correctAnswer": 2,
+      "explanation": "Sender Receiver Condition: M < n. This condition ensures the mathematical validity and reversibility of RSA encryption and decryption."
+    },
+    {
+      "id": 56,
+      "question": "What is the fundamental requirement for symmetric encryption to be effective between two parties?",
+      "options": [
+        "Each party must have a unique public/private key pair.",
+        "The two parties must share the same secret key, and it must be protected from others.",
+        "Communication must occur over a secure channel.",
+        "A trusted third party must manage the key exchange."
+      ],
+      "correctAnswer": 1,
+      "explanation": "For symmetric encryption to work, the two parties to an exchange must share the same key, and that key must be protected from access by others."
+    },
+    {
+      "id": 57,
+      "question": "Which key distribution method relies on a trusted third party to manage keys?",
+      "options": [
+        "Diffie-Hellman",
+        "Public Key Infrastructure (PKI)",
+        "Key Distribution Centres (KDC)",
+        "Paper distribution"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Rather than each organization creating the infrastructure to manage its own keys, a number of hosts could agree to trust a key-distribution center (KDC)."
+    },
+    {
+      "id": 58,
+      "question": "What is the primary purpose of the Diffie-Hellman key exchange protocol?",
+      "options": [
+        "To encrypt messages securely.",
+        "To digitally sign documents.",
+        "To enable two users to exchange a secret key securely over a public channel.",
+        "To authenticate users to a server."
+      ],
+      "correctAnswer": 2,
+      "explanation": "The purpose of the algorithm is to enable two users to exchange a secret key securely that can then be used for subsequent encryption of messages."
+    },
+    {
+      "id": 59,
+      "question": "In the Diffie-Hellman key exchange, what information do Alice and Bob agree on publicly?",
+      "options": [
+        "Their private keys.",
+        "The shared secret key.",
+        "A public prime number (p) and a base (g).",
+        "Their calculated public keys."
+      ],
+      "correctAnswer": 2,
+      "explanation": "Alice and Bob agree on a public prime number p and a base g."
+    },
+    {
+      "id": 60,
+      "question": "Which security service primarily does Kerberos provide?",
+      "options": [
+        "Encryption of data in transit.",
+        "Non-repudiation of actions.",
+        "Centralized authentication of users and servers.",
+        "Integrity checking of messages."
+      ],
+      "correctAnswer": 2,
+      "explanation": "Provides a centralised authentication server whose function is to authenticate users to servers and servers to users."
+    },
+    {
+      "id": 61,
+      "question": "What type of encryption does Kerberos exclusively rely on?",
+      "options": [
+        "Asymmetric encryption",
+        "Symmetric encryption",
+        "Hashing algorithms",
+        "A combination of symmetric and asymmetric encryption"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Relies exclusively on symmetric encryption, making no use of public-key encryption."
+    },
+    {
+      "id": 62,
+      "question": "Which of the following is a key property of a cryptographic hash function?",
+      "options": [
+        "Reversibility: It should be easy to derive the input from the output.",
+        "Key-dependent: The output depends on a secret key.",
+        "Collision-Resistant: It should be hard to find two different inputs that produce the same output.",
+        "Variable output size: The output size changes based on the input size."
+      ],
+      "correctAnswer": 2,
+      "explanation": "A message digest must have the following properties... Collision-Resistant: Hard to find two different inputs with the same digest."
+    },
+    {
+      "id": 63,
+      "question": "What is the primary purpose of a message digest?",
+      "options": [
+        "To encrypt the message content.",
+        "To provide a fixed-size representation of a message for integrity verification.",
+        "To authenticate the sender of the message.",
+        "To ensure the confidentiality of the message."
+      ],
+      "correctAnswer": 1,
+      "explanation": "A message digest is a fixed-size numerical representation of a message... MD5 provides Integrity verification, only."
+    },
+    {
+      "id": 64,
+      "question": "What is the output size of the MD5 message digest algorithm?",
+      "options": [
+        "160 bits",
+        "128 bits",
+        "256 bits",
+        "512 bits"
+      ],
+      "correctAnswer": 1,
+      "explanation": "MD5 message digest algorithm—Takes an input of any arbitrary length and generates a 128-bit message digest."
+    },
+    {
+      "id": 65,
+      "question": "Which Secure Hashing Algorithm variant produces a 256-bit hash value?",
+      "options": [
+        "SHA-1",
+        "MD5",
+        "SHA256",
+        "SHA-512"
+      ],
+      "correctAnswer": 2,
+      "explanation": "SHA256 with a digest size of 256 bits is one the program that accepts an most widely used hash algorithms."
+    },
+    {
+      "id": 66,
+      "question": "What cryptographic primitive is used in conjunction with hashing functions to create a digital signature?",
+      "options": [
+        "Symmetric encryption",
+        "Asymmetric cryptography",
+        "Key exchange protocols",
+        "Random number generators"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Digital Signatures are based on hashing functions and asymmetric cryptography."
+    },
+    {
+      "id": 67,
+      "question": "In a digital signature scheme, whose private key is used to sign a message?",
+      "options": [
+        "The recipient's private key.",
+        "The sender's private key.",
+        "A trusted third party's private key.",
+        "The server's private key."
+      ],
+      "correctAnswer": 1,
+      "explanation": "The hash value of a message is encrypted with a user’s private key. Sender sign the hash with Sender Private key."
+    },
+    {
+      "id": 68,
+      "question": "How is the authenticity of a digitally signed message typically verified?",
+      "options": [
+        "By decrypting the entire message with the sender's public key.",
+        "By comparing the hash of the received message with the hash of the original message.",
+        "By decrypting the digital signature with the sender's public key and comparing it to the hash of the received message.",
+        "By encrypting the message with the recipient's private key."
+      ],
+      "correctAnswer": 2,
+      "explanation": "Anyone who knows the user’s public key can verify the integrity of the message... Decrypt hash with of sender public key... Verify the signed hash by comparing hashes."
+    },
+    {
+      "id": 69,
+      "question": "Which security property does a digital signature provide that a simple hash of a message does not?",
+      "options": [
+        "Integrity",
+        "Confidentiality",
+        "Non-repudiation",
+        "Availability"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Digital Signature without Confidentiality provides authentication. It also provides a digital signature because only the sender could have produced the encrypted hash code. Non-repudiation is a key aspect of digital signatures, ensuring the sender cannot deny having sent the message. While the table explicitly compares Hashes authentication methods vs Digital Signatures, the text implies non-repudiation is a result of the private key usage."
+    },
+    {
+      "id": 70,
+      "question": "In a digital signature scheme with confidentiality, what additional step is typically involved besides hashing and signing with the sender's private key?",
+      "options": [
+        "Encrypting the hash with the sender's public key.",
+        "Encrypting the combined message and signature with the recipient's public key.",
+        "Hashing the signature again.",
+        "Signing the message with the recipient's private key."
+      ],
+      "correctAnswer": 2,
+      "explanation": "Digital Signature example with Confidentiality involves Encrypt with receiver public key. The message and the digital signature are often concatenated and then encrypted for confidentiality."
+    },
+    {
+      "id": 71,
+      "question": "Which of the following is highlighted as a significant reason to care about web threats?",
+      "options": [
+        "They primarily affect outdated systems.",
+        "A large percentage of breaches exploit web flaws.",
+        "Modern firewalls can effectively block all web threats.",
+        "Web threats are less common than network-based attacks."
+      ],
+      "correctAnswer": 1,
+      "explanation": "The source explicitly states, \"Why care? 80% of breaches exploit web flaws (2024 estimate)\"."
+    },
+    {
+      "id": 72,
+      "question": "According to OWASP Top 10, which category involves vulnerabilities related to insufficient access rights enforcement?",
+      "options": [
+        "Cryptographic Failures",
+        "Injection",
+        "Broken Access Control",
+        "Security Misconfiguration"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The \"OWASP TOP 10\" list includes \"A1- Broken Access Control\"."
+    },
+    {
+      "id": 73,
+      "question": "Which type of web threat aims to manipulate databases by inserting malicious SQL queries?",
+      "options": [
+        "Cross-Site Scripting (XSS)",
+        "XML External Entity (XXE)",
+        "SQL Injection (SQLi)",
+        "Command Injection"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The source defines \"SQL Injection (SQLi)\" as a threat that \"Manipulates databases\" and involves the \"insertion\" of a \"SQL query\"."
+    },
+    {
+      "id": 74,
+      "question": "What is the primary goal of a Cross-Site Scripting (XSS) attack?",
+      "options": [
+        "To gain unauthorized access to server files.",
+        "To execute operating system commands on the server.",
+        "To execute malicious scripts within the victim's browser.",
+        "To directly modify database records."
+      ],
+      "correctAnswer": 2,
+      "explanation": "The source explains that XSS \"Targets browsers\" and injects code to be \"executed within the browser of a user\"."
+    },
+    {
+      "id": 75,
+      "question": "An XML External Entity (XXE) attack primarily aims to:",
+      "options": [
+        "Inject malicious scripts into web pages.",
+        "Forge user requests to perform unwanted actions.",
+        "Exploit vulnerabilities in XML parsers to access server files.",
+        "Bypass authentication mechanisms using SQL queries."
+      ],
+      "correctAnswer": 2,
+      "explanation": "The source states that XXE \"Exploits XML parsers\" and has the goal to \"Access server files\"."
+    },
+    {
+      "id": 76,
+      "question": "Which type of web threat involves injecting commands into the operating system through a vulnerable application?",
+      "options": [
+        "File Traversal",
+        "Cross-Site Request Forgery (CSRF)",
+        "Command Injection",
+        "SQL Injection"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The source defines \"Command Injection\" as a threat that \"Runs OS commands\" by taking user input and passing it to \"a system function\"."
+    },
+    {
+      "id": 77,
+      "question": "What is the main objective of a File Traversal attack?",
+      "options": [
+        "To execute arbitrary code on the web server.",
+        "To steal user session cookies.",
+        "To access files and directories outside the web server's root directory.",
+        "To manipulate database queries for unauthorized data retrieval."
+      ],
+      "correctAnswer": 2,
+      "explanation": "The source indicates that the goal of a \"File Traversal\" attack is to \"Access unintended files\" and \"fles outside web root\"."
+    },
+    {
+      "id": 78,
+      "question": "Cross-Site Request Forgery (CSRF) attacks exploit:",
+      "options": [
+        "Vulnerabilities in server-side scripting languages.",
+        "The browser's inability to distinguish between legitimate and malicious scripts.",
+        "The trust a website has in the user's browser to send legitimate requests.",
+        "Weak or absent server-side input validation."
+      ],
+      "correctAnswer": 2,
+      "explanation": "The source explains that CSRF \"Exploits the trust a website has in the user’s browser\"."
+    },
+    {
+      "id": 79,
+      "question": "In the context of SQL injection, what is the purpose of injecting `' OR '1=1' --` in a login form?",
+      "options": [
+        "To update the user's password in the database.",
+        "To delete all records from the user's table.",
+        "To create a condition that always evaluates to true, bypassing authentication.",
+        "To encrypt the user's credentials before submission."
+      ],
+      "correctAnswer": 2,
+      "explanation": "The provided SQL injection example demonstrates how `' OR '1=1' --'` creates a condition that is always true, thus bypassing the password check and granting access."
+    },
+    {
+      "id": 80,
+      "question": "What is a key characteristic of a persistent (stored) XSS attack?",
+      "options": [
+        "The malicious script is embedded in a URL.",
+        "The attack directly manipulates the browser's DOM.",
+        "The malicious script is stored on the server and executed for multiple users.",
+        "The script is only executed if the user clicks on a specific link."
+      ],
+      "correctAnswer": 2,
+      "explanation": "The source defines \"Persistent cross-site scripting\" as when the \"Malicious script is stored on the server and automatically executed whenever users visit the affected page\"."
+    },
+    {
+      "id": 81,
+      "question": "Which of the following is a common consequence of a successful buffer overflow attack?",
+      "options": [
+        "Unauthorized modification of database records.",
+        "Exposure of sensitive server configuration files.",
+        "Execution of arbitrary code chosen by the attacker.",
+        "Unintended disclosure of user session identifiers."
+      ],
+      "correctAnswer": 2,
+      "explanation": "The source explicitly states that a consequence of buffer overflow can be \"Execution of code chosen by attacker\"."
+    },
+    {
+      "id": 82,
+      "question": "What is the difference between a stack buffer overflow and a heap buffer overflow?",
+      "options": [
+        "Stack overflows affect global variables, while heap overflows affect local variables.",
+        "Stack overflows corrupt memory on the stack (local variables, return addresses), while heap overflows corrupt memory on the heap (dynamic data structures).",
+        "Stack overflows are easier to exploit than heap overflows.",
+        "Heap overflows occur during compilation, while stack overflows occur during runtime."
+      ],
+      "correctAnswer": 1,
+      "explanation": "The source clearly distinguishes between the two, stating \"Stack overfows corrupt memory on the stack\" and \"Heap overfows refer to overfows that corrupt memory located on the heap\"."
+    },
+    {
+      "id": 83,
+      "question": "Which of the following is a recommended countermeasure against SQL Injection attacks?",
+      "options": [
+        "Disabling client-side scripting.",
+        "Implementing strong password policies.",
+        "Using parameterized queries (prepared statements).",
+        "Encrypting all network traffic with HTTPS."
+      ],
+      "correctAnswer": 2,
+      "explanation": "The source explicitly mentions \"Parametrised query insertion\" as a \"SQLI COUNTERMEASURES AND PREVENTION METHODS\"."
+    },
+    {
+      "id": 84,
+      "question": "What is the primary purpose of \"escaping output\" in the context of web security?",
+      "options": [
+        "To encrypt sensitive data before it is sent to the client.",
+        "To prevent unauthorized access to server-side resources.",
+        "To prevent the browser from interpreting user-supplied data as executable code, thus mitigating XSS.",
+        "To validate user input against a defined set of allowed characters."
+      ],
+      "correctAnswer": 2,
+      "explanation": "The source lists \"Escape Output\" as a method to \"Block XSS\"."
+    },
+    {
+      "id": 85,
+      "question": "How can XML External Entity (XXE) attacks be primarily prevented?",
+      "options": [
+        "By implementing strong authentication mechanisms.",
+        "By disabling external entity and DTD processing in XML parsers.",
+        "By sanitizing user input to remove potentially malicious characters.",
+        "By using a web application firewall to filter malicious traffic."
+      ],
+      "correctAnswer": 1,
+      "explanation": "The source recommends to \"Disable Entities\" to \"Prevent XXE\"."
+    },
+    {
+      "id": 86,
+      "question": "Which of the following is a common technique to prevent File Traversal attacks?",
+      "options": [
+        "Encrypting filenames stored on the server.",
+        "Limiting the size of uploaded files.",
+        "Sanitizing user-supplied file paths by rejecting sequences like \"../\".",
+        "Using random and unpredictable filenames."
+      ],
+      "correctAnswer": 2,
+      "explanation": "The source suggests to \"Sanitize Paths\" and \"reject ..\" to \"Block File Traversal\"."
+    },
+    {
+      "id": 87,
+      "question": "What is a common security measure to prevent Cross-Site Request Forgery (CSRF) attacks?",
+      "options": [
+        "Implementing CAPTCHA on all forms.",
+        "Using HTTP-only cookies for session management.",
+        "Including unique, unpredictable tokens in forms and verifying them on the server-side.",
+        "Limiting the number of requests a user can make within a certain timeframe."
+      ],
+      "correctAnswer": 2,
+      "explanation": "The source mentions \"CSRF Tokens: Unique codes per request\" as a defense and suggests planning them during the design phase."
+    },
+    {
+      "id": 88,
+      "question": "Input filtering is a primary countermeasure against which type of web threat?",
+      "options": [
+        "SQL Injection",
+        "Cross-Site Scripting (XSS)",
+        "XML External Entity (XXE)",
+        "Command Injection"
+      ],
+      "correctAnswer": 3,
+      "explanation": "The source explicitly lists \"Input Filtering\" as a way to \"Stop Command Injection\"."
+    },
+    {
+      "id": 89,
+      "question": "According to the source, at which stage of the Software Development Life Cycle (SDLC) should security considerations be integrated to be most cost-effective?",
+      "options": [
+        "Testing",
+        "Deployment",
+        "Requirements and Design",
+        "Maintenance"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The source states, \"The earlier in the development life cycle security is implemented, the cheaper software development will be\", with examples in \"Requirements\" and \"Design\" phases."
+    },
+    {
+      "id": 90,
+      "question": "What is the role of PHP Data Objects (PDO) mentioned in the context of secure coding practices?",
+      "options": [
+        "A framework for building user interfaces securely.",
+        "A tool for automatically detecting and preventing XSS attacks.",
+        "A PHP extension providing a consistent and secure way to interact with databases, helping to prevent SQL injection.",
+        "A library for handling XML data securely, mitigating XXE vulnerabilities."
+      ],
+      "correctAnswer": 2,
+      "explanation": "The source describes PDO as a \"PHP extension that provides a consistent, secure way to interact with databases\"."
+    },
+    {
+      "id": 91,
+      "question": "What is meant by \"unvalidated input\" as a common theme in web threats?",
+      "options": [
+        "Input that is not encrypted during transmission.",
+        "Input that is not checked against known malicious patterns.",
+        "Applications trusting user-supplied data without proper verification.",
+        "Input that exceeds predefined length limitations."
+      ],
+      "correctAnswer": 2,
+      "explanation": "The source identifies \"Unvalidated Input: Apps trust users too much\" as a \"Common Theme\"."
+    },
+    {
+      "id": 92,
+      "question": "What is the primary risk associated with leaving vulnerable and outdated components in a web application?",
+      "options": [
+        "Increased processing overhead leading to denial-of-service.",
+        "Compatibility issues with newer browsers and operating systems.",
+        "Known security vulnerabilities in those components can be exploited by attackers.",
+        "Higher licensing costs for older software versions."
+      ],
+      "correctAnswer": 2,
+      "explanation": "While not explicitly detailed, the category \"A6- Vulnerable and Outdated Components\" in the OWASP Top 10 inherently implies that these components contain exploitable weaknesses."
+    },
+    {
+      "id": 93,
+      "question": "Which SQL injection technique involves adding extra malicious queries to a legitimate database request?",
+      "options": [
+        "Tautology",
+        "End-of-line comment",
+        "Piggybacked queries",
+        "Inferential attack"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The source describes \"Piggybacked queries\" as when \"The attacker adds additional queries beyond the intended query\"."
+    },
+    {
+      "id": 94,
+      "question": "In an XSS attack, if the malicious script is embedded in a URL that is sent to a victim, what type of XSS is it?",
+      "options": [
+        "Persistent XSS",
+        "Reflected XSS",
+        "DOM-based XSS",
+        "Server-side XSS"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The source defines \"Reflected cross-site scripting\" as when \"the script is embedded in a URL and executed when the victim clicks the link\"."
+    },
+    {
+      "id": 95,
+      "question": "What is the key difference between how SQL injection and Command Injection attacks operate?",
+      "options": [
+        "SQL injection targets the client-side, while command injection targets the server-side.",
+        "Command injection exploits vulnerabilities in database management systems, while SQL injection exploits operating system interfaces.",
+        "SQL injection manipulates database queries, while command injection executes operating system commands.",
+        "There is no significant difference; they are essentially the same type of attack."
+      ],
+      "correctAnswer": 2,
+      "explanation": "The source clearly states the focus of each attack: SQLi \"Manipulates databases\", and Command Injection \"Runs OS commands\"."
+    },
+    {
+      "id": 96,
+      "question": "Which of the following OWASP Top 10 categories deals with issues related to protecting data at rest and in transit?",
+      "options": [
+        "Injection",
+        "Cryptographic Failures",
+        "Identification and Authentication Failures",
+        "Security Logging and Monitoring Failures"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The category \"A2- Cryptographic Failures\" directly relates to the proper implementation and use of cryptography for data protection."
+    },
+    {
+      "id": 97,
+      "question": "What is the primary purpose of a \"comment mark\" (like `--`) in an SQL injection attack?",
+      "options": [
+        "To add explanatory notes to the injected code.",
+        "To encrypt the malicious SQL commands.",
+        "To prevent the execution of the legitimate SQL code that follows the injected malicious part.",
+        "To indicate the end of the injected SQL statement."
+      ],
+      "correctAnswer": 2,
+      "explanation": "The source explains that the attacker terminates the injected string with a comment mark \"--\" so that \"Subsequent text is ignored at execution time\" and demonstrates this in the injected login query."
+    },
+    {
+      "id": 98,
+      "question": "Which type of buffer overflow affects variables, function arguments, and return addresses?",
+      "options": [
+        "Heap overflow",
+        "Global buffer overflow",
+        "Stack overflow",
+        "Static buffer overflow"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The source states that in \"Buffer Overfow in the stack\", \"values of local variables, function arguments, and return addresses are affected\"."
+    },
+    {
+      "id": 99,
+      "question": "What is the role of \"signature-based\" detection in preventing SQL injection attacks?",
+      "options": [
+        "To analyze the structure and syntax of SQL queries at runtime.",
+        "To identify known malicious SQL injection patterns in user input.",
+        "To rewrite SQL queries to remove potentially harmful components.",
+        "To enforce the principle of least privilege for database users."
+      ],
+      "correctAnswer": 1,
+      "explanation": "The source lists \"Signature based\" under \"Detection\" methods for SQLi countermeasures, implying it looks for known malicious signatures."
+    },
+    {
+      "id": 100,
+      "question": "Implementing proper security logging and monitoring can help in:",
+      "options": [
+        "Preventing all types of web attacks proactively.",
+        "Detecting and responding to security incidents after they occur.",
+        "Automatically patching vulnerabilities in web application components.",
+        "Encrypting user data stored in the application database."
+      ],
+      "correctAnswer": 1,
+      "explanation": "While not elaborately detailed, \"A9- Security Logging and Monitoring Failures\" in the OWASP Top 10 implies that proper logging and monitoring are crucial for identifying and responding to security issues."
     }
   ]
 }

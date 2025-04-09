@@ -330,9 +330,8 @@ function App() {
             </div>
 
             <div className="text-lg mb-8">
-              <p>• Konichuwa 🙌🏽</p>
               <p className="mb-2">• Timed responses & negative scores for wrong answers</p>
-              <p className="mb-2">• Ellarum Nanmai Adaika!</p>
+              <p className="mb-2">• Ellarum Nanmai Adaika! 🙌🏽</p>
             </div>
 
             <button

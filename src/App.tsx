@@ -4,7 +4,7 @@ import VaaAnnamalai from './assets/VaaAnnamalai.jpg';
 
 // Import all the different question data sets
 import questions1_4 from './data/questions1_4.json';
-import questionsData2 from './data/questions5_7.json';
+import questions5_7 from './data/questions5_7.json';
 import questionsData3 from './data/questions7_9.json';
 import questionsData4 from './data/questions10_12.json';
 import questionsDataAll from './data/questionsAll.json';
@@ -57,7 +57,7 @@ function App() {
       id: 2,
       title: "Week 5 - 7",
       description: "Network Security",
-      data: questionsData2
+      data: questions5_7
     },
     {
       id: 3,
@@ -106,7 +106,7 @@ function App() {
 
   // Initialize questions when a week is selected
   useEffect(() => {
-    if (selectedWeek) {
+    if (selectedWeek && selectedWeek.data && Array.isArray(selectedWeek.data.questions)) {
       const allQuestions = selectedWeek.data.questions;
       setQuestions(shuffleArray(allQuestions));
       setUsedQuestionIndices([]); // Reset used question indices
@@ -114,6 +114,10 @@ function App() {
       setCorrectAnswers([]);
       setWrongAnswers([]);
       setTimeLeft(selectedWeek.title === "Give me God of War" ? 30 : 60);
+    } else {
+      // Handle the case where questions are not available (e.g., log an error, set questions to an empty array)
+      console.error("Questions data is missing or not an array!");
+      setQuestions([]); // Initialize to an empty array to prevent further errors
     }
   }, [selectedWeek]);
 

@@ -1,0 +1,484 @@
+{
+  "questions5_7": [
+    {
+      "id": 1,
+      "question": "Which of the following cipher modes encrypts each block of plaintext independently using the same key?",
+      "options": [
+        "Cipher Block Chaining (CBC)",
+        "Counter Mode (CTR)",
+        "Electronic Codebook (ECB)",
+        "Cipher Feedback (CFB)"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The Electronic Code Book (ECB) mode encrypts each plaintext block P[i] into a ciphertext block C[i] using the same key K, as described by the equation C[i] = EK(P[i])."
+    },
+    {
+      "id": 2,
+      "question": "In Cipher Block Chaining (CBC) mode, what is combined with the first plaintext block before encryption?",
+      "options": [
+        "The encryption key",
+        "An Initialization Vector (IV)",
+        "The previous plaintext block",
+        "A counter value"
+      ],
+      "correctAnswer": 1,
+      "explanation": "In CBC mode, the first plaintext block (P) is XORed with an Initialization Vector (IV), a random block separately transmitted encrypted (C [−1] = V), before being encrypted."
+    },
+    {
+      "id": 3,
+      "question": "Which cipher mode turns a block cipher into a stream cipher?",
+      "options": [
+        "Electronic Codebook (ECB)",
+        "Cipher Block Chaining (CBC)",
+        "Counter Mode (CTR)",
+        "Output Feedback (OFB)"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The Counter Mode (CTR) encrypts each counter value and uses it as a keystream which is then XORed with the plaintext, effectively functioning as a stream cipher."
+    },
+    {
+      "id": 4,
+      "question": "What is the block size of the Data Encryption Standard (DES)?",
+      "options": [
+        "64 bits",
+        "128 bits",
+        "192 bits",
+        "256 bits"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The Data Encryption Standard (DES) is a block cipher with a block size of 64 bits."
+    },
+    {
+      "id": 5,
+      "question": "What is the key length of the Data Encryption Standard (DES)?",
+      "options": [
+        "128 bits",
+        "192 bits",
+        "256 bits",
+        "56 bits"
+      ],
+      "correctAnswer": 3,
+      "explanation": "DES uses a 56-bit key length."
+    },
+    {
+      "id": 6,
+      "question": "Which of the following is considered a weakness of the Data Encryption Standard (DES)?",
+      "options": [
+        "Weak keys",
+        "Strong key length",
+        "Complex substitution and permutation",
+        "Independence of feedback"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Problems with DES include 'weak keys,' which are less secure than the majority of keys in the keyspace."
+    },
+    {
+      "id": 7,
+      "question": "How many keys can be used in the 3DES algorithm, depending on the variant?",
+      "options": [
+        "One",
+        "Two or three",
+        "Always three",
+        "Four"
+      ],
+      "correctAnswer": 1,
+      "explanation": "3DES, depending on the variant, uses either two or three different keys (KA, KB, and KC)."
+    },
+    {
+      "id": 8,
+      "question": "Which symmetric encryption algorithm, designed in 1987, was once popular for its speed and simplicity but is now deprecated due to weaknesses?",
+      "options": [
+        "DES",
+        "3DES",
+        "RC4",
+        "AES"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Rivest Cipher 4 (RC4) is a symmetric encryption algorithm designed in 1987, known for its speed and simplicity in software, but is now deprecated due to several weaknesses."
+    },
+    {
+      "id": 9,
+      "question": "What is the block cipher size used by the Advanced Encryption Standard (AES)?",
+      "options": [
+        "64 bits",
+        "128 bits",
+        "Variable (up to 2048 bits)",
+        "256 bits"
+      ],
+      "correctAnswer": 1,
+      "explanation": "AES uses a block cipher of 128 bits."
+    },
+    {
+      "id": 10,
+      "question": "Which AES process generates a set of round keys from the original key?",
+      "options": [
+        "Key Expansion",
+        "SubBytes",
+        "ShiftRows",
+        "MixColumns"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The process of AES starts with Key Expansion, which generates a set of round keys from the original key."
+    },
+    {
+      "id": 11,
+      "question": "In the initial round of AES encryption, what operation is performed?",
+      "options": [
+        "SubBytes",
+        "ShiftRows",
+        "MixColumns",
+        "AddRoundKey"
+      ],
+      "correctAnswer": 3,
+      "explanation": "In the initial round (Pre-Round) of AES encryption, the plaintext is XORed with the first round key in the AddRoundKey operation."
+    },
+    {
+      "id": 12,
+      "question": "Which of the following is a characteristic of asymmetric encryption?",
+      "options": [
+        "Uses a single, shared secret key",
+        "Uses a pair of keys: a public key and a private key",
+        "Primarily used for speed and simplicity",
+        "Key distribution is straightforward"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Asymmetric encryption, also known as public key cryptography, uses a pair of keys: a private key kept secret and a public key that can be shared."
+    },
+    {
+      "id": 13,
+      "question": "Which of the following principles is the security of the RSA algorithm primarily based on?",
+      "options": [
+        "The difficulty of performing modular exponentiation",
+        "The complexity of key expansion",
+        "The difficulty of factoring very large prime numbers",
+        "The use of substitution and permutation"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The RSA algorithm's security relies on the principle of the difficulty in factoring the product of two very large prime numbers."
+    },
+    {
+      "id": 14,
+      "question": "In RSA key generation, what is the purpose of computing φ(n)?",
+      "options": [
+        "To determine the encryption key 'e'",
+        "To compute the modular inverse 'd' of the encryption key",
+        "To generate the public key 'n'",
+        "To select the large prime numbers 'p' and 'q'"
+      ],
+      "correctAnswer": 1,
+      "explanation": "φ(n), the Euler quotient function, is used in calculating the modular inverse 'd' of the encryption key 'e' (e · d ≡ 1 mod φ(n)), which is essential for decryption in RSA."
+    },
+    {
+      "id": 15,
+      "question": "What condition must be met for the plaintext message 'M' in RSA encryption/decryption to ensure mathematical validity?",
+      "options": [
+        "M > n",
+        "M < n",
+        "M = p * q",
+        "M must be a prime number"
+      ],
+      "correctAnswer": 1,
+      "explanation": "For the mathematical validity and reversibility of RSA encryption and decryption, the plaintext message 'M' must be less than 'n' (M < n)."
+    },
+    {
+      "id": 16,
+      "question": "What is the primary goal of key distribution techniques?",
+      "options": [
+        "To securely deliver a key to two parties wishing to exchange data without others seeing it",
+        "To generate strong cryptographic keys",
+        "To encrypt and decrypt messages efficiently",
+        "To verify the integrity of transmitted data"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Key distribution techniques aim to provide a secure means of delivering a key between two parties so they can exchange data, while preventing unauthorized access to that key."
+    },
+    {
+      "id": 17,
+      "question": "Which key distribution method relies on a trusted third party to manage keys?",
+      "options": [
+        "Diffie-Hellman",
+        "Paper distribution",
+        "Key Distribution Centres (KDCs)",
+        "Hardware distribution"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Key Distribution Centres (KDCs) involve a number of hosts agreeing to trust a central entity for key management."
+    },
+    {
+      "id": 18,
+      "question": "What is the primary purpose of the Diffie-Hellman key exchange?",
+      "options": [
+        "To enable two users to securely exchange a secret key for subsequent encryption",
+        "To encrypt and decrypt data directly",
+        "To provide authentication of users",
+        "To generate public and private key pairs"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The purpose of the Diffie-Hellman algorithm is to allow two users to securely exchange a secret key that can then be used for encrypting messages."
+    },
+    {
+      "id": 19,
+      "question": "In the Diffie-Hellman key exchange, what information do Alice and Bob agree on publicly?",
+      "options": [
+        "A public prime number (p) and a base (g)",
+        "Their private keys (a and b)",
+        "The shared secret key (K)",
+        "Each other's public keys (PuA and Pub)"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Alice and Bob must agree on a public prime number 'p' and a base 'g' at the beginning of the Diffie-Hellman key exchange."
+    },
+    {
+      "id": 20,
+      "question": "Which security service does Kerberos primarily provide?",
+      "options": [
+        "Encryption and decryption",
+        "Key distribution and user authentication",
+        "Digital signatures",
+        "Hashing algorithms"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Kerberos is a key distribution and user authentication service. Its function is to authenticate users to servers and servers to users."
+    },
+    {
+      "id": 21,
+      "question": "What type of encryption does Kerberos rely on exclusively?",
+      "options": [
+        "Asymmetric encryption",
+        "Symmetric encryption",
+        "Hashing",
+        "A combination of symmetric and asymmetric encryption"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Kerberos relies exclusively on symmetric encryption, making no use of public-key encryption."
+    },
+    {
+      "id": 22,
+      "question": "What is a key property of a cryptographic hash function?",
+      "options": [
+        "Reversible: Easy to reconstruct the input from the digest",
+        "Key-dependent: Output varies based on a secret key",
+        "Collision-Resistant: Hard to find two different inputs with the same digest",
+        "Variable output size"
+      ],
+      "correctAnswer": 2,
+      "explanation": "A crucial property of a cryptographic hash function is collision resistance, meaning it should be computationally hard to find two distinct inputs that produce the same hash output."
+    },
+    {
+      "id": 23,
+      "question": "Which of the following is a common hashing algorithm that generates a 128-bit message digest?",
+      "options": [
+        "MD5",
+        "SHA-1",
+        "SHA256",
+        "RIPEMD-160"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The MD5 message digest algorithm takes an input of arbitrary length and generates a 128-bit message digest."
+    },
+    {
+      "id": 24,
+      "question": "What primary security goal does a message digest provided by a hashing algorithm like MD5 aim to achieve?",
+      "options": [
+        "Confidentiality",
+        "Integrity verification",
+        "Authentication",
+        "Non-repudiation"
+      ],
+      "correctAnswer": 1,
+      "explanation": "MD5 provides integrity verification, allowing one to confirm that a message has not been altered."
+    },
+    {
+      "id": 25,
+      "question": "What cryptographic primitive forms the basis of a digital signature along with hashing functions?",
+      "options": [
+        "Symmetric encryption",
+        "Asymmetric cryptography",
+        "Stream ciphers",
+        "Block ciphers"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Digital signatures are based on hashing functions and asymmetric cryptography. The hash value of a message is encrypted with the sender's private key."
+    },
+    {
+      "id": 26,
+      "question": "In a digital signature process without confidentiality, what key is used to encrypt the hash value of the message?",
+      "options": [
+        "The sender's public key",
+        "The sender's private key",
+        "The receiver's public key",
+        "A shared secret key"
+      ],
+      "correctAnswer": 1,
+      "explanation": "In a digital signature, the sender signs the hash of the message by encrypting it with their private key."
+    },
+    {
+      "id": 27,
+      "question": "In a digital signature process with confidentiality, what key is used to encrypt the message and the signed hash?",
+      "options": [
+        "The sender's private key",
+        "The sender's public key",
+        "The receiver's public key",
+        "A shared secret key"
+      ],
+      "correctAnswer": 2,
+      "explanation": "To provide confidentiality along with a digital signature, the message and the signed hash are encrypted with the receiver's public key. This ensures only the receiver can decrypt the content."
+    },
+    {
+      "id": 28,
+      "question": "What percentage of breaches were estimated to exploit web flaws in 2024 according to the \"W7-Notes.pdf\" excerpt?",
+      "options": [
+        "50%",
+        "60%",
+        "70%",
+        "80%"
+      ],
+      "correctAnswer": 3,
+      "explanation": "The \"W7-Notes.pdf\" states that an estimated 80% of breaches exploit web flaws (2024 estimate)."
+    },
+    {
+      "id": 29,
+      "question": "According to OWASP, what is the top critical security risk to web applications listed as A2?",
+      "options": [
+        "Broken Access Control",
+        "Cryptographic Failures",
+        "Injection",
+        "Insecure Design"
+      ],
+      "correctAnswer": 1,
+      "explanation": "According to the OWASP Top 10 list provided, A2 is \"Cryptographic Failures\"."
+    },
+    {
+      "id": 30,
+      "question": "Which web threat is designed to manipulate databases by inserting malicious SQL queries via user input?",
+      "options": [
+        "SQL Injection (SQLi)",
+        "Cross-Site Scripting (XSS)",
+        "XML External Entity (XXE)",
+        "Command Injection"
+      ],
+      "correctAnswer": 0,
+      "explanation": "SQL Injection (SQLi) attacks involve the insertion or 'injection' of SQL queries through input data from the client to the application, aiming to manipulate databases."
+    },
+    {
+      "id": 31,
+      "question": "What is the primary goal of a Cross-Site Scripting (XSS) attack?",
+      "options": [
+        "To steal data from the server's database",
+        "To execute malicious scripts within the victim's browser",
+        "To gain unauthorized access to the web server's file system",
+        "To force the victim to perform unwanted actions on another website"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The goal of an XSS attack is to inject a code fragment (scripting language) into an input field so that it is executed within the browser of a user visiting the site."
+    },
+    {
+      "id": 32,
+      "question": "Which type of XSS attack involves the malicious script being stored on the server and executed whenever users visit the affected page?",
+      "options": [
+        "Persistent cross-site scripting",
+        "Reflected cross-site scripting",
+        "DOM-based XSS attack",
+        "Server-side XSS"
+      ],
+      "correctAnswer": 0,
+      "explanation": "In persistent cross-site scripting, the malicious script is stored on the server and is automatically executed when users visit the compromised page."
+    },
+    {
+      "id": 33,
+      "question": "What type of web threat exploits vulnerabilities in XML parsers to potentially access server files?",
+      "options": [
+        "SQL Injection (SQLi)",
+        "Cross-Site Scripting (XSS)",
+        "XML External Entity (XXE) Attack",
+        "Command Injection"
+      ],
+      "correctAnswer": 2,
+      "explanation": "An XML External Entity (XXE) attack exploits XML parsers that process external entity references in XML data, potentially allowing attackers to access server files."
+    },
+    {
+      "id": 34,
+      "question": "Which web threat involves taking a value from the user and passing it to a system function, potentially allowing the execution of operating system commands?",
+      "options": [
+        "SQL Injection (SQLi)",
+        "Cross-Site Scripting (XSS)",
+        "XML External Entity (XXE) Attack",
+        "Command Injection Attack"
+      ],
+      "correctAnswer": 3,
+      "explanation": "Command Injection occurs when an application takes user-provided input and passes it to a system function or evaluate function without proper validation, allowing attackers to execute arbitrary operating system commands."
+    },
+    {
+      "id": 35,
+      "question": "What is the primary goal of a File Traversal attack?",
+      "options": [
+        "To execute arbitrary SQL commands on the database",
+        "To inject malicious scripts into the victim's browser",
+        "To execute operating system commands on the server",
+        "To access files outside the web server's intended root directory"
+      ],
+      "correctAnswer": 3,
+      "explanation": "The goal of a File Traversal attack is to get out of the web server's intended directory and access other files on the system, potentially exposing sensitive information."
+    },
+    {
+      "id": 36,
+      "question": "Which web security vulnerability allows an attacker to induce a user to perform actions without their consent, by exploiting the website's trust in the user's browser?",
+      "options": [
+        "SQL Injection (SQLi)",
+        "Cross-Site Scripting (XSS)",
+        "XML External Entity (XXE) Attack",
+        "Cross-Site Request Forgery (CSRF)"
+      ],
+      "correctAnswer": 3,
+      "explanation": "Cross-Site Request Forgery (CSRF) allows an attacker to trick a user's browser into sending malicious requests to a website where the user is authenticated, thus performing actions without the user's consent."
+    },
+    {
+      "id": 37,
+      "question": "What type of application threat occurs when a process attempts to store data beyond the limits of a fixed-size buffer?",
+      "options": [
+        "Buffer Overflow Attack",
+        "Race Condition",
+        "Format String Vulnerability",
+        "Integer Overflow"
+      ],
+      "correctAnswer": 0,
+      "explanation": "A Buffer Overflow Attack happens when a program tries to write more data to a buffer than it can hold, overwriting adjacent memory locations."
+    },
+    {
+      "id": 38,
+      "question": "Which of the following is a common prevention method against SQL Injection attacks?",
+      "options": [
+        "Input sanitization for special characters in browser scripts",
+        "Use of parameterized queries (prepared statements)",
+        "Disabling external entities in XML parsers",
+        "Encoding user-supplied output in HTML"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Parameterized queries (also known as prepared statements) are a key defensive coding practice to prevent SQL Injection by treating user input as data rather than executable code."
+    },
+    {
+      "id": 39,
+      "question": "What is a common countermeasure against Cross-Site Request Forgery (CSRF) attacks?",
+      "options": [
+        "Input validation on server-side parameters",
+        "Strict Content Security Policy (CSP) headers",
+        "Use of CSRF tokens (unique codes per request)",
+        "HTTP Strict Transport Security (HSTS)"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Implementing CSRF tokens, which are unique, unpredictable tokens included in requests, helps prevent CSRF attacks by ensuring that the server can verify the legitimacy of the request."
+    },
+    {
+      "id": 40,
+      "question": "In the Software Development Life Cycle (SDLC), when is it most cost-effective to implement security measures?",
+      "options": [
+        "Earlier in the development life cycle (e.g., requirements and design phases)",
+        "During the coding phase",
+        "During the testing phase",
+        "After deployment and during maintenance"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Implementing security earlier in the SDLC, such as during the requirements and design phases, is more cost-effective because vulnerabilities can be addressed before significant development effort is invested."
+    }
+  ]
+}

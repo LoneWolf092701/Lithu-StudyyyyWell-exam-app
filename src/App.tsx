@@ -4,7 +4,7 @@ import VaaAnnamalai from './assets/VaaAnnamalai.jpg';
 
 // Import all the different question data sets
 import questions1_4 from './data/questions1_4.json';
-import questionsData2 from './data/questions5_6.json';
+import questionsData2 from './data/questions5_7.json';
 import questionsData3 from './data/questions7_9.json';
 import questionsData4 from './data/questions10_12.json';
 import questionsDataAll from './data/questionsAll.json';
@@ -36,7 +36,6 @@ function shuffleArray<T>(array: T[]): T[] {
   return shuffled;
 }
 
-console.log(questions1_4.questions);
 // Define week option type
 type WeekOption = {
   id: number;
@@ -48,35 +47,35 @@ type WeekOption = {
 function App() {
   // Define all week options
   const weekOptions: WeekOption[] = [
-    { 
-      id: 1, 
-      title: "Week 1 - 4", 
-      description: "Foundations of Cybersecurity", 
-      data: questions1_4 
+    {
+      id: 1,
+      title: "Week 1 - 4",
+      description: "Foundations of Cybersecurity",
+      data: questions1_4
     },
-    { 
-      id: 2, 
-      title: "Week 5 - 6", 
-      description: "Network Security", 
-      data: questions1_4 
+    {
+      id: 2,
+      title: "Week 5 - 7",
+      description: "Network Security",
+      data: questionsData2
     },
-    { 
-      id: 3, 
-      title: "Week 7 - 9", 
-      description: "Application Security", 
-      data: questions1_4 
+    {
+      id: 3,
+      title: "Week 7 - 9",
+      description: "Application Security",
+      data: questionsData3
     },
-    { 
-      id: 4, 
-      title: "Week 10 - 12", 
-      description: "Advanced Topics", 
-      data: questions1_4 
+    {
+      id: 4,
+      title: "Week 10 - 12",
+      description: "Advanced Topics",
+      data: questionsData4
     },
-    { 
-      id: 5, 
-      title: "Give me God of War", 
-      description: "All weeks combined", 
-      data: questions1_4 
+    {
+      id: 5,
+      title: "Give me God of War",
+      description: "All weeks combined",
+      data: questionsDataAll
     }
   ];
 
@@ -87,27 +86,40 @@ function App() {
   const [score, setScore] = useState(0);
   const [scoreText, setScoreText] = useState('');
   const [showExplanation, setShowExplanation] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(selectedWeek?.title === "Give me God of War" ? 30 : 60);
+  const [timeLeft, setTimeLeft] = useState(60);
   const [isActive, setIsActive] = useState(false);
   const [shuffledOptions, setShuffledOptions] = useState<string[]>([]);
   const [message, setMessage] = useState('');
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  
+  const [usedQuestionIndices, setUsedQuestionIndices] = useState<number[]>([]); // Track used question indices
+  const [quizCompleted, setQuizCompleted] = useState(false);
+  const [correctAnswers, setCorrectAnswers] = useState<number[]>([]);
+  const [wrongAnswers, setWrongAnswers] = useState<number[]>([]);
+
   // App state management
-  const [appState, setAppState] = useState<'welcome' | 'weekSelect' | 'quiz'>('welcome');
+  const [appState, setAppState] = useState<'welcome' | 'weekSelect' | 'quiz' | 'results'>('welcome');
   const [darkMode, setDarkMode] = useState(true);
+
+  // Theme toggle button component
+  // Removed duplicate declaration of ThemeToggleButton
+
 
   // Initialize questions when a week is selected
   useEffect(() => {
     if (selectedWeek) {
-      setQuestions(shuffleArray(selectedWeek.data.questions));
-      setTimeLeft(selectedWeek?.title === "Give me God of War" ? 30 : 60);
+      const allQuestions = selectedWeek.data.questions;
+      setQuestions(shuffleArray(allQuestions));
+      setUsedQuestionIndices([]); // Reset used question indices
+      setQuizCompleted(false);
+      setCorrectAnswers([]);
+      setWrongAnswers([]);
+      setTimeLeft(selectedWeek.title === "Give me God of War" ? 30 : 60);
     }
   }, [selectedWeek]);
 
   // Set up shuffled options when current question changes
   useEffect(() => {
-    if (appState === 'quiz' && questions.length > 0) {
+    if (appState === 'quiz' && questions.length > 0 && currentQuestion < questions.length) {
       setShuffledOptions(shuffleArray(questions[currentQuestion].options));
     }
   }, [currentQuestion, questions, appState]);
@@ -115,7 +127,7 @@ function App() {
   // Timer effect
   useEffect(() => {
     let interval: number | undefined;
-    
+
     if (isActive && timeLeft > 0) {
       interval = setInterval(() => {
         setTimeLeft((time) => time - 1);
@@ -124,35 +136,38 @@ function App() {
       setIsActive(false);
       setShowExplanation(true);
       setMessage(incorrectMessages[Math.floor(Math.random() * incorrectMessages.length)]);
+      setWrongAnswers(prev => [...prev, currentQuestion]);
     }
 
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [timeLeft, isActive]);
+  }, [timeLeft, isActive, currentQuestion]);
 
   const handleAnswer = (option: string) => {
     setSelectedOption(option);
-    const correct = option === questions[currentQuestion].options[questions[currentQuestion].correctAnswer];
-    
+    const isCorrect = option === questions[currentQuestion].options[questions[currentQuestion].correctAnswer];
+
     let newScore;
-    if (correct) {
+    if (isCorrect) {
       newScore = score + 1;
       setScore(newScore);
       setMessage(correctMessages[Math.floor(Math.random() * correctMessages.length)]);
+      setCorrectAnswers(prev => [...prev, currentQuestion]);
     } else {
       newScore = score - 1;
       setScore(newScore);
       setMessage(incorrectMessages[Math.floor(Math.random() * incorrectMessages.length)]);
+      setWrongAnswers(prev => [...prev, currentQuestion]);
     }
-    
+
     // Set score text based on the new score value
     setScoreText(newScore === 0 ? "" : newScore >= 1 ? "Come on Velu!" : "IIT bathroom cleaner vacancy available!");
-    
+
     setShowExplanation(true);
     setIsActive(false);
   };
-  
+
   const nextQuestion = () => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion((prev) => prev + 1);
@@ -161,6 +176,9 @@ function App() {
       setIsActive(true);
       setMessage('');
       setSelectedOption(null);
+    } else {
+      setQuizCompleted(true);
+      setAppState('results'); // Transition to results page
     }
   };
 
@@ -174,10 +192,14 @@ function App() {
     setScore(0);
     setScoreText('');
     setShowExplanation(false);
-    setTimeLeft(selectedWeek?.title === "Give me God of War" ? 30 : 60);
+    setTimeLeft(week.title === "Give me God of War" ? 30 : 60); // Access week.title instead of selectedWeek
     setIsActive(true);
     setMessage('');
     setSelectedOption(null);
+    setUsedQuestionIndices([]);
+    setQuizCompleted(false);
+    setCorrectAnswers([]);
+    setWrongAnswers([]);
     setAppState('quiz');
   };
 
@@ -193,6 +215,11 @@ function App() {
     setIsActive(true);
     setMessage('');
     setSelectedOption(null);
+    setUsedQuestionIndices([]);
+    setQuizCompleted(false);
+    setCorrectAnswers([]);
+    setWrongAnswers([]);
+    setAppState('quiz');
   };
 
   const backToWeekSelect = () => {
@@ -204,7 +231,6 @@ function App() {
     setDarkMode(!darkMode);
   };
 
-  console.log(selectedWeek?.title === "Give me God of War" ? 30 : 60);
 
   // Define styles based on theme
   const bgColor = darkMode ? 'bg-black' : 'bg-gray-100';
@@ -225,14 +251,56 @@ function App() {
 
   // Theme toggle button component
   const ThemeToggleButton = ({ className = "" }) => (
-    <button 
-      onClick={toggleTheme} 
+    <button
+      onClick={toggleTheme}
       className={`p-2 rounded-full ${darkMode ? 'bg-gray-800' : 'bg-gray-200'} ${className}`}
       aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
     >
       {darkMode ? <Sun className="w-6 h-6 text-yellow-300" /> : <Moon className="w-6 h-6 text-gray-700" />}
     </button>
   );
+
+  // Results Page
+  const renderResults = () => {
+    const totalQuestions = questions.length;
+    const finalScore = score; // Already calculated the score for correct and wrong already.
+    const correctPercentage = (totalQuestions > 0) ? ((correctAnswers.length / totalQuestions) * 100).toFixed(2) : 0;
+
+    return (
+      <div className={`min-h-screen ${bgColor} ${textColor} flex flex-col`}>
+        <div className="absolute top-4 right-4">
+          <ThemeToggleButton />
+        </div>
+
+        <div className="flex-1 flex flex-col items-center justify-center p-6">
+          <div className={`max-w-4xl w-full ${cardBg} rounded-lg shadow-2xl border ${cardBorder} p-8 text-center`}>
+            <h1 className="text-4xl font-bold mb-4">Quiz Completed!</h1>
+            <p className="text-xl mb-8">Here are your results:</p>
+
+            <div className="mb-8">
+              <p className="text-2xl font-semibold">Final Score: <span className={scoreColor}>{finalScore}</span></p>
+              <p className="text-lg">Correct Answers: {correctAnswers.length} / {totalQuestions} ({correctPercentage}%)</p>
+              <p className="text-lg">Wrong Answers: {wrongAnswers.length} / {totalQuestions}</p>
+            </div>
+
+            <button
+              onClick={resetQuiz}
+              className={`px-8 py-3 ${btnSuccess} text-white rounded-lg text-xl font-semibold transition-colors mb-4`}
+            >
+              Retake Quiz
+            </button>
+
+            <button
+              onClick={backToWeekSelect}
+              className={`px-6 py-2 ${btnSecondary} text-white rounded-lg text-xl transition-colors`}
+            >
+              Back to Week Selection
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   // Render welcome page
   if (appState === 'welcome') {
@@ -246,23 +314,23 @@ function App() {
           <div className={`max-w-4xl w-full ${cardBg} rounded-lg shadow-2xl border ${cardBorder} p-8 text-center`}>
             <h1 className="text-4xl font-bold mb-4">Cybersecurity Quizzz</h1>
             <p className="text-xl mb-8">Parama Padi da!</p>
-            
+
             <div className="mb-12 flex justify-center">
               <div className="relative rounded-lg overflow-hidden" style={{ maxWidth: "100%", height: "300px" }}>
-                <img 
-                  src={VaaAnnamalai} 
-                  alt="Cybersecurity Quiz" 
+                <img
+                  src={VaaAnnamalai}
+                  alt="Cybersecurity Quiz"
                   className="object-cover w-full h-full"
                 />
               </div>
             </div>
-            
+
             <div className="text-lg mb-8">
               <p>• Konichuwa 🙌🏽</p>
               <p className="mb-2">• Timed responses & negative scores for wrong answers</p>
               <p className="mb-2">• Ellarum Nanmai Adaika!</p>
             </div>
-            
+
             <button
               onClick={goToWeekSelect}
               className={`px-8 py-3 ${btnPrimary} text-white rounded-lg text-xl font-semibold transition-colors`}
@@ -286,15 +354,15 @@ function App() {
         <div className="flex-1 flex flex-col items-center justify-center p-6">
           <div className={`max-w-4xl w-full ${cardBg} rounded-lg shadow-2xl border ${cardBorder} p-8`}>
             <h1 className="text-3xl font-bold mb-6 text-center">Select Week Range</h1>
-            
+
             <div className="space-y-4 mb-8">
               {weekOptions.map((week) => (
                 <button
                   key={week.id}
                   onClick={() => selectWeek(week)}
                   className={`w-full p-4 rounded-lg transition-colors border ${
-                    week.id === 5 
-                      ? `${btnDanger} text-white` 
+                    week.id === 5
+                      ? `${btnDanger} text-white`
                       : `${cardBg} ${textColor} hover:bg-opacity-80 border-${darkMode ? 'gray-700' : 'gray-300'}`
                   } flex flex-col items-start`}
                 >
@@ -303,7 +371,7 @@ function App() {
                 </button>
               ))}
             </div>
-            
+
             <div className="flex justify-center">
               <button
                 onClick={() => setAppState('welcome')}
@@ -319,111 +387,120 @@ function App() {
   }
 
   // Render quiz content
-  return (
-    <div className={`min-h-screen ${bgColor} py-8`}>
-      <div className="max-w-3xl mx-auto px-4">
-        <div className={`${cardBg} rounded-lg shadow-lg p-6 ${textColor} border ${cardBorder}`}>
-          <div className="flex justify-between items-center mb-6">
-            <div>
-              <div className={`text-xl font-semibold ${scoreColor}`}>Score: {score} {scoreText}</div>
-              <div className="text-sm opacity-70 mt-1">{selectedWeek?.title}</div>
-            </div>
-            <div className="flex items-center gap-4">
-              <button
-                onClick={backToWeekSelect}
-                className={`px-3 py-1 ${btnSecondary} text-white rounded-lg text-sm transition-colors`}
-              >
-                Change Week
-              </button>
-              <ThemeToggleButton className="w-10 h-10" />
-              <div className="flex items-center text-lg">
-                <Timer className="w-5 h-5 mr-2" />
-                {timeLeft}s
+  if (appState === 'quiz') {
+    return (
+      <div className={`min-h-screen ${bgColor} py-8`}>
+        <div className="max-w-3xl mx-auto px-4">
+          <div className={`${cardBg} rounded-lg shadow-lg p-6 ${textColor} border ${cardBorder}`}>
+            <div className="flex justify-between items-center mb-6">
+              <div>
+                <div className={`text-xl font-semibold ${scoreColor}`}>Score: {score} {scoreText}</div>
+                <div className="text-sm opacity-70 mt-1">{selectedWeek?.title}</div>
+              </div>
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={backToWeekSelect}
+                  className={`px-3 py-1 ${btnSecondary} text-white rounded-lg text-sm transition-colors`}
+                >
+                  Change Week
+                </button>
+                <ThemeToggleButton className="w-10 h-10" />
+                <div className="flex items-center text-lg">
+                  <Timer className="w-5 h-5 mr-2" />
+                  {timeLeft}s
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="mb-8">
-            <h2 className="text-xl font-semibold mb-4">
-              Question {currentQuestion + 1} of {questions.length}
-            </h2>
-            <p className="text-lg mb-6">{questions[currentQuestion]?.question}</p>
+            <div className="mb-8">
+              <h2 className="text-xl font-semibold mb-4">
+                Question {currentQuestion + 1} of {questions.length}
+              </h2>
+              <p className="text-lg mb-6">{questions[currentQuestion]?.question}</p>
 
-            {message && (
-              <div className={`mb-4 p-3 rounded-lg text-center font-medium ${
-                message.includes("🎉") || message.includes("🌟") || message.includes("🔥") || message.includes("⭐") || message.includes("💪")
-                  ? darkMode ? "bg-green-900 text-green-300" : "bg-green-100 text-green-700"
-                  : darkMode ? "bg-blue-900 text-blue-300" : "bg-blue-100 text-blue-700"
-              }`}>
-                {message}
+              {message && (
+                <div className={`mb-4 p-3 rounded-lg text-center font-medium ${
+                  message.includes("🎉") || message.includes("🌟") || message.includes("🔥") || message.includes("⭐") || message.includes("💪")
+                    ? darkMode ? "bg-green-900 text-green-300" : "bg-green-100 text-green-700"
+                    : darkMode ? "bg-blue-900 text-blue-300" : "bg-blue-100 text-blue-700"
+                }`}>
+                  {message}
+                </div>
+              )}
+
+              <div className="space-y-3">
+                {shuffledOptions.map((option, index) => {
+                  const isCorrectAnswer = option === questions[currentQuestion]?.options[questions[currentQuestion]?.correctAnswer];
+                  const isSelected = option === selectedOption;
+                  const showWrongAnswer = showExplanation && isSelected && !isCorrectAnswer;
+
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => !showExplanation && handleAnswer(option)}
+                      className={`w-full text-left p-4 rounded-lg transition-colors ${
+                        showExplanation
+                          ? isCorrectAnswer
+                            ? correctBg
+                            : showWrongAnswer
+                              ? incorrectBg
+                              : optionBg
+                          : optionBg
+                      } border ${darkMode ? 'border-gray-700' : 'border-gray-300'}`}
+                      disabled={showExplanation}
+                    >
+                      <div className="flex items-center">
+                        {showExplanation && (
+                          <>
+                            {isCorrectAnswer && <CheckCircle2 className={`w-5 h-5 ${darkMode ? 'text-green-400' : 'text-green-500'} mr-2`} />}
+                            {showWrongAnswer && <XCircle className={`w-5 h-5 ${darkMode ? 'text-red-400' : 'text-red-500'} mr-2`} />}
+                          </>
+                        )}
+                        {option}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {showExplanation && questions[currentQuestion]?.explanation && (
+              <div className={`mb-6 p-4 ${explanationBg} rounded-lg border ${darkMode ? 'border-indigo-700' : 'border-indigo-200'}`}>
+                <h3 className={`font-semibold mb-2 ${darkMode ? 'text-indigo-300' : 'text-indigo-700'}`}>Explanation:</h3>
+                <p>{questions[currentQuestion]?.explanation}</p>
               </div>
             )}
 
-            <div className="space-y-3">
-              {shuffledOptions.map((option, index) => {
-                const isCorrectAnswer = option === questions[currentQuestion]?.options[questions[currentQuestion]?.correctAnswer];
-                const isSelected = option === selectedOption;
-                const showWrongAnswer = showExplanation && isSelected && !isCorrectAnswer;
-
-                return (
-                  <button
-                    key={index}
-                    onClick={() => !showExplanation && handleAnswer(option)}
-                    className={`w-full text-left p-4 rounded-lg transition-colors ${
-                      showExplanation
-                        ? isCorrectAnswer
-                          ? correctBg
-                          : showWrongAnswer
-                            ? incorrectBg
-                            : optionBg
-                        : optionBg
-                    } border ${darkMode ? 'border-gray-700' : 'border-gray-300'}`}
-                    disabled={showExplanation}
-                  >
-                    <div className="flex items-center">
-                      {showExplanation && (
-                        <>
-                          {isCorrectAnswer && <CheckCircle2 className={`w-5 h-5 ${darkMode ? 'text-green-400' : 'text-green-500'} mr-2`} />}
-                          {showWrongAnswer && <XCircle className={`w-5 h-5 ${darkMode ? 'text-red-400' : 'text-red-500'} mr-2`} />}
-                        </>
-                      )}
-                      {option}
-                    </div>
-                  </button>
-                );
-              })}
+            <div className="flex justify-end space-x-4">
+              {showExplanation && currentQuestion < questions.length - 1 && (
+                <button
+                  onClick={nextQuestion}
+                  className={`px-6 py-2 ${btnPrimary} text-white rounded-lg transition-colors`}
+                >
+                  Next Question
+                </button>
+              )}
+              {(showExplanation && currentQuestion === questions.length - 1) && (
+                <button
+                  onClick={nextQuestion}
+                  className={`px-6 py-2 ${btnSuccess} text-white rounded-lg transition-colors`}
+                >
+                  See Results
+                </button>
+              )}
             </div>
-          </div>
-
-          {showExplanation && questions[currentQuestion]?.explanation && (
-            <div className={`mb-6 p-4 ${explanationBg} rounded-lg border ${darkMode ? 'border-indigo-700' : 'border-indigo-200'}`}>
-              <h3 className={`font-semibold mb-2 ${darkMode ? 'text-indigo-300' : 'text-indigo-700'}`}>Explanation:</h3>
-              <p>{questions[currentQuestion]?.explanation}</p>
-            </div>
-          )}
-
-          <div className="flex justify-end space-x-4">
-            {showExplanation && currentQuestion < questions.length - 1 && (
-              <button
-                onClick={nextQuestion}
-                className={`px-6 py-2 ${btnPrimary} text-white rounded-lg transition-colors`}
-              >
-                Next Question
-              </button>
-            )}
-            {(showExplanation && currentQuestion === questions.length - 1) && (
-              <button
-                onClick={resetQuiz}
-                className={`px-6 py-2 ${btnSuccess} text-white rounded-lg transition-colors`}
-              >
-                Restart Quiz
-              </button>
-            )}
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
+
+  //Results
+  if (appState === 'results') {
+    return renderResults();
+  }
+
+  return <div>Error: Unknown app state</div>;
 }
 
 export default App;

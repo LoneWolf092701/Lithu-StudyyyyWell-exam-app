@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Timer, CheckCircle2, XCircle, Sun, Moon } from 'lucide-react';
+import { Timer, CheckCircle2, XCircle, Sun, Moon, Info, ChevronDown, ChevronUp } from 'lucide-react';
 import VaaAnnamalai from './assets/VaaAnnamalai.jpg';
 
 // Import all the different question data sets
 import questions1_4 from './data/questions1_4.json';
 import questions5_7 from './data/questions5_7.json';
-import questionsData3 from './data/questions7_9.json';
-import questionsData4 from './data/questions10_12.json';
+import questions8_10 from './data/questions7_9.json';
+import questions11_12 from './data/questions10_12.json';
 import questionsDataAll from './data/questionsAll.json';
 
 // Motivational messages arrays
@@ -63,13 +63,13 @@ function App() {
       id: 3,
       title: "Week 7 - 9",
       description: "Application Security",
-      data: questionsData3
+      data: questions8_10
     },
     {
       id: 4,
       title: "Week 10 - 12",
       description: "Advanced Topics",
-      data: questionsData4
+      data: questions11_12
     },
     {
       id: 5,
@@ -86,12 +86,13 @@ function App() {
   const [score, setScore] = useState(0);
   const [scoreText, setScoreText] = useState('');
   const [showExplanation, setShowExplanation] = useState(false);
+  const [showWhyOthersWrong, setShowWhyOthersWrong] = useState(false); // New state for toggling additional explanation
   const [timeLeft, setTimeLeft] = useState(60);
   const [isActive, setIsActive] = useState(false);
   const [shuffledOptions, setShuffledOptions] = useState<string[]>([]);
   const [message, setMessage] = useState('');
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  const [usedQuestionIndices, setUsedQuestionIndices] = useState<number[]>([]); // Track used question indices
+  const [usedQuestionIndices, setUsedQuestionIndices] = useState<number[]>([]);
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [correctAnswers, setCorrectAnswers] = useState<number[]>([]);
   const [wrongAnswers, setWrongAnswers] = useState<number[]>([]);
@@ -100,24 +101,19 @@ function App() {
   const [appState, setAppState] = useState<'welcome' | 'weekSelect' | 'quiz' | 'results'>('welcome');
   const [darkMode, setDarkMode] = useState(true);
 
-  // Theme toggle button component
-  // Removed duplicate declaration of ThemeToggleButton
-
-
   // Initialize questions when a week is selected
   useEffect(() => {
     if (selectedWeek && selectedWeek.data && Array.isArray(selectedWeek.data.questions)) {
       const allQuestions = selectedWeek.data.questions;
       setQuestions(shuffleArray(allQuestions));
-      setUsedQuestionIndices([]); // Reset used question indices
+      setUsedQuestionIndices([]);
       setQuizCompleted(false);
       setCorrectAnswers([]);
       setWrongAnswers([]);
       setTimeLeft(selectedWeek.title === "Give me God of War" ? 30 : 60);
     } else {
-      // Handle the case where questions are not available (e.g., log an error, set questions to an empty array)
       console.error("Questions data is missing or not an array!");
-      setQuestions([]); // Initialize to an empty array to prevent further errors
+      setQuestions([]);
     }
   }, [selectedWeek]);
 
@@ -176,13 +172,14 @@ function App() {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion((prev) => prev + 1);
       setShowExplanation(false);
+      setShowWhyOthersWrong(false); // Reset the "why others wrong" state
       setTimeLeft(selectedWeek?.title === "Give me God of War" ? 30 : 60);
       setIsActive(true);
       setMessage('');
       setSelectedOption(null);
     } else {
       setQuizCompleted(true);
-      setAppState('results'); // Transition to results page
+      setAppState('results');
     }
   };
 
@@ -196,7 +193,8 @@ function App() {
     setScore(0);
     setScoreText('');
     setShowExplanation(false);
-    setTimeLeft(week.title === "Give me God of War" ? 30 : 60); // Access week.title instead of selectedWeek
+    setShowWhyOthersWrong(false); // Reset additional explanation state
+    setTimeLeft(week.title === "Give me God of War" ? 30 : 60);
     setIsActive(true);
     setMessage('');
     setSelectedOption(null);
@@ -215,6 +213,7 @@ function App() {
     setScore(0);
     setScoreText('');
     setShowExplanation(false);
+    setShowWhyOthersWrong(false); // Reset additional explanation state
     setTimeLeft(selectedWeek?.title === "Give me God of War" ? 30 : 60);
     setIsActive(true);
     setMessage('');
@@ -235,6 +234,10 @@ function App() {
     setDarkMode(!darkMode);
   };
 
+  // Toggle function for "why others wrong" section
+  const toggleWhyOthersWrong = () => {
+    setShowWhyOthersWrong(!showWhyOthersWrong);
+  };
 
   // Define styles based on theme
   const bgColor = darkMode ? 'bg-black' : 'bg-gray-100';
@@ -250,6 +253,8 @@ function App() {
   const correctBg = darkMode ? 'bg-green-900 border-green-700' : 'bg-green-100 border-green-500';
   const incorrectBg = darkMode ? 'bg-red-900 border-red-700' : 'bg-red-100 border-red-500';
   const explanationBg = darkMode ? 'bg-gray-900' : 'bg-blue-50';
+  const whyWrongBg = darkMode ? 'bg-gray-800' : 'bg-orange-50'; // Different background for "why others wrong" section
+  
   // Define score color based on score value
   const scoreColor = score < 0 ? 'text-red-500' : darkMode ? 'text-white' : 'text-gray-900';
 
@@ -267,7 +272,7 @@ function App() {
   // Results Page
   const renderResults = () => {
     const totalQuestions = questions.length;
-    const finalScore = score; // Already calculated the score for correct and wrong already.
+    const finalScore = score;
     const correctPercentage = (totalQuestions > 0) ? ((correctAnswers.length / totalQuestions) * 100).toFixed(2) : 0;
 
     return (
@@ -467,10 +472,43 @@ function App() {
               </div>
             </div>
 
+            {/* Enhanced explanation section with "why others wrong" feature */}
             {showExplanation && questions[currentQuestion]?.explanation && (
               <div className={`mb-6 p-4 ${explanationBg} rounded-lg border ${darkMode ? 'border-indigo-700' : 'border-indigo-200'}`}>
-                <h3 className={`font-semibold mb-2 ${darkMode ? 'text-indigo-300' : 'text-indigo-700'}`}>Explanation:</h3>
-                <p>{questions[currentQuestion]?.explanation}</p>
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className={`font-semibold ${darkMode ? 'text-indigo-300' : 'text-indigo-700'}`}>Explanation:</h3>
+                  {/* Info button to toggle "why others wrong" section */}
+                  {questions[currentQuestion]?.why_others_wrong && (
+                    <button
+                      onClick={toggleWhyOthersWrong}
+                      className={`flex items-center gap-1 px-2 py-1 rounded-md text-sm transition-colors ${
+                        darkMode 
+                          ? 'bg-gray-700 hover:bg-gray-600 text-gray-300' 
+                          : 'bg-gray-200 hover:bg-gray-300 text-gray-600'
+                      }`}
+                      title="Click to see why other options are wrong"
+                    >
+                      <Info className="w-4 h-4" />
+                      <span>Why others wrong?</span>
+                      {showWhyOthersWrong ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                    </button>
+                  )}
+                </div>
+                <p className="mb-3">{questions[currentQuestion]?.explanation}</p>
+                
+                {/* Expandable "why others wrong" section */}
+                {showWhyOthersWrong && questions[currentQuestion]?.why_others_wrong && (
+                  <div className={`mt-4 p-3 ${whyWrongBg} rounded-lg border ${
+                    darkMode ? 'border-orange-700' : 'border-orange-200'
+                  } transition-all duration-300 ease-in-out`}>
+                    <h4 className={`font-medium mb-2 ${darkMode ? 'text-orange-300' : 'text-orange-700'}`}>
+                      Why the other options are incorrect:
+                    </h4>
+                    <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                      {questions[currentQuestion]?.why_others_wrong}
+                    </p>
+                  </div>
+                )}
               </div>
             )}
 

@@ -1,1444 +1,1309 @@
 {
-  "questions1_4": [
+  "quiz_info": {
+    "title": "Cyber Security Quiz - Weeks 8-10",
+    "topics": ["Web Vulnerabilities", "Malicious Software", "Access Control & AAA"],
+    "total_questions": 100
+  },
+  "questions": [
     {
       "id": 1,
-      "question": "Which of the following is NOT traditionally considered a core objective of the CIA security triad?",
+      "question": "Which OWASP Top 10 2021 category includes SQL Injection vulnerabilities?",
       "options": [
-        "Confidentiality",
-        "Integrity",
-        "Availability",
-        "Authenticity"
+        "A1 - Broken Access Control",
+        "A2 - Cryptographic Failures", 
+        "A3 - Injection",
+        "A4 - Insecure Design"
       ],
-      "correctAnswer": 3,
-      "explanation": "While authenticity is an important security concept, the CIA triad traditionally includes Confidentiality, Integrity, and Availability."
+      "correctAnswer": 2,
+      "explanation": "SQL Injection falls under A3 - Injection in the OWASP Top 10 2021. This category covers various injection attacks where untrusted data is sent to an interpreter as part of a command or query.",
+      "why_others_wrong": "A1 covers access control issues, A2 covers cryptographic problems, and A4 covers design flaws - none of these specifically address injection vulnerabilities."
     },
     {
       "id": 2,
-      "question": "What is the primary goal of the reconnaissance stage in hacking?",
+      "question": "In a SQL injection attack using the payload ' OR '1'='1' --, what does the double dash (--) represent?",
       "options": [
-        "Exploiting vulnerabilities",
-        "Covering tracks",
-        "Gathering information about the target",
-        "Maintaining access"
+        "A logical operator",
+        "A comment delimiter",
+        "A string concatenation operator",
+        "A comparison operator"
       ],
-      "correctAnswer": 2,
-      "explanation": "Reconnaissance involves passively gathering information about the target using public records and open-source intelligence. Attackers leverage this information to understand their target, including network layouts, domains, servers, and infrastructure details."
+      "correctAnswer": 1,
+      "explanation": "The double dash (--) is used as a comment delimiter in SQL. It causes the database to ignore everything after it, effectively nullifying the rest of the original query including password checks.",
+      "why_others_wrong": "While SQL has logical operators (AND, OR), string operators, and comparison operators, the double dash specifically serves as a comment marker to ignore subsequent SQL code."
     },
     {
       "id": 3,
-      "question": "Which of the following is an example of a technical security control?",
+      "question": "Which type of Cross-Site Scripting (XSS) attack stores malicious scripts on the server permanently?",
       "options": [
-        "Policies",
-        "Security guards",
-        "Firewalls",
-        "Training courses"
+        "Reflected XSS",
+        "DOM-based XSS",
+        "Persistent XSS",
+        "Self-XSS"
       ],
       "correctAnswer": 2,
-      "explanation": "Firewalls are a technical measure used to mitigate identified threats by controlling network access. Policies and training courses are administrative controls, and security guards are a physical control."
+      "explanation": "Persistent XSS (also called Stored XSS) stores malicious scripts on the server permanently. When users visit the affected page, the script executes automatically, making it particularly dangerous as it affects all users who view the compromised content.",
+      "why_others_wrong": "Reflected XSS doesn't store scripts on the server but reflects them back immediately. DOM-based XSS manipulates the DOM without server storage. Self-XSS requires the victim to execute the script themselves."
     },
     {
       "id": 4,
-      "question": "What type of social engineering attack involves physically being present and making personal contact?",
+      "question": "What is the primary goal of a Cross-Site Request Forgery (CSRF) attack?",
       "options": [
-        "Psychological",
-        "Physical",
-        "Digital",
-        "Virtual"
+        "To steal user credentials",
+        "To execute malicious scripts in the browser",
+        "To trick users into performing unwanted actions",
+        "To inject SQL commands into databases"
       ],
-      "correctAnswer": 1,
-      "explanation": "Physical social engineering attacks involve the attacker being physically present and interacting with the target in person."
+      "correctAnswer": 2,
+      "explanation": "CSRF attacks trick authenticated users into performing unwanted actions by exploiting the trust a website has in the user's browser. The attack forges requests that appear to come from the legitimate user.",
+      "why_others_wrong": "Stealing credentials is typically done through phishing or XSS. Executing malicious scripts is XSS. SQL injection involves database commands. CSRF specifically focuses on forging legitimate user requests."
     },
     {
       "id": 5,
-      "question": "Which of the following best describes a 'zero-day' threat?",
+      "question": "In the context of XML External Entity (XXE) attacks, what does the attacker typically try to access?",
       "options": [
-        "An attack that occurs on the last day of the year",
-        "Exploits targeting unknown software vulnerabilities",
-        "A threat with zero impact",
-        "A vulnerability that has been patched for zero days"
+        "Database records",
+        "Server files",
+        "User passwords",
+        "Network configurations"
       ],
       "correctAnswer": 1,
-      "explanation": "Zero-day threats exploit software flaws that are unknown to the vendor and for which no patch is yet available."
+      "explanation": "XXE attacks exploit XML parsers to access server files by defining external entities that reference local files (like /etc/passwd on Linux systems). The XML parser processes these entities and can expose sensitive system files.",
+      "why_others_wrong": "While XXE might indirectly access databases or configurations, its primary mechanism is accessing server files through XML external entity references. Direct password theft and network configuration access are not the main XXE attack vectors."
     },
     {
       "id": 6,
-      "question": "What is the purpose of the DREAD threat modeling?",
+      "question": "Which command injection payload would typically be used to view the contents of the /etc/passwd file on a Linux system?",
       "options": [
-        "To prevent all attacks",
-        "To quantify the severity of threats",
-        "To develop new security technologies",
-        "To eliminate vulnerabilities"
+        "; cat /etc/passwd",
+        "; SELECT * FROM users",
+        "; alert('XSS')",
+        "; DROP TABLE users"
       ],
-      "correctAnswer": 1,
-      "explanation": "DREAD focuses on the severity of the impact of an attack and the seriousness of the threat existence by assessing factors like Damage, Reproducibility, Exploitability, Affected Users, and Discoverability."
+      "correctAnswer": 0,
+      "explanation": "The semicolon (;) is used to chain commands in Unix/Linux systems, and 'cat /etc/passwd' is the standard command to display the contents of the password file. This is a typical command injection payload for Linux systems.",
+      "why_others_wrong": "The SELECT statement is SQL syntax, not OS commands. The alert() function is JavaScript for XSS attacks. DROP TABLE is also SQL syntax for database manipulation, not OS command injection."
     },
     {
       "id": 7,
-      "question": "Which of the following is an example of an integrity objective?",
+      "question": "What characterizes a Directory Traversal (Path Traversal) attack?",
       "options": [
-        "Ensuring data is available to authorized users at any time",
-        "Assuring that private information is not disclosed to unauthorized individuals",
-        "Assuring that information and programs are changed only in a specified and authorized manner",
-        "Verifying that users are who they say they are"
+        "Injecting SQL commands into input fields",
+        "Using ../ sequences to access files outside the web root",
+        "Executing JavaScript in the browser",
+        "Forging HTTP requests"
       ],
-      "correctAnswer": 2,
-      "explanation": "This aligns with the definition of data integrity. Option A describes availability, Option B describes confidentiality, and Option D describes authenticity."
+      "correctAnswer": 1,
+      "explanation": "Directory Traversal attacks use sequences like '../' to navigate up directory levels and access files outside the intended web root directory. This allows attackers to read sensitive system files that should not be accessible through the web application.",
+      "why_others_wrong": "SQL injection involves database commands, not file system navigation. JavaScript execution is XSS. HTTP request forgery is CSRF. Directory traversal specifically involves manipulating file paths."
     },
     {
       "id": 8,
-      "question": "What is the main function of a router?",
+      "question": "According to the NIST definition, what is malware?",
       "options": [
-        "To connect devices via Ethernet cables within a local network",
-        "To redirect data to the destination MAC address",
-        "To connect different networks together",
-        "To echo incoming packets to all ports"
+        "Any software that requires administrator privileges",
+        "A program inserted covertly to compromise CIA properties",
+        "Software that monitors network traffic",
+        "Any program that modifies system files"
       ],
-      "correctAnswer": 2,
-      "explanation": "Routers perform traffic directing functions and connect distinct and separate computer networks. Option A describes a hub, and Option B describes a switch."
+      "correctAnswer": 1,
+      "explanation": "NIST 800-83 defines malware as 'a program that is inserted into a system, usually covertly, with the intent of compromising the confidentiality, integrity, or availability of the victim's data, applications, or operating system.' The key aspects are covert insertion and intent to compromise CIA properties.",
+      "why_others_wrong": "Programs requiring admin privileges aren't necessarily malicious. Network monitoring tools can be legitimate. File modification alone doesn't make software malicious - the covert nature and malicious intent are crucial defining factors."
     },
     {
       "id": 9,
-      "question": "Which OSI layer is generally considered responsible for encryption from a security perspective?",
+      "question": "What are the three phases of the malware lifecycle?",
       "options": [
-        "Application Layer",
-        "Presentation Layer",
-        "Session Layer",
-        "Transport Layer"
+        "Creation, Distribution, Activation",
+        "Infection, Execution, Payload",
+        "Install, Run, Destroy",
+        "Upload, Download, Execute"
       ],
       "correctAnswer": 1,
-      "explanation": "From a security perspective, encryption generally takes place at the Presentation Layer of the OSI model."
+      "explanation": "The malware lifecycle consists of three phases: Infection (how it gets in), Execution (when and how it runs), and Payload (what it does). This lifecycle helps classify and understand how malware operates and persists.",
+      "why_others_wrong": "Creation, Distribution, Activation describe development phases, not operational phases. Install, Run, Destroy oversimplifies the process. Upload, Download, Execute are network operations, not malware lifecycle phases."
     },
     {
       "id": 10,
-      "question": "What is the purpose of the Domain Name System (DNS)?",
+      "question": "Which type of malware is described as 'standalone' and can run independently once installed?",
       "options": [
-        "To encrypt network traffic",
-        "To map domain names to IP addresses",
-        "To manage network hardware",
-        "To provide wireless network access"
+        "Virus",
+        "Worm",
+        "Trojan Horse",
+        "Rootkit"
       ],
       "correctAnswer": 1,
-      "explanation": "DNS is an application-layer protocol for mapping human-readable domain names to the numerical IP addresses that computers use."
+      "explanation": "Worms are independent malware that can run on their own once installed on a compromised machine. They actively seek out other machines to infect and don't require a host program to function, unlike viruses.",
+      "why_others_wrong": "Viruses require host programs to run. Trojan horses disguise themselves as legitimate software but still need user interaction. Rootkits typically modify existing system components rather than operating independently."
     },
     {
       "id": 11,
-      "question": "Which TCP flag is used to terminate a connection?",
+      "question": "What distinguishes a virus from a worm in terms of propagation?",
       "options": [
-        "SYN",
-        "ACK",
-        "FIN",
-        "RST"
+        "Viruses spread through email, worms through networks",
+        "Viruses require host programs, worms are self-replicating",
+        "Viruses are encrypted, worms are not",
+        "Viruses target files, worms target systems"
       ],
-      "correctAnswer": 2,
-      "explanation": "The FIN flag in a TCP header is used to signal the termination or closing of an active network connection, indicating that the sender has no more data to transmit."
+      "correctAnswer": 1,
+      "explanation": "The key distinction is that viruses need to attach to and infect host programs to spread, while worms are self-replicating and can propagate independently across networks without requiring host programs.",
+      "why_others_wrong": "Both can spread through various means including email and networks. Encryption is not a distinguishing factor. While they may have different targets, the fundamental difference is in their dependency on host programs for replication."
     },
     {
       "id": 12,
-      "question": "What is the primary function of the Address Resolution Protocol (ARP)?",
+      "question": "Which virus classification hides itself from detection by anti-virus software?",
       "options": [
-        "To assign IP addresses dynamically",
-        "To translate domain names to IP addresses",
-        "To map IP addresses to MAC addresses",
-        "To encrypt network communications"
+        "Polymorphic virus",
+        "Stealth virus",
+        "Macro virus",
+        "Boot sector virus"
       ],
-      "correctAnswer": 2,
-      "explanation": "ARP connects the network layer to the data link layer by mapping IP addresses to their corresponding Media Access Control (MAC) addresses within the same local network segment."
+      "correctAnswer": 1,
+      "explanation": "Stealth viruses are explicitly designed to hide themselves from detection by anti-virus software using various evasion techniques such as intercepting system calls and providing false information to scanning programs.",
+      "why_others_wrong": "Polymorphic viruses change their code but don't necessarily hide from detection. Macro viruses infect documents with macro code. Boot sector viruses infect the master boot record. Only stealth viruses specifically focus on avoiding detection."
     },
     {
       "id": 13,
-      "question": "Which of the following is a characteristic of a connectionless protocol like UDP?",
+      "question": "What type of virus changes its code with every infection to avoid signature-based detection?",
       "options": [
-        "Reliable connection stream",
-        "Guaranteed packet delivery in order",
-        "Data sent out as soon as there is enough data to be transmitted",
-        "Error checking"
+        "Stealth virus",
+        "Polymorphic virus",
+        "Metamorphic virus",
+        "Encrypted virus"
       ],
-      "correctAnswer": 2,
-      "explanation": "Connectionless protocols like UDP transmit data as soon as it is available, without establishing a connection or ensuring delivery."
+      "correctAnswer": 1,
+      "explanation": "Polymorphic viruses mutate their code with every infection while maintaining the same functionality. This makes them difficult to detect using traditional signature-based antivirus methods that look for specific code patterns.",
+      "why_others_wrong": "Stealth viruses hide but don't necessarily change code. Metamorphic viruses also change but rewrite themselves completely, not just mutate. Encrypted viruses use encryption but don't necessarily change their underlying code structure."
     },
     {
       "id": 14,
-      "question": "What is the purpose of a VPN?",
+      "question": "What is the primary difference between a metamorphic and polymorphic virus?",
       "options": [
-        "To increase network speed",
-        "To provide a direct connection to a local network",
-        "To hide data in transit and create a private network across a WAN",
-        "To replace physical network cables with wireless connections"
+        "Metamorphic viruses are encrypted, polymorphic are not",
+        "Metamorphic viruses completely rewrite themselves, polymorphic just mutate",
+        "Metamorphic viruses target boot sectors, polymorphic target files",
+        "Metamorphic viruses spread faster than polymorphic"
       ],
-      "correctAnswer": 2,
-      "explanation": "A Virtual Private Network (VPN) creates a secure, encrypted tunnel for data transmission across a Wide Area Network (WAN), effectively extending a private network. Encryption enables hiding data in transit."
+      "correctAnswer": 1,
+      "explanation": "Metamorphic viruses completely rewrite themselves at each iteration and may change behavior as well as appearance, while polymorphic viruses only mutate their code while keeping the same basic functionality and structure.",
+      "why_others_wrong": "Encryption, target locations, and spreading speed are not the distinguishing factors. The key difference is the extent of code modification - complete rewriting versus mutation of existing code."
     },
     {
       "id": 15,
-      "question": "In the context of ethical hacking, what is a 'red team'?",
+      "question": "Which type of malware specifically modifies or replaces system programs to hide its presence?",
       "options": [
-        "A team responsible for implementing security policies",
-        "A team that detects and defends against attacks",
-        "A team that performs penetration testing by simulating real-world threats",
-        "A team that facilitates collaboration between blue and red teams"
+        "Virus",
+        "Worm", 
+        "Rootkit",
+        "Trojan horse"
       ],
       "correctAnswer": 2,
-      "explanation": "Red teams perform penetration testing by acting as true outside threats to identify vulnerabilities. Blue teams implement security policies and defend, while purple teams facilitate collaboration."
+      "explanation": "Rootkits are designed to modify or replace existing system programs to conceal their presence and maintain persistent access. They operate at a low level to hide processes, files, and network connections from detection.",
+      "why_others_wrong": "Viruses infect programs but don't necessarily hide system presence. Worms replicate across networks. Trojan horses disguise themselves as legitimate software but don't typically modify system programs for concealment."
     },
     {
       "id": 16,
-      "question": "What is the 'least privilege' principle in security design?",
+      "question": "What is the main characteristic of a Trojan horse?",
       "options": [
-        "Granting all users the same level of access",
-        "Allowing access to all resources by default",
-        "Granting users only the minimum necessary access to perform their tasks",
-        "Denying access to all users"
+        "It replicates itself across networks",
+        "It appears to be useful software but contains harmful code",
+        "It modifies the boot sector",
+        "It encrypts user files for ransom"
       ],
-      "correctAnswer": 2,
-      "explanation": "This principle aims to minimize potential damage from security breaches by ensuring users have only the access they need."
+      "correctAnswer": 1,
+      "explanation": "A Trojan horse masquerades as legitimate, useful software while containing hidden malicious functionality. Users willingly install it thinking it's beneficial, which gives the malware access to the system.",
+      "why_others_wrong": "Network replication is characteristic of worms. Boot sector modification is done by boot sector viruses. File encryption for ransom is characteristic of ransomware. Trojans specifically focus on deception and disguise."
     },
     {
       "id": 17,
-      "question": "What is the purpose of 'covering tracks' in the context of malicious hacking?",
+      "question": "Which social engineering technique involves extracting information during seemingly normal conversation?",
       "options": [
-        "To improve system performance",
-        "To hide or delete evidence of unauthorized access",
-        "To enhance network security",
-        "To install new security patches"
+        "Pretexting",
+        "Elicitation", 
+        "Baiting",
+        "Tailgating"
       ],
       "correctAnswer": 1,
-      "explanation": "Covering tracks involves hiding or deleting any evidence of unauthorized access and continued presence within the targeted system or network."
+      "explanation": "Elicitation is defined as 'the subtle extraction of information during an apparently normal and innocent conversation.' It involves skillfully gathering sensitive information without the target realizing they're being manipulated.",
+      "why_others_wrong": "Pretexting involves creating a fabricated scenario. Baiting involves offering something enticing to trigger actions. Tailgating is physical unauthorized access by following someone. Only elicitation focuses on subtle information extraction through conversation."
     },
     {
       "id": 18,
-      "question": "Which of the following is an example of a 'physical threat'?",
+      "question": "What type of social engineering attack involves creating a fabricated scenario to build trust?",
       "options": [
-        "Phishing emails",
-        "Denial-of-Service (DoS) attacks",
-        "Theft of devices",
-        "Tampered software updates"
+        "Elicitation",
+        "Pretexting",
+        "Phishing",
+        "Vishing"
       ],
-      "correctAnswer": 2,
-      "explanation": "Physical threats involve tangible assets. Theft of devices directly impacts physical equipment, whereas the other options are cyber or digital threats."
+      "correctAnswer": 1,
+      "explanation": "Pretexting involves creating a fabricated scenario or story to build trust and extract information. The attacker assumes a false identity or situation to appear legitimate and gain the victim's confidence.",
+      "why_others_wrong": "Elicitation focuses on conversation-based information gathering. Phishing uses fraudulent communications, typically email. Vishing is voice-based phishing. Pretexting specifically involves creating false scenarios to establish trust."
     },
     {
       "id": 19,
-      "question": "What is the role of the Transport Layer in the TCP/IP model?",
+      "question": "According to the lecture notes, what are the three main categories of vulnerabilities that create human attack surfaces?",
       "options": [
-        "Providing physical connections between devices",
-        "Defining network addressing",
-        "Maintaining end-to-end communications across the network",
-        "Providing standardized data exchange for applications"
+        "Ignorance, trust, and greed",
+        "Social engineering, human error, and trusted insiders",
+        "Phishing, pretexting, and baiting",
+        "Physical, psychological, and digital"
       ],
-      "correctAnswer": 2,
-      "explanation": "The Transport Layer is responsible for maintaining end-to-end communications across the network."
+      "correctAnswer": 1,
+      "explanation": "The human attack surface refers to vulnerabilities created by social engineering (tricking people), human error (mistakes), and trusted insiders (authorized personnel who become threats). These represent the main ways humans become security vulnerabilities.",
+      "why_others_wrong": "While ignorance, trust, and greed may be factors, they're not the formal categories. Phishing, pretexting, and baiting are specific techniques, not categories. Physical, psychological, and digital don't specifically address human vulnerabilities."
     },
     {
       "id": 20,
-      "question": "What is the meaning of the HTTP status code '404 Not Found'?",
+      "question": "What does the 'A' in AAA stand for in cybersecurity?",
       "options": [
-        "The request was successful",
-        "The requested resource was not found",
-        "There was a server error",
-        "Access to the resource is forbidden"
+        "Authorization, Authentication, Accounting",
+        "Authentication, Authorization, Accountability", 
+        "Access, Authentication, Authorization",
+        "Authentication, Accounting, Availability"
       ],
       "correctAnswer": 1,
-      "explanation": "A '404 Not Found' status code indicates that the server has successfully received the client's request, but the specific resource being requested could not be located."
+      "explanation": "AAA stands for Authentication (verifying identity), Authorization (determining access rights), and Accountability (tracking and logging actions). These three components work together to provide comprehensive access control.",
+      "why_others_wrong": "While accounting is related to accountability, the formal AAA model uses Accountability. Access and Availability, though important security concepts, are not part of the standard AAA framework."
     },
     {
       "id": 21,
-      "question": "According to NIST, what is the primary goal of cybersecurity?",
+      "question": "Which AAA component involves verifying 'who you are'?",
       "options": [
-        "To completely eliminate all threats and vulnerabilities",
-        "To ensure the continuous operation of all automated information systems",
-        "To protect automated information systems to achieve the applicable objectives of preserving integrity, availability, and confidentiality of information system resources",
-        "To solely focus on preventing unauthorized external access"
+        "Authorization",
+        "Authentication",
+        "Accountability", 
+        "Access Control"
       ],
-      "correctAnswer": 2,
-      "explanation": "This aligns with the CIA triad definition provided by NIST, focusing on protecting automated systems while preserving integrity, availability, and confidentiality."
+      "correctAnswer": 1,
+      "explanation": "Authentication is the process of verifying identity - confirming 'who you are.' It typically involves credentials like passwords, biometrics, or certificates to prove the claimed identity.",
+      "why_others_wrong": "Authorization determines 'what you can do' after identity is verified. Accountability tracks 'what you did.' Access Control is a broader concept that encompasses all three AAA components."
     },
     {
       "id": 22,
-      "question": "Which security design principle emphasizes simplicity and smallness in security mechanisms?",
+      "question": "What is the difference between identification and authentication?",
       "options": [
-        "Separation of Privilege",
-        "Economy of Mechanism",
-        "Least Privilege",
-        "Psychological Acceptability"
+        "Identification verifies identity, authentication provides identity",
+        "Identification provides identity claim, authentication verifies the claim",
+        "Identification is for users, authentication is for systems",
+        "They are the same process"
       ],
       "correctAnswer": 1,
-      "explanation": "The Economy of Mechanism principle promotes simplicity in the design of security measures."
+      "explanation": "Identification is the process of claiming an identity (like providing a username), while authentication is the process of verifying that the claimed identity is legitimate (like providing the correct password for that username).",
+      "why_others_wrong": "The first option reverses the definitions. Both processes apply to users and systems. They are distinctly different processes that work together but serve different purposes in access control."
     },
     {
       "id": 23,
-      "question": "What term describes a weakness in a system exploitable by a threat?",
+      "question": "Which authentication factor represents 'something you know'?",
       "options": [
-        "Threat",
-        "Risk",
-        "Vulnerability",
-        "Exploit"
+        "Fingerprint",
+        "Smart card",
+        "Password",
+        "Location GPS"
       ],
       "correctAnswer": 2,
-      "explanation": "A vulnerability is any weakness in a system that can be exploited by a threat actor."
+      "explanation": "Passwords, passphrases, and PINs represent 'something you know' - information that is stored in your memory. This is one of the three main authentication factors in cybersecurity.",
+      "why_others_wrong": "Fingerprints are 'something you are' (biometric). Smart cards are 'something you have' (possession). GPS location is 'somewhere you are' (location-based authentication)."
     },
     {
       "id": 24,
-      "question": "Which threat category originates from within the organization's security perimeter?",
+      "question": "What type of authentication token calculates a number synchronized with an authentication server?",
       "options": [
-        "Outsider Threats",
-        "Network Threats",
-        "Physical Threats",
-        "Insider Threats"
+        "Asynchronous token",
+        "Synchronous token", 
+        "Smart card",
+        "USB token"
       ],
-      "correctAnswer": 3,
-      "explanation": "Insider threats are initiated by entities inside the security perimeter, making them particularly challenging to manage."
+      "correctAnswer": 1,
+      "explanation": "Synchronous tokens calculate numbers that are synchronized with the authentication server, either through time-based synchronization or event-based synchronization. Both the token and server generate the same number at the same time.",
+      "why_others_wrong": "Asynchronous tokens don't require calculation or synchronization. Smart cards and USB tokens are physical devices that may or may not use synchronization depending on their implementation."
     },
     {
       "id": 25,
-      "question": "What type of attack attempts to learn information without affecting system resources?",
+      "question": "Which biometric authentication method is classified as 'dynamic'?",
       "options": [
-        "Active Attack",
-        "Passive Attack",
-        "Brute-force Attack",
-        "Denial-of-Service (DoS) Attack"
+        "Fingerprint scanning",
+        "Iris recognition",
+        "Keystroke dynamics",
+        "Hand geometry"
       ],
-      "correctAnswer": 1,
-      "explanation": "Passive attacks aim to learn or capture information without interfering with system operations, such as eavesdropping."
+      "correctAnswer": 2,
+      "explanation": "Keystroke dynamics is a dynamic biometric that analyzes behavioral patterns in how you type, including timing and rhythm. Dynamic biometrics measure behavioral characteristics rather than static physical features.",
+      "why_others_wrong": "Fingerprints, iris patterns, and hand geometry are static biometrics based on physical characteristics that don't change significantly over time."
     },
     {
       "id": 26,
-      "question": "What term describes individuals who use other people's hacking tools with limited understanding?",
+      "question": "What is the principle of 'least privilege' in access control?",
       "options": [
-        "Hackers (Crackers)",
-        "Hacktivists",
-        "Script Kiddies",
-        "Amateurs"
+        "Users should have the minimum access needed to perform their job",
+        "Users should have maximum access for convenience",
+        "All users should have the same level of access",
+        "Access should be granted based on seniority"
       ],
-      "correctAnswer": 2,
-      "explanation": "Script Kiddies are individuals who use pre-made hacking tools without a deep understanding of the underlying technology."
+      "correctAnswer": 0,
+      "explanation": "The principle of least privilege states that users should be granted only the minimum level of access necessary to perform their job functions. This reduces the potential impact of compromised accounts or insider threats.",
+      "why_others_wrong": "Maximum access increases security risks unnecessarily. Equal access ignores different job requirements. Seniority-based access doesn't consider actual job needs and violates the principle of appropriate access levels."
     },
     {
       "id": 27,
-      "question": "Which hacking stage involves actively probing a target's network for vulnerabilities?",
+      "question": "What does 'need to know' principle ensure in access control?",
       "options": [
-        "Reconnaissance",
-        "Scanning and Enumeration",
-        "Gaining Access",
-        "Maintaining Access"
+        "Users know their passwords",
+        "Users access only information required for their work tasks",
+        "Users understand security policies",
+        "Users report security incidents"
       ],
       "correctAnswer": 1,
-      "explanation": "Scanning and Enumeration involves actively probing a target's network to identify potential entry points and vulnerabilities."
+      "explanation": "The 'need to know' principle ensures that subjects are granted access only to information they need to know for their specific work tasks and job functions, limiting exposure of sensitive information.",
+      "why_others_wrong": "Password knowledge, security policy understanding, and incident reporting are important but not what the 'need to know' principle specifically addresses. It focuses specifically on information access limitations."
     },
     {
       "id": 28,
-      "question": "What is a high-capacity network interconnecting smaller networks?",
+      "question": "In Discretionary Access Control (DAC), who decides access permissions?",
       "options": [
-        "Local Area Network (LAN)",
-        "Wide Area Network (WAN)",
-        "Backbone network",
-        "Personal Area Network (PAN)"
+        "System administrator",
+        "Security officer",
+        "Resource owner",
+        "All users collectively"
       ],
       "correctAnswer": 2,
-      "explanation": "A backbone network is a high-capacity network that interconnects various smaller networks, often used by ISPs or large organizations."
+      "explanation": "In DAC, the resource owner (the person who created or owns the resource) has the discretion to decide who can access their resources and what level of access to grant. This is why it's called 'discretionary.'",
+      "why_others_wrong": "System administrators manage systems but don't necessarily control individual resource access in DAC. Security officers create policies but don't make individual access decisions. Collective user decision-making is not how DAC operates."
     },
     {
       "id": 29,
-      "question": "Which OSI layer is responsible for the physical operation of the network?",
+      "question": "What characterizes Mandatory Access Control (MAC)?",
       "options": [
-        "Data Link Layer",
-        "Network Layer",
-        "Transport Layer",
-        "Physical Layer"
+        "Users can modify their own permissions",
+        "Access is determined by system-wide security policies",
+        "All users have equal access rights",
+        "Permissions are based on user requests"
       ],
-      "correctAnswer": 3,
-      "explanation": "The Physical Layer is responsible for the physical transmission of data over network media, translating binary data into electrical or radio signals."
+      "correctAnswer": 1,
+      "explanation": "MAC is characterized by system-wide security policies that are centrally controlled by security administrators. Users cannot modify access permissions, and decisions are based on security labels and clearance levels rather than user discretion.",
+      "why_others_wrong": "Users cannot modify permissions in MAC (that's DAC). Equal access rights don't consider security levels. User requests don't determine access in MAC - it's based on predetermined security policies and classifications."
     },
     {
       "id": 30,
-      "question": "Which TCP/IP layer combines OSI Session and Presentation layers?",
+      "question": "In Role-Based Access Control (RBAC), access permissions are assigned based on:",
       "options": [
-        "Network Layer",
-        "Transport Layer",
-        "Application Layer",
-        "Link Layer"
+        "User identity",
+        "Security clearance level",
+        "Job roles and responsibilities",
+        "Resource sensitivity"
       ],
       "correctAnswer": 2,
-      "explanation": "The TCP/IP Application Layer combines the functionalities of the OSI Session and Presentation layers."
+      "explanation": "RBAC assigns permissions based on roles that reflect job functions and responsibilities. Users are assigned to roles, and roles are granted permissions, making access management more efficient and aligned with organizational structure.",
+      "why_others_wrong": "User identity is used in DAC. Security clearance levels are used in MAC. Resource sensitivity affects classification but doesn't drive RBAC assignments - job roles do."
     },
     {
       "id": 31,
-      "question": "What is enclosing data from one protocol within another called?",
+      "question": "What makes Attribute-Based Access Control (ABAC) more flexible than other models?",
       "options": [
-        "Fragmentation",
-        "Encapsulation",
-        "Sequencing",
-        "Multiplexing"
+        "It uses only user attributes",
+        "It considers multiple attributes of users, resources, and environment",
+        "It requires fewer administrative controls",
+        "It works only with predefined roles"
       ],
       "correctAnswer": 1,
-      "explanation": "Encapsulation is the process of enclosing data from one protocol within another protocol's data payload."
+      "explanation": "ABAC's flexibility comes from its ability to make access decisions based on multiple attributes including user attributes, resource attributes, and environmental conditions (like time of day, location, etc.), allowing for very granular and context-aware access control.",
+      "why_others_wrong": "Using only user attributes would be limiting, not flexible. ABAC actually requires more complex administration due to its granular nature. It doesn't rely on predefined roles like RBAC does."
     },
     {
       "id": 32,
-      "question": "Which Application Layer protocol transfers data between web clients and servers?",
+      "question": "What is an Access Control List (ACL)?",
       "options": [
-        "Domain Name System (DNS)",
-        "Hypertext Transfer Protocol (HTTP)",
-        "Transmission Control Protocol (TCP)",
-        "User Datagram Protocol (UDP)"
+        "A list of all users in the system",
+        "A collection of access control entries for a file or resource",
+        "A list of security policies",
+        "A record of access attempts"
       ],
       "correctAnswer": 1,
-      "explanation": "HTTP is designed specifically for transferring data between web clients and servers."
+      "explanation": "An ACL is a collection of Access Control Entries (ACEs) that specify which users or groups are granted or denied specific types of access to a particular file, folder, or resource.",
+      "why_others_wrong": "A user list doesn't specify permissions. Security policies are broader than ACLs. Access attempt records are audit logs, not access control mechanisms."
     },
     {
       "id": 33,
-      "question": "What is the standard port number for DNS queries?",
+      "question": "Which protocol uses UDP as its transport mechanism?",
       "options": [
-        "Port 80",
-        "Port 443",
-        "Port 53",
-        "Port 22"
+        "TACACS+",
+        "RADIUS",
+        "Diameter",
+        "Kerberos"
       ],
-      "correctAnswer": 2,
-      "explanation": "DNS queries are typically issued over UDP on port 53."
+      "correctAnswer": 1,
+      "explanation": "RADIUS (Remote Authentication Dial-In User Service) uses UDP as its transport protocol, which makes it simpler but less reliable than TCP-based protocols. This is one of the key differences between RADIUS and TACACS+.",
+      "why_others_wrong": "TACACS+ and Diameter both use TCP for more reliable transmission. Kerberos uses both UDP and TCP depending on the message size and type."
     },
     {
       "id": 34,
-      "question": "Which TCP flag initiates a connection in the three-way handshake?",
+      "question": "What advantage does TACACS+ have over RADIUS?",
       "options": [
-        "ACK (Acknowledge)",
-        "FIN (Finished)",
-        "RST (Reset)",
-        "SYN (Synchronize)"
+        "Uses UDP for faster transmission",
+        "Provides more sophisticated authentication and authorization control",
+        "Requires less network bandwidth",
+        "Works only with Cisco devices"
       ],
-      "correctAnswer": 3,
-      "explanation": "The client sends a SYN packet to initiate a TCP connection."
+      "correctAnswer": 1,
+      "explanation": "TACACS+ provides more sophisticated authentication steps and tighter control over complex authorization activities compared to RADIUS. It also uses TCP, which provides more reliable transmission than RADIUS's UDP.",
+      "why_others_wrong": "TACACS+ uses TCP, not UDP. It typically uses more bandwidth due to TCP overhead. While developed by Cisco, TACACS+ is not limited to Cisco devices."
     },
     {
       "id": 35,
-      "question": "What is the length of an IPv4 address in bits?",
+      "question": "What is the primary purpose of Kerberos?",
       "options": [
-        "64 bits",
-        "32 bits",
-        "128 bits",
-        "16 bits"
+        "File encryption",
+        "Network monitoring",
+        "User authentication and key distribution",
+        "Intrusion detection"
       ],
-      "correctAnswer": 1,
-      "explanation": "IPv4 addresses are 32-bit binary addresses."
+      "correctAnswer": 2,
+      "explanation": "Kerberos is primarily designed to provide authentication for client/server applications and secure key distribution using symmetric cryptography. It's a network authentication protocol that uses tickets to verify identity.",
+      "why_others_wrong": "While Kerberos involves cryptography, it's not primarily for file encryption. It doesn't monitor networks or detect intrusions - its focus is on authentication and secure key management."
     },
     {
       "id": 36,
-      "question": "Which protocol dynamically assigns IP addresses to devices?",
+      "question": "In Kerberos, what is a 'ticket'?",
       "options": [
-        "Address Resolution Protocol (ARP)",
-        "Domain Name System (DNS)",
-        "Dynamic Host Configuration Protocol (DHCP)",
-        "Internet Protocol (IP)"
+        "A user password",
+        "An encrypted authentication token",
+        "A network address",
+        "A public key certificate"
       ],
-      "correctAnswer": 2,
-      "explanation": "DHCP is responsible for the dynamic assignment of IP addresses and other network configuration information."
+      "correctAnswer": 1,
+      "explanation": "In Kerberos, a ticket is an encrypted authentication token that contains information about the user's identity and access permissions. It's used to authenticate users to services without transmitting passwords over the network.",
+      "why_others_wrong": "Passwords are what users provide initially. Network addresses identify locations, not authentication status. Public key certificates are used in PKI systems, while Kerberos uses symmetric cryptography."
     },
     {
       "id": 37,
-      "question": "What is the purpose of a MAC address?",
+      "question": "What does Single Sign-On (SSO) primarily provide?",
       "options": [
-        "To provide a logical network address for routing",
-        "To translate domain names to IP addresses",
-        "To provide a unique physical address for identifying a device on a local network segment",
-        "To dynamically assign IP addresses"
+        "Multiple passwords for enhanced security",
+        "One password for all corporate systems and applications",
+        "Automatic password generation",
+        "Password encryption services"
       ],
-      "correctAnswer": 2,
-      "explanation": "MAC addresses uniquely identify a device on a local network segment at the hardware level."
+      "correctAnswer": 1,
+      "explanation": "SSO allows users to access multiple corporate systems and applications using a single set of credentials, improving user experience while potentially enhancing security by reducing password management overhead.",
+      "why_others_wrong": "Multiple passwords would be the opposite of SSO. While SSO systems may generate session tokens, automatic password generation isn't their primary function. Password encryption is a component but not the main purpose."
     },
     {
       "id": 38,
-      "question": "What is a common method for ethical hackers to intercept and analyze network traffic?",
+      "question": "Which component of malware determines when the payload is activated?",
       "options": [
-        "Port scanning",
-        "Vulnerability scanning",
-        "Traffic sniffing by configuring the network interface in promiscuous mode",
-        "Firewall rule analysis"
+        "Infection mechanism",
+        "Trigger",
+        "Propagation method",
+        "Payload"
       ],
-      "correctAnswer": 2,
-      "explanation": "Configuring a network interface in promiscuous mode allows the capture of all network frames on the local segment for analysis."
+      "correctAnswer": 1,
+      "explanation": "The trigger (sometimes known as a logic bomb) is the component that determines when the payload is activated or delivered. It could be a specific date, system condition, or user action that causes the malware to execute its malicious function.",
+      "why_others_wrong": "The infection mechanism is how malware spreads. Propagation methods are how it replicates. The payload is what executes, but the trigger determines when it executes."
     },
     {
       "id": 39,
-      "question": "What is the primary goal of the Weaponization phase in the Cyber Kill Chain?",
+      "question": "During which phase of the virus lifecycle does the virus copy itself to other programs?",
       "options": [
-        "To identify and select potential targets",
-        "To pair remote access malware with an exploit into a deliverable payload",
-        "To transmit the weaponized payload to the target",
-        "To trigger the delivered weapon and exploit vulnerabilities"
+        "Dormant phase",
+        "Triggering phase", 
+        "Propagation phase",
+        "Execution phase"
       ],
-      "correctAnswer": 1,
-      "explanation": "The Weaponization phase involves pairing remote access malware with an exploit to create a deliverable payload."
+      "correctAnswer": 2,
+      "explanation": "During the propagation phase, the virus places copies of itself into other programs or system areas on the disk. This is when the actual replication and spreading occurs.",
+      "why_others_wrong": "The dormant phase is when the virus is idle. The triggering phase activates the virus. The execution phase is when the virus performs its intended malicious function, not when it replicates."
     },
     {
       "id": 40,
-      "question": "What type of penetration testing simulates an attack with no prior knowledge of the target system?",
+      "question": "What type of malware payload is designed to steal keystrokes?",
       "options": [
-        "White Box Testing",
-        "Gray Box Testing",
-        "Black Box Testing",
-        "Purple Team Testing"
+        "System corruption",
+        "Keylogger",
+        "Backdoor",
+        "Bot"
       ],
-      "correctAnswer": 2,
-      "explanation": "Black Box Testing simulates an external attacker's perspective with no prior knowledge of the system."
+      "correctAnswer": 1,
+      "explanation": "Keyloggers are designed specifically to capture and steal keystrokes, enabling attackers to monitor all user input including passwords, credit card numbers, and other sensitive information.",
+      "why_others_wrong": "System corruption payloads damage systems. Backdoors provide unauthorized access. Bots allow remote control. Only keyloggers specifically focus on keystroke capture."
     },
     {
       "id": 41,
-      "question": "What is the primary goal of network security as outlined in the sources?",
+      "question": "What is the primary characteristic of a botnet?",
       "options": [
-        "To increase network speed and efficiency.",
-        "To prevent malicious activity and ensure network availability.",
-        "To monitor employee internet usage.",
-        "To manage network hardware and software."
+        "It encrypts files for ransom",
+        "It's a collection of compromised computers controlled remotely",
+        "It monitors network traffic",
+        "It modifies system files"
       ],
       "correctAnswer": 1,
-      "explanation": "To prevent malicious activity and ensure network availability. The outline of network security includes topics like network security itself and availability threats, indicating the primary concern is protection against harmful actions and maintaining access to network resources."
+      "explanation": "A botnet is a collection of compromised computers (bots or zombies) that can be controlled remotely by cybercriminals to perform coordinated attacks like DDoS, send spam, or mine cryptocurrency.",
+      "why_others_wrong": "File encryption for ransom is characteristic of ransomware. Network monitoring is done by legitimate tools or spyware. System file modification is done by various malware types, but doesn't define botnets specifically."
     },
     {
       "id": 42,
-      "question": "According to the sources, which country was the top origin of cyberattacks in 2020?",
+      "question": "Which generation of antivirus software uses heuristic rules for detection?",
       "options": [
-        "United States",
-        "Russia",
-        "China",
-        "United Kingdom"
+        "First generation",
+        "Second generation",
+        "Third generation",
+        "Fourth generation"
       ],
-      "correctAnswer": 2,
-      "explanation": "China. The sources explicitly state that in 2020, China was the top country of origin for cyberattacks, accounting for 41 percent."
+      "correctAnswer": 1,
+      "explanation": "Second generation antivirus software introduced heuristic rules for probable malware detection, moving beyond simple signature-based detection to identify potentially malicious behavior patterns.",
+      "why_others_wrong": "First generation relied only on signatures. Third generation used memory-resident programs and activity monitoring. Fourth generation combined multiple techniques including scanning, activity traps, and access control."
     },
     {
       "id": 43,
-      "question": "Which of the following is NOT listed as a category of malicious attacks in the sources?",
+      "question": "What does 'security through obscurity' mean in the context of robots.txt files?",
       "options": [
-        "Fabrications",
-        "Interceptions",
-        "Installations",
-        "Modifications"
+        "Files are encrypted for security",
+        "Security relies on hiding rather than strong protection",
+        "Only administrators can access the files",
+        "Files are stored in secure locations"
       ],
-      "correctAnswer": 2,
-      "explanation": "Installations. The sources list Fabrications, Interceptions, and Modifications as examples of malicious attacks. Installations are not mentioned in this context."
+      "correctAnswer": 1,
+      "explanation": "Security through obscurity means relying on hiding information (like directories in robots.txt) rather than implementing strong security controls. This is generally considered a weak security approach because hidden information can still be discovered and accessed.",
+      "why_others_wrong": "Encryption, administrative access controls, and secure storage are actual security measures, not obscurity. Obscurity specifically refers to hiding rather than protecting."
     },
     {
       "id": 44,
-      "question": "What security mechanism does HTTP basic authentication lack, making it a target for passive attacks?",
+      "question": "In a Local File Inclusion (LFI) attack, what does '../' represent?",
       "options": [
-        "Strong encryption",
-        "Multi-factor authentication",
-        "Regular password updates",
-        "IP address whitelisting"
+        "A file extension",
+        "Directory traversal to parent directory",
+        "A server command",
+        "An SQL injection payload"
       ],
-      "correctAnswer": 0,
-      "explanation": "Strong encryption. HTTP basic authentication is described as insecure because full credentials (user ID and password) are sent in the clear over the wire in the Authorization header."
+      "correctAnswer": 1,
+      "explanation": "'../' is used for directory traversal, allowing attackers to navigate up to parent directories and potentially access files outside the intended web directory structure. Multiple '../' sequences can traverse multiple directory levels.",
+      "why_others_wrong": "File extensions typically come after dots (like .txt). Server commands have different syntax. SQL injection uses database-specific syntax, not file system navigation commands."
     },
     {
       "id": 45,
-      "question": "What is the main objective of a DNS pharming attack?",
+      "question": "What is the main difference between Local File Inclusion (LFI) and Remote File Inclusion (RFI)?",
       "options": [
-        "To overload the DNS server with requests.",
-        "To change the IP address associated with a server maliciously.",
-        "To gain unauthorized access to the DNS server configuration.",
-        "To intercept DNS queries and steal information."
+        "LFI affects databases, RFI affects files",
+        "LFI includes files from the same server, RFI includes files from remote servers",
+        "LFI is more dangerous than RFI",
+        "LFI uses HTTP, RFI uses HTTPS"
       ],
       "correctAnswer": 1,
-      "explanation": "To change the IP address associated with a server maliciously. DNS pharming is defined as an attacker's attempt to maliciously change the IP address linked to a server."
+      "explanation": "LFI includes files from the local server (same system), while RFI includes files from remote servers over the network. RFI is generally considered more dangerous as it allows attackers to execute code hosted on their own servers.",
+      "why_others_wrong": "Both affect file inclusion, not specifically databases. RFI is typically more dangerous than LFI. Both can use various protocols; the distinction is local vs. remote file location."
     },
     {
       "id": 46,
-      "question": "What is the fundamental principle behind DNS cache poisoning?",
+      "question": "Which HTTP response code typically indicates a successful SQL injection attempt?",
       "options": [
-        "Encrypting DNS records to prevent eavesdropping.",
-        "Flooding the DNS server with legitimate requests.",
-        "Giving DNS servers false records and getting them cached.",
-        "Using complex algorithms to generate unpredictable DNS queries."
+        "404 Not Found",
+        "200 OK with unexpected data",
+        "500 Internal Server Error",
+        "403 Forbidden"
       ],
-      "correctAnswer": 2,
-      "explanation": "Giving DNS servers false records and getting them cached. The basic idea of DNS cache poisoning is to provide DNS servers with incorrect records so that they store this false information in their cache."
+      "correctAnswer": 1,
+      "explanation": "A successful SQL injection often returns a 200 OK response but with unexpected or additional data that wasn't intended to be displayed, such as database records from other tables or system information.",
+      "why_others_wrong": "404 indicates the resource wasn't found. 500 errors might indicate a failed injection attempt that caused an error. 403 indicates access is forbidden. Success is indicated by getting the expected response with unexpected data."
     },
     {
       "id": 47,
-      "question": "During which phase of penetration testing do transport layer attacks often begin, according to the sources?",
+      "question": "What is the purpose of the UNION operator in SQL injection attacks?",
       "options": [
-        "Exploitation",
-        "Scanning and enumeration",
-        "Post-exploitation",
-        "Reconnaissance"
+        "To delete database records",
+        "To combine results from multiple SELECT statements",
+        "To update existing records",
+        "To create new database tables"
       ],
       "correctAnswer": 1,
-      "explanation": "Scanning and enumeration. The sources state that transport layer attacks start at the early stages of penetration testing, specifically during the Scanning and enumeration phase."
+      "explanation": "The UNION operator in SQL is used to combine the results of two or more SELECT statements. In SQL injection attacks, it's used to append additional SELECT queries to extract data from other tables or databases.",
+      "why_others_wrong": "DELETE removes records, UPDATE modifies existing records, and CREATE creates new objects. UNION specifically combines query results, making it useful for extracting additional data in injections."
     },
     {
       "id": 48,
-      "question": "What is the primary purpose of the scanning and enumeration phase?",
+      "question": "What information can typically be extracted from the information_schema in SQL injection attacks?",
       "options": [
-        "To exploit identified vulnerabilities.",
-        "To establish persistent access to a target system.",
-        "To confirm information learned during reconnaissance and discover new details about the target.",
-        "To generate reports on security weaknesses."
+        "User passwords",
+        "Database structure and metadata",
+        "Network configurations",
+        "System files"
       ],
-      "correctAnswer": 2,
-      "explanation": "To confirm information learned during reconnaissance and discover new details about the target. During this phase, attackers use various tools to verify previously gathered information and uncover new details about the target network and systems."
+      "correctAnswer": 1,
+      "explanation": "The information_schema contains metadata about the database structure, including table names, column names, data types, and other schema information. This is valuable for attackers to understand the database structure for more targeted attacks.",
+      "why_others_wrong": "User passwords are stored in application-specific tables, not information_schema. Network configurations and system files are not database metadata and wouldn't be in information_schema."
     },
     {
       "id": 49,
-      "question": "In the context of port scanning, what does a TCP open port typically respond with upon receiving a SYN request?",
+      "question": "In the context of XSS attacks, what does DOM stand for?",
       "options": [
-        "A Reset message (RST)",
-        "No response",
-        "An ACK",
-        "A SYN/ACK"
+        "Data Object Model",
+        "Document Object Model",
+        "Dynamic Object Model",
+        "Database Object Model"
       ],
-      "correctAnswer": 3,
-      "explanation": "A SYN/ACK. For a TCP open port, the server will respond to a SYN request with a SYN/ACK packet, indicating that the port is listening and a connection can be established."
+      "correctAnswer": 1,
+      "explanation": "DOM stands for Document Object Model, which is a programming interface for HTML and XML documents. DOM-based XSS attacks manipulate the DOM structure in the browser to execute malicious scripts.",
+      "why_others_wrong": "While the other options might sound plausible, DOM specifically refers to the Document Object Model, which is the standard way browsers represent and interact with HTML/XML documents."
     },
     {
       "id": 50,
-      "question": "What does a server responding with a Reset (RST) message to a TCP SYN request indicate?",
+      "question": "Which of the following is NOT a typical payload classification for malware?",
       "options": [
-        "The port is open and a connection is established.",
-        "The port is open but the request was blocked.",
-        "The port is closed.",
-        "The port is filtered by a firewall."
+        "System Corruption",
+        "Information Theft",
+        "Attack Agents",
+        "Data Compression"
       ],
-      "correctAnswer": 2,
-      "explanation": "The port is closed. A server responding with an RST message to a TCP SYN request indicates that the port is closed."
+      "correctAnswer": 3,
+      "explanation": "Data Compression is not a malware payload classification. The typical payload classifications include System Corruption, Information Theft (including keyloggers and spyware), Attack Agents (bots), Remote Control Facilities, and Stealthing (backdoors and rootkits).",
+      "why_others_wrong": "System Corruption, Information Theft, and Attack Agents are all legitimate malware payload classifications mentioned in the course materials."
     },
     {
       "id": 51,
-      "question": "According to the sources, what does no response to a UDP request typically indicate?",
+      "question": "What is the primary goal of a Remote Access Trojan (RAT)?",
       "options": [
-        "The port is closed.",
-        "The port is open.",
-        "The request was definitely blocked by a firewall.",
-        "The target host is down."
+        "To encrypt files for ransom",
+        "To provide unauthorized remote access to the system",
+        "To monitor network traffic",
+        "To replicate across networks"
       ],
       "correctAnswer": 1,
-      "explanation": "The port is open. No response to a UDP request can indicate that the port is open, although it could also mean a firewall silently blocked the request."
+      "explanation": "Remote Access Trojans are designed to provide attackers with unauthorized remote access to compromised systems, allowing them to control the system as if they were physically present at the machine.",
+      "why_others_wrong": "File encryption is characteristic of ransomware. Network monitoring is done by spyware or legitimate tools. Network replication is characteristic of worms, not RATs."
     },
     {
       "id": 52,
-      "question": "Which type of port scan completes a full TCP handshake, making it reliable but noisy?",
+      "question": "In access control, what does an Access Control Entry (ACE) specify?",
       "options": [
-        "SYN Scan",
-        "FIN Scan",
-        "Connect scan",
-        "Ping Scan"
+        "The user's password requirements",
+        "Allow or deny permissions for a specific user or group",
+        "The system's security policy",
+        "Network access protocols"
       ],
-      "correctAnswer": 2,
-      "explanation": "Connect scan. A connect scan fully connects to the target IP address and port in a complete TCP handshake. It is reliable but generates more logs and is thus considered noisy."
+      "correctAnswer": 1,
+      "explanation": "An Access Control Entry (ACE) specifies whether to allow or deny specific types of access (like read, write, execute) for a particular user or group to a specific resource.",
+      "why_others_wrong": "Password requirements are part of security policies, not ACEs. Security policies are broader than individual ACEs. Network protocols are separate from file/resource access permissions."
     },
     {
       "id": 53,
-      "question": "What is the primary goal of session hijacking?",
+      "question": "What is 'user provisioning' in the context of access control?",
       "options": [
-        "To observe network traffic without interference.",
-        "To take over a session that has authenticated access to a resource.",
-        "To disrupt network services by overwhelming them with requests.",
-        "To inject malicious code into network packets."
+        "Providing users with hardware",
+        "Granting access to new employees with proper approvals",
+        "Training users on security policies",
+        "Monitoring user activities"
       ],
       "correctAnswer": 1,
-      "explanation": "To take over a session that has authenticated access to a resource. Session hijacking aims to seize control of an already authenticated session to gain unauthorized access."
+      "explanation": "User provisioning refers to the process of granting access rights to new employees, typically involving management approvals and verification processes to ensure appropriate access levels are assigned.",
+      "why_others_wrong": "Hardware provision is IT asset management. Security training is awareness education. Activity monitoring is part of accountability/auditing, not provisioning."
     },
     {
       "id": 54,
-      "question": "Session hijacking becomes possible after what critical point in a communication session?",
+      "question": "Which access control model is most commonly used in military and government systems?",
       "options": [
-        "After the establishment of a physical connection.",
-        "After the target system is patched and updated.",
-        "After the authentication process.",
-        "After the encryption of the communication channel."
+        "Discretionary Access Control (DAC)",
+        "Mandatory Access Control (MAC)",
+        "Role-Based Access Control (RBAC)",
+        "Attribute-Based Access Control (ABAC)"
       ],
-      "correctAnswer": 2,
-      "explanation": "After the authentication process. Session hijacking is possible after the target has been authenticated, as attackers then try to exploit the established session."
+      "correctAnswer": 1,
+      "explanation": "MAC is most commonly used in military and government systems because it uses security labels and clearance levels (like Top Secret, Secret, Confidential) that align with government security classifications.",
+      "why_others_wrong": "DAC gives too much control to individual users for high-security environments. RBAC and ABAC, while useful, don't inherently support the security classification systems used in military/government contexts."
     },
     {
       "id": 55,
-      "question": "In a session hijack attack, what action does the attacker often take against the legitimate client to prevent them from interfering?",
+      "question": "What does 'separation of privileges' principle require?",
       "options": [
-        "Forces a password reset.",
-        "Conducts a Denial of Service (DoS) attack.",
-        "Sends a deauthentication packet.",
-        "Spoofs the server's IP address."
+        "Each user has a unique password",
+        "Multiple conditions must be met to access restricted resources",
+        "Users can only access their own files",
+        "Administrative rights are separated from user rights"
       ],
       "correctAnswer": 1,
-      "explanation": "Conducts a Denial of Service (DoS) attack. Attackers in a session hijack sometimes conduct a DoS attack on the client to make them unavailable and prevent them from sending new data that would change the sequence numbers."
+      "explanation": "Separation of privileges requires that multiple conditions or approvals are needed to perform sensitive operations or access restricted resources, preventing any single person from having complete control over critical functions.",
+      "why_others_wrong": "Unique passwords are basic authentication. File ownership is part of DAC. Administrative separation is role-based security but doesn't capture the essence of requiring multiple conditions/approvals."
     },
     {
       "id": 56,
-      "question": "What is the defining characteristic of a Man-in-the-Middle (MITM) attack?",
+      "question": "In the context of malware analysis, what does 'sandbox' refer to?",
       "options": [
-        "The attacker only observes the communication without interaction.",
-        "The attacker intercepts all communications between two hosts and can potentially modify them.",
-        "The attacker exploits vulnerabilities in network protocols to crash systems.",
-        "The attacker replays old network traffic to gain unauthorized access."
+        "A type of malware",
+        "An isolated environment for safe malware execution and analysis",
+        "A malware distribution method",
+        "A type of encryption"
       ],
       "correctAnswer": 1,
-      "explanation": "The attacker intercepts all communications between two hosts and can potentially modify them. In a MITM attack, the attacker positions themselves to intercept and potentially alter all communication between a client and a server."
+      "explanation": "A sandbox is an isolated, controlled environment where potentially malicious code can be executed safely for analysis without affecting the host system or network. It's used to study malware behavior.",
+      "why_others_wrong": "Sandboxes are not malware themselves, but tools for analysis. They're not distribution methods or encryption techniques, but security mechanisms for safe analysis."
     },
     {
       "id": 57,
-      "question": "In a blind hijack attack, what critical information about the communication stream does the attacker lack?",
+      "question": "What is the main purpose of CSRF tokens?",
       "options": [
-        "The IP addresses of the communicating parties.",
-        "The ports being used for communication.",
-        "The sequence numbers of the packets and the responses to injected data.",
-        "The type of encryption being used."
+        "To encrypt form data",
+        "To prevent Cross-Site Request Forgery attacks",
+        "To validate user credentials",
+        "To compress HTTP requests"
       ],
-      "correctAnswer": 2,
-      "explanation": "The sequence numbers of the packets and the responses to injected data. A blind hijack attack is characterized by the attacker's inability to see the responses to the data they inject because they must blindly guess the sequence numbers."
+      "correctAnswer": 1,
+      "explanation": "CSRF tokens are unique, unpredictable values included in forms or requests to verify that the request actually came from the legitimate user and not from a malicious site attempting to forge the request.",
+      "why_others_wrong": "CSRF tokens don't encrypt data - that's done by HTTPS. They don't validate credentials - that's authentication. They don't compress requests - that's handled by HTTP compression."
     },
     {
       "id": 58,
-      "question": "What is the primary characteristic of a session replay attack?",
+      "question": "Which type of attack exploits the trust relationship between a user's browser and a website?",
       "options": [
-        "Intercepting and modifying ongoing communications.",
-        "Injecting crafted packets into an existing session.",
-        "Creating new sessions or utilizing old, captured session information.",
-        "Disrupting a session by flooding it with invalid packets."
+        "SQL Injection",
+        "Cross-Site Request Forgery (CSRF)",
+        "Command Injection",
+        "Directory Traversal"
       ],
-      "correctAnswer": 2,
-      "explanation": "In a session replay attack, the attacker reuses captured session data to create new sessions or utilize old ones."
+      "correctAnswer": 1,
+      "explanation": "CSRF attacks exploit the trust relationship between a user's browser and a website by using the user's authenticated session to perform unauthorized actions without their knowledge or consent.",
+      "why_others_wrong": "SQL Injection exploits database queries. Command Injection exploits system commands. Directory Traversal exploits file system navigation. Only CSRF specifically exploits browser-website trust relationships."
     },
     {
       "id": 59,
-      "question": "At which layer of the OSI model are IP vulnerabilities primarily found?",
+      "question": "What is 'clickjacking' also known as?",
       "options": [
-        "Transport layer",
-        "Data Link layer",
-        "Network layer",
-        "Application layer"
+        "Cross-site scripting",
+        "UI redress attack",
+        "SQL injection",
+        "Session hijacking"
       ],
-      "correctAnswer": 2,
-      "explanation": "The section on IP vulnerabilities falls under Network layer attacks in the outline, indicating that these vulnerabilities are at the network layer."
+      "correctAnswer": 1,
+      "explanation": "Clickjacking is also known as a UI (User Interface) redress attack because it involves manipulating the user interface to trick users into clicking on elements they didn't intend to click, often by using transparent or opaque layers.",
+      "why_others_wrong": "Cross-site scripting involves malicious scripts. SQL injection targets databases. Session hijacking involves taking over user sessions. Only UI redress specifically describes the interface manipulation aspect of clickjacking."
     },
     {
       "id": 60,
-      "question": "What is a key characteristic of IP that makes eavesdropping possible?",
+      "question": "In malware classification, what does 'persistence' refer to?",
       "options": [
-        "Mandatory encryption of all data.",
-        "Source authentication for every packet.",
-        "Unencrypted transmission.",
-        "Built-in bandwidth constraints."
+        "How long malware stays active in memory",
+        "Whether malware survives system reboots",
+        "How often malware replicates",
+        "The malware's resistance to detection"
       ],
-      "correctAnswer": 2,
-      "explanation": "One of the listed IP vulnerabilities is unencrypted transmission, making it possible to eavesdrop on data at any intermediate host during routing."
+      "correctAnswer": 1,
+      "explanation": "In malware classification, persistence refers to whether malware can survive system reboots and maintain its presence on the system. Persistent malware installs itself in ways that allow it to restart when the system boots.",
+      "why_others_wrong": "Memory duration is about transient behavior. Replication frequency is about propagation. Detection resistance is about stealth capabilities. Persistence specifically refers to surviving reboots."
     },
     {
       "id": 61,
-      "question": "What is the main purpose of an IP spoofing attack?",
+      "question": "What is the difference between 'static' and 'dynamically updated' malware?",
       "options": [
-        "To encrypt network traffic.",
-        "To send packets from one IP address that appear to originate from another.",
-        "To improve the routing efficiency of network packets.",
-        "To prevent unauthorized access to a network by filtering IP addresses."
+        "Static malware doesn't move, dynamic malware spreads",
+        "Static malware has no network support, dynamic malware can be updated remotely",
+        "Static malware targets files, dynamic malware targets processes",
+        "Static malware is encrypted, dynamic malware is not"
       ],
       "correctAnswer": 1,
-      "explanation": "IP spoofing is an attempt to send packets with a forged source IP address."
+      "explanation": "Static malware operates independently without external support or updates, while dynamically updated malware can communicate with external infrastructure to receive new instructions, updates, or additional payloads.",
+      "why_others_wrong": "Movement/spreading relates to propagation methods. File vs. process targeting relates to attack vectors. Encryption relates to evasion techniques. The key distinction is external infrastructure support for updates."
     },
     {
       "id": 62,
-      "question": "What is a critical requirement for a successful IP spoofing attack?",
+      "question": "What characterizes 'coordinated attack' malware?",
       "options": [
-        "The attacker must have physical access to the target network.",
-        "The spoofed IP address must be actively used by another device on the network.",
-        "The spoofed IP cannot exist with another user on the network.",
-        "The attacker must know the administrator's password."
+        "It attacks multiple file types",
+        "It uses multiple infection vectors",
+        "It participates in larger-scale attacks with other compromised systems",
+        "It coordinates with antivirus software"
       ],
       "correctAnswer": 2,
-      "explanation": "For IP spoofing to succeed, the spoofed IP address cannot be in use by another device on the network."
+      "explanation": "Coordinated attack malware participates in larger-scale attacks where multiple compromised systems work together, such as in DDoS attacks or botnets. Individual instances alone wouldn't cause significant damage.",
+      "why_others_wrong": "Multiple file types and infection vectors relate to versatility, not coordination. Coordination with antivirus would be counterproductive for malware. Coordination specifically refers to working with other compromised systems."
     },
     {
       "id": 63,
-      "question": "At which layer of the OSI model do sniffers primarily operate?",
+      "question": "Which malware propagation mechanism is most commonly associated with email attachments?",
       "options": [
-        "Network layer",
-        "Transport layer",
-        "Physical and Data Link layers",
-        "Application layer"
+        "Worm propagation",
+        "Virus infection",
+        "Social engineering attacks",
+        "Drive-by downloads"
       ],
       "correctAnswer": 2,
-      "explanation": "Based on the OSI model to cyber threats mapping, sniffing occurs at the Data Link layer, which interacts closely with the physical layer."
+      "explanation": "Email attachments typically rely on social engineering attacks to convince users to open malicious attachments. The malware itself might be a virus or trojan, but the propagation mechanism is social engineering.",
+      "why_others_wrong": "Worms typically spread automatically across networks. Virus infection refers to the malware type, not propagation method. Drive-by downloads occur through web browsing, not email attachments."
     },
     {
       "id": 64,
-      "question": "What network adapter mode allows a sniffer to capture all traffic regardless of the destination address?",
+      "question": "What is 'malvertising'?",
       "options": [
-        "Normal mode",
-        "Filtered mode",
-        "Promiscuous mode (also called monitor mode)",
-        "Bridged mode"
+        "Advertising antivirus software",
+        "Malware distributed through advertisements",
+        "Marketing strategies for malware",
+        "Fake antivirus advertisements"
       ],
-      "correctAnswer": 2,
-      "explanation": "When a network adapter is put in promiscuous mode, it captures all network traffic it can hear, regardless of the intended destination."
+      "correctAnswer": 1,
+      "explanation": "Malvertising refers to malware distributed through online advertisements. Attackers pay for ads on legitimate websites, embedding malware that infects visitors without compromising the host website.",
+      "why_others_wrong": "Antivirus advertising is legitimate marketing. Malware doesn't need marketing strategies. While fake antivirus ads exist, malvertising specifically refers to malware distribution through any type of online advertising."
     },
     {
       "id": 65,
-      "question": "Which of the following protocols transmits information in clear text, making it vulnerable to sniffing?",
+      "question": "What is a 'macro virus'?",
       "options": [
-        "SSH (Secure Shell)",
-        "HTTPS (HTTP Secure)",
-        "Telnet",
-        "TLS (Transport Layer Security)"
+        "A very large virus",
+        "A virus that infects scripting code in documents",
+        "A virus that affects macroscopic systems",
+        "A virus with multiple components"
       ],
-      "correctAnswer": 2,
-      "explanation": "The sources explicitly mention that keystrokes transmitted over Telnet can be easily sniffed because the communication is not encrypted."
+      "correctAnswer": 1,
+      "explanation": "A macro virus infects scripting code (macros) used in documents like Microsoft Word or Excel files. These viruses are platform-independent and can spread through document sharing.",
+      "why_others_wrong": "Size is not the defining characteristic. 'Macroscopic' doesn't apply to computer viruses. Multiple components describe composite malware, not macro viruses specifically."
     },
     {
       "id": 66,
-      "question": "What is the primary goal of a MAC flooding attack?",
+      "question": "What makes macro viruses particularly threatening according to the lecture notes?",
       "options": [
-        "To intercept network traffic by forcing it through the attacker's device.",
-        "To flood the switch with fake MAC addresses, overwhelming its CAM table.",
-        "To associate the attacker's MAC address with a legitimate IP address.",
-        "To block network traffic by manipulating MAC address filters."
+        "They are platform independent",
+        "They spread faster than other viruses",
+        "They are harder to detect",
+        "They cause more damage"
       ],
-      "correctAnswer": 1,
-      "explanation": "The goal of MAC flooding is to overwhelm the switch's Content Addressable Memory (CAM) table with bogus MAC addresses."
+      "correctAnswer": 0,
+      "explanation": "Macro viruses are particularly threatening because they are platform independent - they can run on any system that supports the application containing the macro, unlike executable viruses that are system-specific.",
+      "why_others_wrong": "Speed, detection difficulty, and damage level can vary among different malware types. The key distinguishing threat of macro viruses is their ability to work across different platforms and operating systems."
     },
     {
       "id": 67,
-      "question": "What security mechanism uses \"block\" or \"allow\" lists of MAC addresses to control network access?",
+      "question": "In access control systems, what is a 'security kernel'?",
       "options": [
-        "MAC spoofing",
-        "ARP poisoning",
-        "MAC filtering",
-        "Network segmentation"
+        "The core antivirus component",
+        "The central point that enforces access control",
+        "The encrypted part of the operating system",
+        "The user interface for security settings"
       ],
-      "correctAnswer": 2,
-      "explanation": "MAC filtering involves creating lists of allowed or blocked MAC addresses to control which devices can access a network."
+      "correctAnswer": 1,
+      "explanation": "The security kernel is the central component that enforces access control for computer systems. It implements the reference monitor concept and handles all access requests according to the security policy rules.",
+      "why_others_wrong": "Antivirus components are separate from access control kernels. Encryption relates to data protection, not access control enforcement. User interfaces are presentation layers, not enforcement mechanisms."
     },
     {
       "id": 68,
-      "question": "What is the fundamental technique used in ARP spoofing?",
+      "question": "What does the 'reference monitor' concept require?",
       "options": [
-        "Exploiting vulnerabilities in routing protocols.",
-        "Manipulating the ARP cache by sending forged ARP packets.",
-        "Overwhelming the network with ARP requests.",
-        "Cracking the encryption used by the ARP protocol."
+        "All access requests must be logged",
+        "All access requests must be mediated by the security kernel",
+        "All users must have monitoring software",
+        "All systems must have external monitoring"
       ],
       "correctAnswer": 1,
-      "explanation": "ARP spoofing involves sending spoofed ARP packets to trick devices into associating the attacker's MAC address with a legitimate IP address."
+      "explanation": "The reference monitor concept requires that all access requests be mediated (intercepted and controlled) by the security kernel, ensuring that no access can bypass the security controls.",
+      "why_others_wrong": "While logging is important for accountability, it's not the core reference monitor requirement. User monitoring software and external monitoring are additional security measures, not reference monitor requirements."
     },
     {
       "id": 69,
-      "question": "Why are ARP spoofing attacks often successful on local networks?",
+      "question": "What is the main advantage of using federated identities?",
       "options": [
-        "ARP requests are always encrypted.",
-        "ARP tables are static and rarely updated.",
-        "Machines inherently trust other devices on the same network.",
-        "Firewalls always allow ARP traffic."
+        "Stronger password requirements",
+        "Users can log in using external service credentials",
+        "Faster authentication processing",
+        "Better encryption of credentials"
       ],
-      "correctAnswer": 2,
-      "explanation": "The success of ARP spoofing is partly due to the fact that devices on the same local network typically trust each other."
+      "correctAnswer": 1,
+      "explanation": "Federated identities allow users to access multiple services using credentials from an external identity provider (like Google or Facebook), reducing the need to create and manage multiple accounts.",
+      "why_others_wrong": "Password strength depends on the identity provider's policies. Speed and encryption are implementation details. The main advantage is credential reuse across multiple services."
     },
     {
       "id": 70,
-      "question": "What is a common initial step an attacker might take in conjunction with ARP poisoning to facilitate interception of traffic?",
+      "question": "In the context of social engineering, what is 'baiting'?",
       "options": [
-        "Disabling the target's firewall.",
-        "Forcing the target to renew its DHCP lease.",
-        "Sending unnecessary ARP replies to poison the ARP cache.",
-        "Cracking the target's Wi-Fi password."
+        "Asking direct questions to gather information",
+        "Offering something enticing to trigger a desired action",
+        "Following someone through secure doors",
+        "Creating false scenarios to build trust"
       ],
-      "correctAnswer": 2,
-      "explanation": "ARP poisoning involves sending unsolicited ARP replies to corrupt the ARP cache of victims."
+      "correctAnswer": 1,
+      "explanation": "Baiting involves offering something enticing (like free software, USB drives, or prizes) to lure victims into taking actions that compromise security, such as downloading malware or revealing information.",
+      "why_others_wrong": "Direct questioning is more related to elicitation. Following through doors is tailgating. Creating false scenarios is pretexting. Baiting specifically involves attractive offers or lures."
     },
     {
       "id": 71,
-      "question": "What is the primary objective of a Denial-of-Service (DoS) attack?",
+      "question": "What is 'tailgating' in physical security terms?",
       "options": [
-        "To gain unauthorized access to sensitive data.",
-        "To modify system configurations without permission.",
-        "To prevent legitimate users from accessing and/or using a system and its services.",
-        "To spread malicious software to other systems on the network."
+        "Following someone's digital footprint",
+        "Monitoring someone's online activities",
+        "Following someone through a secure access point",
+        "Copying someone's access credentials"
       ],
       "correctAnswer": 2,
-      "explanation": "A DoS attack aims to disrupt access to a system and its services for legitimate users."
+      "explanation": "Tailgating (also called piggybacking) is a physical security breach where an unauthorized person follows an authorized person through a secure access point, such as a locked door or security checkpoint.",
+      "why_others_wrong": "Digital footprints, online monitoring, and credential copying are cybersecurity concepts. Tailgating specifically refers to physical unauthorized access by following someone."
     },
     {
       "id": 72,
-      "question": "What distinguishes a Distributed Denial of Service (DDoS) attack from a regular DoS attack?",
+      "question": "Which authentication method provides the highest level of security?",
       "options": [
-        "A DDoS attack uses encryption, while a DoS attack does not.",
-        "A DDoS attack targets network hardware, while a DoS attack targets software.",
-        "A DDoS attack uses multiple hosts to amplify the attack.",
-        "A DDoS attack is easily traceable to a single source, unlike a DoS attack."
+        "Single-factor authentication",
+        "Two-factor authentication",
+        "Multi-factor authentication",
+        "Biometric authentication alone"
       ],
       "correctAnswer": 2,
-      "explanation": "The key difference is that a DDoS attack utilizes numerous compromised systems to generate a large volume of malicious traffic."
+      "explanation": "Multi-factor authentication (MFA) provides the highest security by combining multiple authentication factors (something you know, have, are, or where you are), making it much more difficult for attackers to compromise all factors.",
+      "why_others_wrong": "Single-factor authentication is the weakest. Two-factor is stronger than single but not as strong as multi-factor. Biometric authentication alone is still single-factor, even though it's a strong factor."
     },
     {
       "id": 73,
-      "question": "What are the compromised systems used in a DDoS attack often referred to as?",
+      "question": "What is the primary purpose of input validation in preventing web attacks?",
       "options": [
-        "Gateways",
-        "Routers",
-        "Agents, bots, or zombies",
-        "Firewalls"
+        "To improve application performance",
+        "To ensure data meets expected format and constraints",
+        "To encrypt user input",
+        "To log all user activities"
       ],
-      "correctAnswer": 2,
-      "explanation": "The malicious code implanted on victim systems across the Internet that are used to carry out DDoS attacks are called agents, bots, or zombies."
+      "correctAnswer": 1,
+      "explanation": "Input validation ensures that user input meets expected format, type, length, and content constraints before processing, preventing malicious input from being executed as code or commands.",
+      "why_others_wrong": "Performance improvement is a side benefit, not the primary purpose. Encryption protects data in transit or storage. Logging is for auditing and monitoring. Validation specifically prevents malicious input processing."
     },
     {
       "id": 74,
-      "question": "What type of network level DoS/DDoS attack involves sending a large number of ping packets to overwhelm the victim?",
+      "question": "What is 'output encoding' used to prevent?",
       "options": [
-        "Smurf attack",
-        "Reflected attack",
-        "ICMP flood or Ping flood",
-        "DHCP starvation"
+        "SQL Injection",
+        "Cross-Site Scripting (XSS)",
+        "Command Injection",
+        "Directory Traversal"
       ],
-      "correctAnswer": 2,
-      "explanation": "An ICMP flood, also known as a ping flood, involves overwhelming the target with a large number of ping packets."
+      "correctAnswer": 1,
+      "explanation": "Output encoding is primarily used to prevent XSS attacks by ensuring that user input is properly encoded when displayed in web pages, preventing browsers from interpreting the input as executable code.",
+      "why_others_wrong": "SQL Injection is prevented by parameterized queries. Command Injection requires input validation and command sanitization. Directory Traversal needs path validation. Output encoding specifically addresses XSS."
     },
     {
       "id": 75,
-      "question": "What is a key characteristic of a Smurf attack?",
+      "question": "What are 'parameterized queries' designed to prevent?",
       "options": [
-        "It directly targets the attacker's own network.",
-        "It uses compromised IoT devices to launch the attack.",
-        "It sends ICMP broadcasts with a spoofed victim IP address, causing network devices to flood the victim with replies.",
-        "It exploits vulnerabilities in DNS servers."
+        "Cross-Site Scripting",
+        "SQL Injection",
+        "Command Injection", 
+        "Session Hijacking"
       ],
-      "correctAnswer": 2,
-      "explanation": "In a Smurf attack, the attacker spoofs the victim's IP address as the source of ICMP broadcast messages, causing many hosts on the network to reply to the victim."
+      "correctAnswer": 1,
+      "explanation": "Parameterized queries (also called prepared statements) are designed to prevent SQL Injection by separating SQL code from data, ensuring that user input cannot be interpreted as SQL commands.",
+      "why_others_wrong": "XSS is prevented by output encoding. Command Injection requires command sanitization. Session Hijacking is prevented by secure session management. Parameterized queries specifically target SQL Injection."
     },
     {
       "id": 76,
-      "question": "What is the main characteristic of a SYN flood attack at the transport layer?",
+      "question": "What is the principle of 'defense in depth'?",
       "options": [
-        "Sending a large number of UDP packets to random ports.",
-        "Exploiting weaknesses in the application layer protocols.",
-        "Using forged packets with the SYN flag set, overwhelming the victim's connection resources.",
-        "Sending oversized ICMP packets to crash the target system."
+        "Using the strongest possible single security control",
+        "Implementing multiple layers of security controls",
+        "Focusing only on perimeter security",
+        "Using only technical security controls"
       ],
-      "correctAnswer": 2,
-      "explanation": "A SYN flood attack involves sending numerous SYN requests without completing the TCP handshake, consuming server resources."
+      "correctAnswer": 1,
+      "explanation": "Defense in depth involves implementing multiple layers of security controls so that if one layer fails, other layers continue to provide protection. This creates a comprehensive security strategy.",
+      "why_others_wrong": "Single strong controls can fail. Perimeter-only security ignores internal threats. Technical-only controls ignore human and physical factors. Multiple layers provide comprehensive protection."
     },
     {
       "id": 77,
-      "question": "What is the goal of an HTTP flood attack at the application layer?",
+      "question": "In malware analysis, what does 'static analysis' involve?",
       "options": [
-        "To intercept sensitive information transmitted over HTTP.",
-        "To bombards Web servers with HTTP requests, consuming considerable resources.",
-        "To modify the content displayed on a website.",
-        "To gain administrative access to the web server."
+        "Running malware in a controlled environment",
+        "Examining malware code without executing it",
+        "Monitoring network traffic from malware",
+        "Testing malware on different operating systems"
       ],
       "correctAnswer": 1,
-      "explanation": "An HTTP flood aims to overwhelm a web server by sending a high volume of HTTP requests."
+      "explanation": "Static analysis involves examining malware code, structure, and properties without actually executing the malware. This includes analyzing file headers, strings, assembly code, and other characteristics.",
+      "why_others_wrong": "Running malware in controlled environments is dynamic analysis. Network monitoring is behavioral analysis. Multi-platform testing is compatibility analysis. Static analysis specifically avoids execution."
     },
     {
       "id": 78,
-      "question": "What makes a \"Slowloris\" attack a potent variant of an HTTP flood?",
+      "question": "What is 'dynamic analysis' in malware research?",
       "options": [
-        "It encrypts the HTTP requests, making them harder to filter.",
-        "It exploits vulnerabilities in the underlying operating system.",
-        "It attempts to monopolize by sending HTTP requests that never complete, eventually consuming the web server's connection capacity.",
-        "It distributes the attack across a large number of compromised hosts."
+        "Analyzing code without execution",
+        "Observing malware behavior while it's running",
+        "Studying malware source code",
+        "Comparing different malware families"
       ],
-      "correctAnswer": 2,
-      "explanation": "Slowloris works by sending partial HTTP requests and keeping connections open for a long time, exhausting the server's connection limits."
+      "correctAnswer": 1,
+      "explanation": "Dynamic analysis involves observing malware behavior while it's actually running in a controlled environment, monitoring its actions, network communications, file modifications, and system interactions.",
+      "why_others_wrong": "Non-execution analysis is static analysis. Source code study is also static analysis. Family comparison is classification analysis. Dynamic analysis requires actual execution and observation."
     },
     {
       "id": 79,
-      "question": "What is a key aspect that makes responding to DDoS attacks launched by IoT botnets challenging?",
+      "question": "What is a 'zero-day exploit'?",
       "options": [
-        "The traffic is usually encrypted with strong algorithms.",
-        "The traffic originates from a small number of highly sophisticated devices.",
-        "The traffic is coming from a large number of devices in different networks.",
-        "IoT devices have very high processing power, making the attack traffic difficult to distinguish."
+        "An exploit that takes zero days to execute",
+        "An exploit targeting unknown vulnerabilities",
+        "An exploit that causes no damage",
+        "An exploit that self-destructs immediately"
       ],
-      "correctAnswer": 2,
-      "explanation": "DDoS attacks using IoT botnets are hard to mitigate because the attack traffic is distributed across a vast number of compromised devices on various networks."
+      "correctAnswer": 1,
+      "explanation": "A zero-day exploit targets previously unknown vulnerabilities for which no patches or fixes exist. The term 'zero-day' refers to the fact that developers have had zero days to create and distribute a fix.",
+      "why_others_wrong": "Execution time is not the defining characteristic. Zero damage contradicts the nature of exploits. Self-destruction is not typical. The key aspect is targeting unknown, unpatched vulnerabilities."
     },
     {
       "id": 80,
-      "question": "According to the OSI model mapping, at which layer do attacks like Ping of Death (PoD) and Smurf attack primarily occur?",
+      "question": "What is the main difference between 'whitelisting' and 'blacklisting' in security?",
       "options": [
-        "Transport layer",
-        "Session layer",
-        "Network layer",
-        "Data Link layer"
+        "Whitelisting blocks everything, blacklisting allows everything",
+        "Whitelisting allows only approved items, blacklisting blocks known bad items",
+        "Whitelisting is for users, blacklisting is for applications",
+        "Whitelisting uses encryption, blacklisting does not"
       ],
-      "correctAnswer": 2,
-      "explanation": "The OSI model mapping in the sources places Ping of Death (PoD) attack and Smurf attack under the Network layer threats."
+      "correctAnswer": 1,
+      "explanation": "Whitelisting (allow-listing) permits only explicitly approved items and blocks everything else, while blacklisting (deny-listing) blocks known bad items but allows everything else by default.",
+      "why_others_wrong": "The first option reverses the concepts. Both can apply to users, applications, and other entities. Encryption is not a distinguishing factor between these approaches."
     },
     {
       "id": 81,
-      "question": "Which of the following network security attack aims to disrupt access to a system or its services by legitimate users?",
+      "question": "In access control, what is 'privilege escalation'?",
       "options": [
-        "Session Hijacking",
-        "IP Spoofing",
-        "Denial-of-Service (DoS)",
-        "Man-in-the-Middle (MITM)"
+        "Gaining higher-level permissions than originally granted",
+        "Using more system resources than allocated",
+        "Accessing files faster than normal",
+        "Creating new user accounts"
       ],
-      "correctAnswer": 2,
-      "explanation": "This type of attack prevents legitimate users from accessing and/or using the system and its services."
+      "correctAnswer": 0,
+      "explanation": "Privilege escalation occurs when a user or process gains higher-level permissions or access rights than they were originally granted, often exploiting vulnerabilities or misconfigurations to gain administrative access.",
+      "why_others_wrong": "Resource usage is performance-related, not privilege-related. Access speed doesn't relate to permission levels. Account creation is a specific administrative function, not general privilege escalation."
     },
     {
       "id": 82,
-      "question": "In which layer of the OSI model do DNS attacks primarily occur?",
+      "question": "What is 'horizontal privilege escalation'?",
       "options": [
-        "Transport Layer",
-        "Network Layer",
-        "Application Layer",
-        "Physical Layer"
+        "Gaining administrative privileges",
+        "Accessing resources of other users at the same privilege level",
+        "Escalating privileges across different systems",
+        "Increasing system resource access"
       ],
-      "correctAnswer": 2,
-      "explanation": "DNS is explicitly listed under Application layer attacks in the provided sources."
+      "correctAnswer": 1,
+      "explanation": "Horizontal privilege escalation involves accessing resources or accounts belonging to other users at the same privilege level, rather than gaining higher-level administrative access.",
+      "why_others_wrong": "Administrative privilege gain is vertical escalation. Cross-system escalation relates to lateral movement. System resources are not privilege levels but computational resources."
     },
     {
       "id": 83,
-      "question": "What is the main goal of DNS cache poisoning?",
+      "question": "What is 'vertical privilege escalation'?",
       "options": [
-        "To intercept user credentials during authentication",
-        "To flood DNS servers with excessive requests",
-        "To give DNS servers false records and get them cached",
-        "To disrupt the resolution of domain names"
+        "Accessing other users' accounts",
+        "Gaining higher-level administrative privileges",
+        "Moving between different applications",
+        "Escalating across network segments"
       ],
-      "correctAnswer": 2,
-      "explanation": "The source clearly states that the basic idea of DNS cache poisoning is to give DNS servers false records so they are stored in the cache."
+      "correctAnswer": 1,
+      "explanation": "Vertical privilege escalation involves gaining higher-level privileges, typically moving from standard user access to administrative or root-level access within the same system.",
+      "why_others_wrong": "Accessing other users' accounts is horizontal escalation. Application movement is lateral movement. Network segment movement is network-based lateral movement, not privilege escalation."
     },
     {
       "id": 84,
-      "question": "During the scanning and enumeration phase, what is the purpose of banner grabbing?",
+      "question": "What does 'fail-safe defaults' principle require?",
       "options": [
-        "To flood network ports with unsolicited requests",
-        "To bypass firewall rules and gain unauthorized access",
-        "To identify and probe services and Operating Systems running behind open ports",
-        "To capture network traffic and analyze packet headers"
+        "Systems should fail completely when errors occur",
+        "Access should be denied by default unless explicitly allowed",
+        "Backup systems should activate automatically",
+        "Default passwords should be complex"
       ],
-      "correctAnswer": 2,
-      "explanation": "Banner grabbing is used to obtain information about the services and Operating Systems running on target ports."
+      "correctAnswer": 1,
+      "explanation": "The fail-safe defaults principle requires that access decisions should be based on permission rather than exclusion - default access should be denied unless explicitly granted.",
+      "why_others_wrong": "Complete system failure is not safe or practical. Backup activation is fault tolerance. Password complexity is good practice but not the fail-safe defaults principle."
     },
     {
       "id": 85,
-      "question": "What response from a server to a TCP SYN request typically indicates that the port is open?",
+      "question": "What does 'complete mediation' principle ensure?",
       "options": [
-        "RST (Reset) message",
-        "No response",
-        "ICMP type 3 response",
-        "SYN/ACK (Synchronize-Acknowledge) packet"
+        "All users are authenticated",
+        "Every access attempt is checked against access controls",
+        "All data is encrypted",
+        "All activities are logged"
       ],
-      "correctAnswer": 3,
-      "explanation": "A server responding with a SYN/ACK packet after receiving a SYN request indicates an open port."
+      "correctAnswer": 1,
+      "explanation": "Complete mediation ensures that every access attempt must be checked against the access control mechanism - no access can bypass security controls.",
+      "why_others_wrong": "Authentication is important but separate from mediation. Encryption protects data but doesn't control access. Logging records activities but doesn't control them. Mediation specifically means checking every access attempt."
     },
     {
       "id": 86,
-      "question": "Which type of port scan completes the full TCP handshake, making it reliable but also very noisy?",
+      "question": "What is meant by 'least common mechanism' principle?",
       "options": [
-        "SYN Scan",
-        "FIN Scan",
-        "Connect Scan",
-        "Ping Scan"
+        "Use the simplest security mechanisms",
+        "Minimize shared resources between users", 
+        "Use standard security protocols",
+        "Implement the most common security controls"
       ],
-      "correctAnswer": 2,
-      "explanation": "The connect scan fully connects to the target IP address and port in a complete TCP handshake and is described as reliable but very noisy."
+      "correctAnswer": 1,
+      "explanation": "The least common mechanism principle states that mechanisms allowing resources to be shared by multiple users should be minimized, reducing the risk of unauthorized information transfer between users.",
+      "why_others_wrong": "Simplicity is the economy of mechanism principle. Standard protocols relate to interoperability. Common controls relate to best practices. This principle specifically addresses shared resource risks."
     },
     {
       "id": 87,
-      "question": "What is the primary goal of session hijacking?",
+      "question": "What does 'psychological acceptability' principle address?",
       "options": [
-        "To eavesdrop on network communications without being detected",
-        "To take over a session that has authenticated access to a resource",
-        "To modify data in transit between two communicating hosts",
-        "To prevent legitimate users from accessing network resources"
+        "User mental health considerations",
+        "Security interfaces should be intuitive and user-friendly",
+        "Users should accept all security policies",
+        "Psychological profiling of attackers"
       ],
       "correctAnswer": 1,
-      "explanation": "Session hijacking aims to take control of an already authenticated session to gain unauthorized access."
+      "explanation": "Psychological acceptability means that security mechanisms should have user-friendly interfaces that match user expectations, making security controls easier to use correctly and reducing user resistance.",
+      "why_others_wrong": "Mental health is not a security design principle. Policy acceptance is important but not what this principle addresses. Attacker profiling is threat modeling, not interface design."
     },
     {
       "id": 88,
-      "question": "In a session hijacking attack, what is the attacker typically trying to predict or determine?",
+      "question": "What should the 'work factor' principle consider when designing security?",
       "options": [
-        "The encryption algorithm being used",
-        "The server's operating system",
-        "The sequence numbers of the packets",
-        "The user's login credentials"
+        "How much work users must do",
+        "The cost of circumventing security versus attacker resources",
+        "The amount of computational work required",
+        "The work required to maintain security"
       ],
-      "correctAnswer": 2,
-      "explanation": "For a session hijack to be successful, the attacker must successfully determine or guess the sequence numbers."
+      "correctAnswer": 1,
+      "explanation": "The work factor principle states that the cost and effort required to circumvent a security mechanism should be compared with the resources and motivation of potential attackers when designing security.",
+      "why_others_wrong": "User effort is usability consideration. Computational work is performance consideration. Maintenance work is operational consideration. Work factor specifically relates to attack cost versus attacker capability."
     },
     {
       "id": 89,
-      "question": "Which type of session hijacking attack involves the attacker positioning themselves between two communicating hosts and intercepting all communications?",
+      "question": "What is the purpose of 'compromise recording' principle?",
       "options": [
-        "Session Replay Attack",
-        "Blind Hijack Attack",
-        "Man in the Middle Attack (MITM)",
-        "Session Hijack Attack"
+        "To document security policy compromises",
+        "To record all security breaches for analysis and future prevention",
+        "To record negotiated security agreements",
+        "To document system performance compromises"
       ],
-      "correctAnswer": 2,
-      "explanation": "In a Man in the Middle attack, the attacker intercepts all communications by positioning themselves between the client and the server."
+      "correctAnswer": 1,
+      "explanation": "Compromise recording principle suggests that mechanisms to record security compromises and intrusions are as important as preventing them, enabling corrective action and future improvements.",
+      "why_others_wrong": "Policy compromises are different from security breaches. Negotiated agreements are contracts, not security incidents. Performance compromises are not security compromises."
     },
     {
       "id": 90,
-      "question": "What is the fundamental vulnerability that IP spoofing attacks exploit?",
+      "question": "In web application security, what is 'input sanitization'?",
       "options": [
-        "Weak encryption of network traffic",
-        "Lack of source authentication in IP packets",
-        "Predictable TCP sequence numbers",
-        "Insecure routing protocols"
+        "Cleaning user interfaces",
+        "Removing or escaping potentially dangerous characters from input",
+        "Encrypting user input",
+        "Compressing input data"
       ],
       "correctAnswer": 1,
-      "explanation": "IP vulnerabilities include the lack of source authentication, allowing senders to spoof the source address."
+      "explanation": "Input sanitization involves removing, escaping, or neutralizing potentially dangerous characters or patterns from user input before processing, preventing injection attacks and other input-based vulnerabilities.",
+      "why_others_wrong": "Interface cleaning is user experience design. Encryption protects data but doesn't sanitize it. Compression reduces size but doesn't remove dangerous content."
     },
     {
       "id": 91,
-      "question": "What is a key requirement for a successful IP spoofing attack?",
+      "question": "What is 'session fixation' attack?",
       "options": [
-        "The attacker must be on the same network segment as the victim",
-        "The attacker must know the victim's login credentials",
-        "The spoofed IP address cannot be in use by another active device on the network",
-        "The attacker must have physical access to the network infrastructure"
+        "Stealing existing session tokens",
+        "Forcing a user to use a predetermined session ID",
+        "Extending session timeouts indefinitely", 
+        "Creating multiple sessions for one user"
       ],
-      "correctAnswer": 2,
-      "explanation": "For IP spoofing to succeed, the spoofed IP cannot exist with another user on the network."
+      "correctAnswer": 1,
+      "explanation": "Session fixation attacks involve forcing a victim to use a session ID that the attacker already knows, allowing the attacker to hijack the session once the victim authenticates.",
+      "why_others_wrong": "Stealing existing tokens is session hijacking. Extending timeouts is session management issue. Multiple sessions is session management complexity, not fixation."
     },
     {
       "id": 92,
-      "question": "What is the function of a network sniffer?",
+      "question": "What is the main purpose of 'Content Security Policy' (CSP)?",
       "options": [
-        "To actively block malicious network traffic",
-        "To generate and send network packets",
-        "To capture network traffic as it moves across the network",
-        "To route network packets to their intended destination"
+        "To encrypt web content",
+        "To prevent XSS attacks by controlling resource loading",
+        "To authenticate users",
+        "To compress web content"
       ],
-      "correctAnswer": 2,
-      "explanation": "A sniffer is designed to capture, or \"sniff,\" network traffic as it moves across the network."
+      "correctAnswer": 1,
+      "explanation": "Content Security Policy (CSP) is a security mechanism that helps prevent XSS attacks by allowing web developers to control which resources (scripts, stylesheets, images) can be loaded and executed by the browser.",
+      "why_others_wrong": "Encryption is handled by HTTPS. Authentication is handled by login systems. Compression is handled by HTTP compression. CSP specifically controls resource loading to prevent code injection."
     },
     {
       "id": 93,
-      "question": "Placing a network adapter in which mode allows a sniffer to capture all traffic regardless of the destination address?",
+      "question": "What is 'SQL injection blind attack'?",
       "options": [
-        "Normal mode",
-        "Filtered mode",
-        "Restricted mode",
-        "Promiscuous mode (monitor mode)"
+        "An injection attack that causes no visible errors",
+        "An attack where the attacker cannot see query results directly",
+        "An injection that targets blind databases",
+        "A random SQL injection attempt"
       ],
-      "correctAnswer": 3,
-      "explanation": "When a network adapter is put in promiscuous mode, a sniffer can sniff all traffic regardless of the destination address."
+      "correctAnswer": 1,
+      "explanation": "A blind SQL injection attack is one where the attacker cannot see the results of the injection directly but can infer information based on the application's behavior, such as response time or error messages.",
+      "why_others_wrong": "Visible errors can still occur in blind attacks. 'Blind databases' is not a real term. Random attempts are not specifically blind attacks. The key characteristic is inferring results indirectly."
     },
     {
       "id": 94,
-      "question": "Which of the following protocols transmits information in the clear and is thus a good target for sniffing?",
+      "question": "What does 'time-based blind SQL injection' exploit?",
       "options": [
-        "Secure Shell (SSH)",
-        "Transport Layer Security (TLS)",
-        "Hypertext Transfer Protocol (HTTP)",
-        "Internet Protocol Security (IPsec)"
+        "System clock vulnerabilities",
+        "Database response time differences to infer information",
+        "Time zone configuration errors",
+        "Session timeout mechanisms"
       ],
-      "correctAnswer": 2,
-      "explanation": "HTTP is designed to send information in the clear without any protection, making it a good target for sniffing."
+      "correctAnswer": 1,
+      "explanation": "Time-based blind SQL injection exploits differences in database response times to infer information. Attackers inject payloads that cause delays when certain conditions are true, allowing them to extract data based on response timing.",
+      "why_others_wrong": "System clocks, time zones, and session timeouts are not the mechanisms exploited. The attack specifically uses conditional time delays in database queries to extract information."
     },
     {
       "id": 95,
-      "question": "What is the primary goal of a MAC flooding attack?",
+      "question": "What is 'boolean-based blind SQL injection'?",
       "options": [
-        "To overwhelm a router's routing table",
-        "To fill the switch's Content Addressable Memory (CAM) table with fake MAC addresses",
-        "To disrupt wireless communication by jamming signals",
-        "To gain unauthorized access to network devices via MAC addresses"
+        "Injection using boolean operators",
+        "Inferring information based on true/false application responses",
+        "Attacking boolean database fields",
+        "Using binary data in injection"
       ],
       "correctAnswer": 1,
-      "explanation": "The goal of MAC flooding is to flood the switch with fake MAC addresses to fill its CAM table."
+      "explanation": "Boolean-based blind SQL injection infers information by analyzing whether the application returns different responses (true/false conditions) based on injected queries, even when actual data isn't displayed.",
+      "why_others_wrong": "While boolean operators may be used, that's not the defining characteristic. Boolean database fields aren't specifically targeted. Binary data isn't the focus. The key is using application response differences to infer true/false conditions."
     },
     {
       "id": 96,
-      "question": "What fundamental property of the ARP protocol is exploited in ARP spoofing?",
+      "question": "What is 'DOM-based XSS' vulnerability caused by?",
       "options": [
-        "The requirement for mutual authentication before ARP communication",
-        "The encryption of ARP request and response packets",
-        "The fact that ARP tables are updated whenever an ARP response is received, even unsolicited ones",
-        "The tracking of ARP Requests by network devices"
+        "Server-side code vulnerabilities",
+        "Client-side JavaScript code manipulating DOM unsafely",
+        "Database query vulnerabilities",
+        "Network protocol weaknesses"
       ],
-      "correctAnswer": 2,
-      "explanation": "ARP spoofing works because the ARP table updates whenever an ARP response is received, and ARP Requests are not authenticated."
+      "correctAnswer": 1,
+      "explanation": "DOM-based XSS occurs when client-side JavaScript code manipulates the DOM (Document Object Model) in an unsafe way, allowing attackers to inject malicious scripts through URL parameters or other client-side inputs.",
+      "why_others_wrong": "Server-side vulnerabilities cause reflected or stored XSS. Database queries relate to SQL injection. Network protocols are separate from DOM manipulation. DOM-based XSS is specifically a client-side vulnerability."
     },
     {
       "id": 97,
-      "question": "What is the key characteristic that distinguishes a Distributed Denial of Service (DDoS) attack from a Denial of Service (DoS) attack?",
+      "question": "What is the primary difference between 'authentication' and 'authorization'?",
       "options": [
-        "DDoS attacks target application-layer vulnerabilities, while DoS attacks target network-layer vulnerabilities",
-        "DDoS attacks are easier to trace back to the source than DoS attacks",
-        "DDoS attacks utilize multiple compromised hosts to generate attack traffic",
-        "DoS attacks are always more impactful than DDoS attacks"
+        "Authentication is for users, authorization is for systems",
+        "Authentication verifies identity, authorization determines access rights",
+        "Authentication uses passwords, authorization uses permissions",
+        "Authentication is mandatory, authorization is optional"
       ],
-      "correctAnswer": 2,
-      "explanation": "A DDoS attack amplifies a DoS attack by using multiple hosts to generate enough traffic to disrupt the target."
+      "correctAnswer": 1,
+      "explanation": "Authentication verifies who you are (identity verification), while authorization determines what you're allowed to do (access rights determination). They are sequential processes in access control.",
+      "why_others_wrong": "Both apply to users and systems. While passwords and permissions are commonly used, they're not exclusive to each process. Both are typically mandatory in secure systems. The key difference is identity vs. access rights."
     },
     {
       "id": 98,
-      "question": "Which type of network-level DDoS attack involves sending a large number of ICMP echo request packets to the victim?",
+      "question": "What makes a 'zero-day vulnerability' particularly dangerous?",
       "options": [
-        "Smurf attack",
-        "Reflected attack",
-        "DHCP starvation",
-        "ICMP flood (Ping flood)"
+        "It spreads faster than other vulnerabilities",
+        "No patches or defenses exist when it's discovered",
+        "It affects more systems than known vulnerabilities",
+        "It's harder to exploit than other vulnerabilities"
       ],
-      "correctAnswer": 3,
-      "explanation": "An ICMP flood, also known as a ping flood, is carried out by sending a large number of ping packets to the victim."
+      "correctAnswer": 1,
+      "explanation": "Zero-day vulnerabilities are particularly dangerous because they are unknown to vendors and security researchers, meaning no patches, signatures, or specific defenses exist when they are first exploited by attackers.",
+      "why_others_wrong": "Spreading speed depends on the exploitation method. System impact varies by vulnerability type. Exploitation difficulty varies by vulnerability complexity. The danger is specifically the lack of available defenses."
     },
     {
       "id": 99,
-      "question": "What is the underlying mechanism of a Smurf attack?",
+      "question": "What is 'threat modeling' in cybersecurity?",
       "options": [
-        "Exploiting vulnerabilities in the TCP three-way handshake",
-        "Sending fragmented IP packets that cause the target system to crash upon reassembly",
-        "Sending an ICMP broadcast with a spoofed source IP address of the victim, causing many devices to respond to the victim",
-        "Exhausting the DHCP server's IP address pool"
+        "Creating mathematical models of threats",
+        "Systematically analyzing potential security threats and vulnerabilities",
+        "Modeling network traffic patterns",
+        "Creating 3D models of security architecture"
       ],
-      "correctAnswer": 2,
-      "explanation": "In a Smurf attack, the hacker sends an ICMP broadcast with the victim's spoofed IP, causing all network devices to respond to the victim."
+      "correctAnswer": 1,
+      "explanation": "Threat modeling is a systematic approach to analyzing potential security threats, vulnerabilities, and attack vectors against a system or application, helping prioritize security measures and identify potential weaknesses.",
+      "why_others_wrong": "Mathematical modeling is just one possible approach. Network traffic analysis is traffic analysis, not threat modeling. 3D architectural models are design tools, not security analysis. Threat modeling specifically focuses on comprehensive security analysis."
     },
     {
       "id": 100,
-      "question": "Which transport layer DDoS attack exploits the TCP three-way handshake by sending numerous SYN packets without completing the connection?",
+      "question": "In the OWASP Top 10 2021, which category addresses issues with how applications verify user identity?",
       "options": [
-        "UDP flood",
-        "ICMP flood",
-        "SYN flood",
-        "FIN flood"
-      ],
-      "correctAnswer": 2,
-      "explanation": "A SYN flood uses forged packets with the SYN flag set, overwhelming the victim's system by consuming connection resources."
-    },
-    {
-      "id": 101,
-      "question": "What is the primary characteristic of a Slowloris attack?",
-      "options": [
-        "It floods the target with a high volume of complete HTTP requests",
-        "It exploits programming defects in the web server software",
-        "It attempts to monopolize the web server's connection capacity by sending HTTP requests that are never completed",
-        "It targets the DNS infrastructure associated with the web server"
-      ],
-      "correctAnswer": 2,
-      "explanation": "Slowloris attempts to monopolize by sending HTTP requests that never complete, eventually consuming the web server's connection capacity."
-    },
-    {
-      "id": 102,
-      "question": "Which type of attack involves sending oversized IP packets that some systems cannot handle, leading to a crash upon reassembly?",
-      "options": [
-        "Teardrop Attack",
-        "Smurf Attack",
-        "Ping of Death (PoD)",
-        "Land DoS"
-      ],
-      "correctAnswer": 2,
-      "explanation": "The Ping of Death (PoD) involves sending oversized packets that can cause some systems to crash when reassembled."
-    },
-    {
-      "id": 103,
-      "question": "What is a botnet?",
-      "options": [
-        "A collection of network security tools used by ethical hackers",
-        "A type of firewall that filters malicious traffic",
-        "A network of compromised devices (zombies) controlled by an attacker",
-        "A secure communication protocol for IoT devices"
-      ],
-      "correctAnswer": 2,
-      "explanation": "A botnet is a network of zombie devices, which are malicious code implanted on victim systems."
-    },
-    {
-      "id": 104,
-      "question": "What is the primary purpose of cryptography?",
-      "options": [
-        "To physically secure computer hardware",
-        "To store and transmit data in a form that only those it is intended for can read and process",
-        "To prevent unauthorized physical access to networks",
-        "To detect and remove malware from infected systems"
+        "A1 - Broken Access Control",
+        "A7 - Identification and Authentication Failures",
+        "A2 - Cryptographic Failures",
+        "A10 - Server-Side Request Forgery"
       ],
       "correctAnswer": 1,
-      "explanation": "Cryptography is defined as a method of storing and transmitting data in a form readable only by the intended recipients."
-    },
-    {
-      "id": 105,
-      "question": "Which of the following is the process of scrambling plaintext into ciphertext?",
-      "options": [
-        "Decryption",
-        "Cryptanalysis",
-        "Encryption (Enciphering)",
-        "Hashing"
-      ],
-      "correctAnswer": 2,
-      "explanation": "Encryption, also known as enciphering, is the process of scrambling plaintext into ciphertext."
-    },
-    {
-      "id": 106,
-      "question": "Ensuring that data is not altered without authorization relates to which goal of cryptography?",
-      "options": [
-        "Confidentiality",
-        "Authentication",
-        "Non-Repudiation",
-        "Integrity"
-      ],
-      "correctAnswer": 3,
-      "explanation": "Integrity ensures that data is not altered without authorization."
-    },
-    {
-      "id": 107,
-      "question": "Verifying the claimed identity of system users is the primary function of which security goal achieved by cryptosystems?",
-      "options": [
-        "Confidentiality",
-        "Authentication",
-        "Integrity",
-        "Non-Repudiation"
-      ],
-      "correctAnswer": 1,
-      "explanation": "Authentication verifies the claimed identity of system users."
-    },
-    {
-      "id": 108,
-      "question": "What does non-repudiation in cryptography provide?",
-      "options": [
-        "Guarantee that encrypted data cannot be decrypted by unauthorized parties",
-        "Assurance that the data was not altered during transmission",
-        "Assurance to the recipient that the message was originated by the sender and cannot be denied later",
-        "Verification of the sender's identity through a shared secret"
-      ],
-      "correctAnswer": 2,
-      "explanation": "Non-Repudiation provides assurance that the message was originated by the sender, who cannot later deny sending it."
-    },
-    {
-      "id": 109,
-      "question": "Which mathematical operation is fundamental to many cryptographic algorithms, especially in public-key cryptography, as it allows operations on very large numbers in a manageable range?",
-      "options": [
-        "Boolean AND",
-        "Prime factorization",
-        "Modulo operation",
-        "Integer division"
-      ],
-      "correctAnswer": 2,
-      "explanation": "The modulo operation is a fundamental operation in many cryptographic algorithms, particularly in public-key cryptography, as it allows operations on very large numbers in a manageable range."
-    },
-    {
-      "id": 110,
-      "question": "What is a key characteristic of prime numbers that makes them useful in cryptography?",
-      "options": [
-        "They are easily divisible by many other numbers",
-        "The difficulty of factorizing the product of two large primes",
-        "They follow predictable patterns",
-        "They are always even numbers (except for 2)"
-      ],
-      "correctAnswer": 1,
-      "explanation": "The difficulty of factorizing the product of two large primes is central to the security of public-key cryptography."
-    },
-    {
-      "id": 111,
-      "question": "In cryptography, what is entropy a measure of?",
-      "options": [
-        "The length of the encryption key",
-        "The speed of the encryption algorithm",
-        "The level of randomness or unpredictability associated with a random system",
-        "The complexity of the ciphertext"
-      ],
-      "correctAnswer": 2,
-      "explanation": "Entropy is defined as the level of randomness or the measure of unpredictability associated with a random system."
-    },
-    {
-      "id": 112,
-      "question": "What is a characteristic of a substitution cipher?",
-      "options": [
-        "It rearranges the order of plaintext letters",
-        "It replaces plaintext letters with other letters, numbers, or symbols",
-        "It processes plaintext in fixed-size blocks",
-        "It operates on plaintext one bit at a time"
-      ],
-      "correctAnswer": 1,
-      "explanation": "A substitution cipher is one in which the letters of plaintext are replaced by other letters or by numbers or symbols."
-    },
-    {
-      "id": 113,
-      "question": "Which type of cipher rearranges the letters of a plaintext message to form the ciphertext message?",
-      "options": [
-        "Substitution cipher",
-        "Stream cipher",
-        "Block cipher",
-        "Transposition cipher"
-      ],
-      "correctAnswer": 3,
-      "explanation": "Transposition ciphers use an encryption algorithm to rearrange the letters of a plain-text message."
-    },
-    {
-      "id": 114,
-      "question": "What is the primary difference in how block ciphers and stream ciphers process plaintext?",
-      "options": [
-        "Block ciphers use a public key, while stream ciphers use a private key",
-        "Block ciphers encrypt one bit at a time, while stream ciphers encrypt in fixed-size groups",
-        "Block ciphers encrypt fixed-size blocks of plaintext, while stream ciphers treat the message as a continuous stream of bits",
-        "Block ciphers are symmetric, while stream ciphers are asymmetric"
-      ],
-      "correctAnswer": 2,
-      "explanation": "A block cipher encrypts a block of input to a block of output, while a stream cipher treats the message as a stream of bits."
-    },
-    {
-      "id": 115,
-      "question": "Which type of encryption algorithm uses the same key for both encryption and decryption?",
-      "options": [
-        "Asymmetric encryption",
-        "Public-key encryption",
-        "Symmetric encryption",
-        "Two-key encryption"
-      ],
-      "correctAnswer": 2,
-      "explanation": "Symmetric algorithms use the same key for encryption and decryption."
-    },
-    {
-      "id": 116,
-      "question": "Asymmetric encryption algorithms utilize which type of keys?",
-      "options": [
-        "Only a single shared secret key",
-        "Multiple identical keys for all users",
-        "A public key and a private key pair for each user",
-        "Separate encryption and decryption keys that are the same for all users"
-      ],
-      "correctAnswer": 2,
-      "explanation": "Asymmetric algorithms employ two keys, a public key and a private key, making up a key pair."
-    },
-    {
-      "id": 117,
-      "question": "What is a significant advantage of asymmetric encryption over symmetric encryption in terms of key management?",
-      "options": [
-        "Asymmetric encryption is significantly faster",
-        "Asymmetric systems provide for easier and more manageable key distribution",
-        "Asymmetric encryption offers stronger confidentiality",
-        "Asymmetric encryption can solely provide integrity"
-      ],
-      "correctAnswer": 1,
-      "explanation": "Asymmetric systems provide for easier and more manageable key distribution than symmetric systems."
-    },
-    {
-      "id": 118,
-      "question": "What is steganography?",
-      "options": [
-        "A method of making data unintelligible through encryption",
-        "A method of hiding data within another media type so that its existence is concealed",
-        "A cryptographic technique to ensure data integrity",
-        "A protocol for secure key exchange"
-      ],
-      "correctAnswer": 1,
-      "explanation": "Steganography is a method of hiding data in another media type so the very existence of the data is concealed."
-    },
-    {
-      "id": 119,
-      "question": "What is a key property of a cryptographic hash function?",
-      "options": [
-        "It is a two-way function, allowing retrieval of the original input from the hash value",
-        "It is a one-way function, making it infeasible to retrieve the plaintext from the hash value",
-        "It always produces hash values of different lengths for different inputs",
-        "It requires a secret key for generating the hash value"
-      ],
-      "correctAnswer": 1,
-      "explanation": "A hash function is a special mathematical function that performs a one-way function."
-    },
-    {
-      "id": 120,
-      "question": "What is the primary purpose of a Message Authentication Code (MAC)?",
-      "options": [
-        "To encrypt the contents of a message",
-        "To ensure the confidentiality of a message using asymmetric keys",
-        "To authenticate the information exchanged between parties who share a secret key and verify its integrity",
-        "To generate a unique identifier for each message transmitted over a network"
-      ],
-      "correctAnswer": 2,
-      "explanation": "A MAC is typically used between two parties that share a secret key to authenticate information exchanged between those parties."
+      "explanation": "A7 - Identification and Authentication Failures specifically addresses issues with how applications verify user identity, including weak authentication mechanisms, credential management problems, and session management flaws.",
+      "why_others_wrong": "A1 covers access control after authentication. A2 covers cryptographic implementation issues. A10 covers SSRF attacks. A7 specifically focuses on identity verification problems."
     }
   ]
 }

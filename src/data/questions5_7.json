@@ -2,1203 +2,1303 @@
   "questions": [
     {
       "id": 1,
-      "question": "Which of the following cipher modes encrypts each block of plaintext independently using the same key?",
+      "question": "In Electronic Code Book (ECB) mode, what is the main security weakness?",
       "options": [
-        "Cipher Block Chaining (CBC)",
-        "Counter Mode (CTR)",
-        "Electronic Codebook (ECB)",
-        "Cipher Feedback (CFB)"
+        "It requires too much computational power",
+        "Identical plaintext blocks produce identical ciphertext blocks",
+        "It only works with symmetric encryption",
+        "It cannot handle large files"
       ],
-      "correctAnswer": 2,
-      "explanation": "The Electronic Code Book (ECB) mode encrypts each plaintext block P[i] into a ciphertext block C[i] using the same key K, as described by the equation C[i] = EK(P[i])."
+      "correctAnswer": 1,
+      "explanation": "ECB's main weakness is that identical plaintext blocks always produce identical ciphertext blocks, revealing patterns in the data. This makes it vulnerable to analysis attacks where attackers can identify repeated data patterns.",
+      "why_others_wrong": "Computational power isn't ECB's weakness - it's actually quite efficient. ECB works with both symmetric and asymmetric encryption contexts. File size isn't a limitation - ECB can handle large files, though the pattern revelation becomes more problematic with larger datasets."
     },
     {
       "id": 2,
-      "question": "In Cipher Block Chaining (CBC) mode, what is combined with the first plaintext block before encryption?",
+      "question": "What is the primary purpose of the initialization vector (IV) in Cipher Block Chaining (CBC) mode?",
       "options": [
-        "The encryption key",
-        "An Initialization Vector (IV)",
-        "The previous plaintext block",
-        "A counter value"
+        "To encrypt the final block",
+        "To provide randomness for the first block encryption",
+        "To verify data integrity",
+        "To generate the encryption key"
       ],
       "correctAnswer": 1,
-      "explanation": "In CBC mode, the first plaintext block (P) is XORed with an Initialization Vector (IV), a random block separately transmitted encrypted (C [−1] = V), before being encrypted."
+      "explanation": "The IV provides randomness for encrypting the first block since there's no previous ciphertext block to XOR with. This ensures that identical plaintexts produce different ciphertexts when encrypted with different IVs, preventing pattern recognition attacks.",
+      "why_others_wrong": "The IV doesn't encrypt the final block - it only affects the first block's encryption. Data integrity verification is handled by separate mechanisms like MACs or digital signatures, not IVs. The IV doesn't generate encryption keys - keys are generated through separate key generation processes."
     },
     {
       "id": 3,
-      "question": "Which cipher mode turns a block cipher into a stream cipher?",
+      "question": "Counter Mode (CTR) effectively turns a block cipher into what type of cipher?",
       "options": [
-        "Electronic Codebook (ECB)",
-        "Cipher Block Chaining (CBC)",
-        "Counter Mode (CTR)",
-        "Output Feedback (OFB)"
+        "Hash function",
+        "Stream cipher",
+        "Digital signature",
+        "Key exchange protocol"
       ],
-      "correctAnswer": 2,
-      "explanation": "The Counter Mode (CTR) encrypts each counter value and uses it as a keystream which is then XORed with the plaintext, effectively functioning as a stream cipher."
+      "correctAnswer": 1,
+      "explanation": "CTR mode turns a block cipher into a stream cipher by encrypting counter values to create a keystream that is XORed with plaintext. This allows for parallel processing and random access to encrypted data, characteristics typical of stream ciphers.",
+      "why_others_wrong": "Hash functions produce fixed-size outputs for integrity verification, not encryption. Digital signatures provide authentication and non-repudiation, not data encryption. Key exchange protocols establish shared secrets between parties, not encrypt data streams."
     },
     {
       "id": 4,
-      "question": "What is the block size of the Data Encryption Standard (DES)?",
+      "question": "What is the key length used in the Data Encryption Standard (DES)?",
       "options": [
         "64 bits",
+        "56 bits",
         "128 bits",
-        "192 bits",
         "256 bits"
       ],
-      "correctAnswer": 0,
-      "explanation": "The Data Encryption Standard (DES) is a block cipher with a block size of 64 bits."
+      "correctAnswer": 1,
+      "explanation": "DES uses a 56-bit key length, although the key is often represented as 64 bits with 8 parity bits. The 56-bit key length is now considered insufficient for modern security requirements, which is why DES has been largely replaced by more secure algorithms like AES.",
+      "why_others_wrong": "64 bits includes parity bits but the effective key length is 56 bits. 128 bits and 256 bits are key lengths used by AES, not DES. These longer key lengths were developed later to address DES's security weaknesses."
     },
     {
       "id": 5,
-      "question": "What is the key length of the Data Encryption Standard (DES)?",
+      "question": "What is the main advantage of 3DES over DES?",
       "options": [
-        "128 bits",
-        "192 bits",
-        "256 bits",
-        "56 bits"
+        "Faster encryption speed",
+        "Smaller key size",
+        "Longer effective key length providing better security",
+        "Simpler implementation"
       ],
-      "correctAnswer": 3,
-      "explanation": "DES uses a 56-bit key length."
+      "correctAnswer": 2,
+      "explanation": "3DES provides longer effective key length (112 or 168 bits depending on the variant) compared to DES's 56 bits, making it significantly more resistant to brute force attacks. It achieves this by applying DES encryption three times with different keys.",
+      "why_others_wrong": "3DES is actually slower than DES because it performs encryption three times. The key size is larger, not smaller, which is what provides the security benefit. Implementation is more complex, not simpler, due to the triple encryption process."
     },
     {
       "id": 6,
-      "question": "Which of the following is considered a weakness of the Data Encryption Standard (DES)?",
+      "question": "Why has RC4 been deprecated in modern cryptographic applications?",
       "options": [
-        "Weak keys",
-        "Strong key length",
-        "Complex substitution and permutation",
-        "Independence of feedback"
+        "It's too slow for practical use",
+        "It only works with small key sizes",
+        "It has several identified security weaknesses",
+        "It requires too much memory"
       ],
-      "correctAnswer": 0,
-      "explanation": "Problems with DES include 'weak keys,' which are less secure than the majority of keys in the keyspace."
+      "correctAnswer": 2,
+      "explanation": "RC4 has been deprecated due to several identified security weaknesses, including biased keystream generation and vulnerabilities in key scheduling. These weaknesses made it unsuitable for secure applications, leading to its removal from protocols like TLS.",
+      "why_others_wrong": "RC4 was actually known for being fast, not slow - speed was one of its advantages. It supports key lengths up to 2048 bits, not just small keys. Memory usage isn't excessive - RC4 was designed to be lightweight and efficient in terms of resources."
     },
     {
       "id": 7,
-      "question": "How many keys can be used in the 3DES algorithm, depending on the variant?",
-      "options": [
-        "One",
-        "Two or three",
-        "Always three",
-        "Four"
-      ],
-      "correctAnswer": 1,
-      "explanation": "3DES, depending on the variant, uses either two or three different keys (KA, KB, and KC)."
-    },
-    {
-      "id": 8,
-      "question": "Which symmetric encryption algorithm, designed in 1987, was once popular for its speed and simplicity but is now deprecated due to weaknesses?",
-      "options": [
-        "DES",
-        "3DES",
-        "RC4",
-        "AES"
-      ],
-      "correctAnswer": 2,
-      "explanation": "Rivest Cipher 4 (RC4) is a symmetric encryption algorithm designed in 1987, known for its speed and simplicity in software, but is now deprecated due to several weaknesses."
-    },
-    {
-      "id": 9,
-      "question": "What is the block cipher size used by the Advanced Encryption Standard (AES)?",
+      "question": "What block size does AES use?",
       "options": [
         "64 bits",
-        "128 bits",
-        "Variable (up to 2048 bits)",
-        "256 bits"
-      ],
-      "correctAnswer": 1,
-      "explanation": "AES uses a block cipher of 128 bits."
-    },
-    {
-      "id": 10,
-      "question": "Which AES process generates a set of round keys from the original key?",
-      "options": [
-        "Key Expansion",
-        "SubBytes",
-        "ShiftRows",
-        "MixColumns"
-      ],
-      "correctAnswer": 0,
-      "explanation": "The process of AES starts with Key Expansion, which generates a set of round keys from the original key."
-    },
-    {
-      "id": 11,
-      "question": "In the initial round of AES encryption, what operation is performed?",
-      "options": [
-        "SubBytes",
-        "ShiftRows",
-        "MixColumns",
-        "AddRoundKey"
-      ],
-      "correctAnswer": 3,
-      "explanation": "In the initial round (Pre-Round) of AES encryption, the plaintext is XORed with the first round key in the AddRoundKey operation."
-    },
-    {
-      "id": 12,
-      "question": "Which of the following is a characteristic of asymmetric encryption?",
-      "options": [
-        "Uses a single, shared secret key",
-        "Uses a pair of keys: a public key and a private key",
-        "Primarily used for speed and simplicity",
-        "Key distribution is straightforward"
-      ],
-      "correctAnswer": 1,
-      "explanation": "Asymmetric encryption, also known as public key cryptography, uses a pair of keys: a private key kept secret and a public key that can be shared."
-    },
-    {
-      "id": 13,
-      "question": "Which of the following principles is the security of the RSA algorithm primarily based on?",
-      "options": [
-        "The difficulty of performing modular exponentiation",
-        "The complexity of key expansion",
-        "The difficulty of factoring very large prime numbers",
-        "The use of substitution and permutation"
-      ],
-      "correctAnswer": 2,
-      "explanation": "The RSA algorithm's security relies on the principle of the difficulty in factoring the product of two very large prime numbers."
-    },
-    {
-      "id": 14,
-      "question": "In RSA key generation, what is the purpose of computing φ(n)?",
-      "options": [
-        "To determine the encryption key 'e'",
-        "To compute the modular inverse 'd' of the encryption key",
-        "To generate the public key 'n'",
-        "To select the large prime numbers 'p' and 'q'"
-      ],
-      "correctAnswer": 1,
-      "explanation": "φ(n), the Euler quotient function, is used in calculating the modular inverse 'd' of the encryption key 'e' (e · d ≡ 1 mod φ(n)), which is essential for decryption in RSA."
-    },
-    {
-      "id": 15,
-      "question": "What condition must be met for the plaintext message 'M' in RSA encryption/decryption to ensure mathematical validity?",
-      "options": [
-        "M > n",
-        "M < n",
-        "M = p * q",
-        "M must be a prime number"
-      ],
-      "correctAnswer": 1,
-      "explanation": "For the mathematical validity and reversibility of RSA encryption and decryption, the plaintext message 'M' must be less than 'n' (M < n)."
-    },
-    {
-      "id": 16,
-      "question": "What is the primary goal of key distribution techniques?",
-      "options": [
-        "To securely deliver a key to two parties wishing to exchange data without others seeing it",
-        "To generate strong cryptographic keys",
-        "To encrypt and decrypt messages efficiently",
-        "To verify the integrity of transmitted data"
-      ],
-      "correctAnswer": 0,
-      "explanation": "Key distribution techniques aim to provide a secure means of delivering a key between two parties so they can exchange data, while preventing unauthorized access to that key."
-    },
-    {
-      "id": 17,
-      "question": "Which key distribution method relies on a trusted third party to manage keys?",
-      "options": [
-        "Diffie-Hellman",
-        "Paper distribution",
-        "Key Distribution Centres (KDCs)",
-        "Hardware distribution"
-      ],
-      "correctAnswer": 2,
-      "explanation": "Key Distribution Centres (KDCs) involve a number of hosts agreeing to trust a central entity for key management."
-    },
-    {
-      "id": 18,
-      "question": "What is the primary purpose of the Diffie-Hellman key exchange?",
-      "options": [
-        "To enable two users to securely exchange a secret key for subsequent encryption",
-        "To encrypt and decrypt data directly",
-        "To provide authentication of users",
-        "To generate public and private key pairs"
-      ],
-      "correctAnswer": 0,
-      "explanation": "The purpose of the Diffie-Hellman algorithm is to allow two users to securely exchange a secret key that can then be used for encrypting messages."
-    },
-    {
-      "id": 19,
-      "question": "In the Diffie-Hellman key exchange, what information do Alice and Bob agree on publicly?",
-      "options": [
-        "A public prime number (p) and a base (g)",
-        "Their private keys (a and b)",
-        "The shared secret key (K)",
-        "Each other's public keys (PuA and Pub)"
-      ],
-      "correctAnswer": 0,
-      "explanation": "Alice and Bob must agree on a public prime number 'p' and a base 'g' at the beginning of the Diffie-Hellman key exchange."
-    },
-    {
-      "id": 20,
-      "question": "Which security service does Kerberos primarily provide?",
-      "options": [
-        "Encryption and decryption",
-        "Key distribution and user authentication",
-        "Digital signatures",
-        "Hashing algorithms"
-      ],
-      "correctAnswer": 1,
-      "explanation": "Kerberos is a key distribution and user authentication service. Its function is to authenticate users to servers and servers to users."
-    },
-    {
-      "id": 21,
-      "question": "What type of encryption does Kerberos rely on exclusively?",
-      "options": [
-        "Asymmetric encryption",
-        "Symmetric encryption",
-        "Hashing",
-        "A combination of symmetric and asymmetric encryption"
-      ],
-      "correctAnswer": 1,
-      "explanation": "Kerberos relies exclusively on symmetric encryption, making no use of public-key encryption."
-    },
-    {
-      "id": 22,
-      "question": "What is a key property of a cryptographic hash function?",
-      "options": [
-        "Reversible: Easy to reconstruct the input from the digest",
-        "Key-dependent: Output varies based on a secret key",
-        "Collision-Resistant: Hard to find two different inputs with the same digest",
-        "Variable output size"
-      ],
-      "correctAnswer": 2,
-      "explanation": "A crucial property of a cryptographic hash function is collision resistance, meaning it should be computationally hard to find two distinct inputs that produce the same hash output."
-    },
-    {
-      "id": 23,
-      "question": "Which of the following is a common hashing algorithm that generates a 128-bit message digest?",
-      "options": [
-        "MD5",
-        "SHA-1",
-        "SHA256",
-        "RIPEMD-160"
-      ],
-      "correctAnswer": 0,
-      "explanation": "The MD5 message digest algorithm takes an input of arbitrary length and generates a 128-bit message digest."
-    },
-    {
-      "id": 24,
-      "question": "What primary security goal does a message digest provided by a hashing algorithm like MD5 aim to achieve?",
-      "options": [
-        "Confidentiality",
-        "Integrity verification",
-        "Authentication",
-        "Non-repudiation"
-      ],
-      "correctAnswer": 1,
-      "explanation": "MD5 provides integrity verification, allowing one to confirm that a message has not been altered."
-    },
-    {
-      "id": 25,
-      "question": "What cryptographic primitive forms the basis of a digital signature along with hashing functions?",
-      "options": [
-        "Symmetric encryption",
-        "Asymmetric cryptography",
-        "Stream ciphers",
-        "Block ciphers"
-      ],
-      "correctAnswer": 1,
-      "explanation": "Digital signatures are based on hashing functions and asymmetric cryptography. The hash value of a message is encrypted with the sender's private key."
-    },
-    {
-      "id": 26,
-      "question": "In a digital signature process without confidentiality, what key is used to encrypt the hash value of the message?",
-      "options": [
-        "The sender's public key",
-        "The sender's private key",
-        "The receiver's public key",
-        "A shared secret key"
-      ],
-      "correctAnswer": 1,
-      "explanation": "In a digital signature, the sender signs the hash of the message by encrypting it with their private key."
-    },
-    {
-      "id": 27,
-      "question": "In a digital signature process with confidentiality, what key is used to encrypt the message and the signed hash?",
-      "options": [
-        "The sender's private key",
-        "The sender's public key",
-        "The receiver's public key",
-        "A shared secret key"
-      ],
-      "correctAnswer": 2,
-      "explanation": "To provide confidentiality along with a digital signature, the message and the signed hash are encrypted with the receiver's public key. This ensures only the receiver can decrypt the content."
-    },
-    {
-      "id": 28,
-      "question": "What percentage of breaches were estimated to exploit web flaws in 2024 according to the \"W7-Notes.pdf\" excerpt?",
-      "options": [
-        "50%",
-        "60%",
-        "70%",
-        "80%"
-      ],
-      "correctAnswer": 3,
-      "explanation": "The \"W7-Notes.pdf\" states that an estimated 80% of breaches exploit web flaws (2024 estimate)."
-    },
-    {
-      "id": 29,
-      "question": "According to OWASP, what is the top critical security risk to web applications listed as A2?",
-      "options": [
-        "Broken Access Control",
-        "Cryptographic Failures",
-        "Injection",
-        "Insecure Design"
-      ],
-      "correctAnswer": 1,
-      "explanation": "According to the OWASP Top 10 list provided, A2 is \"Cryptographic Failures\"."
-    },
-    {
-      "id": 30,
-      "question": "Which web threat is designed to manipulate databases by inserting malicious SQL queries via user input?",
-      "options": [
-        "SQL Injection (SQLi)",
-        "Cross-Site Scripting (XSS)",
-        "XML External Entity (XXE)",
-        "Command Injection"
-      ],
-      "correctAnswer": 0,
-      "explanation": "SQL Injection (SQLi) attacks involve the insertion or 'injection' of SQL queries through input data from the client to the application, aiming to manipulate databases."
-    },
-    {
-      "id": 31,
-      "question": "What is the primary goal of a Cross-Site Scripting (XSS) attack?",
-      "options": [
-        "To steal data from the server's database",
-        "To execute malicious scripts within the victim's browser",
-        "To gain unauthorized access to the web server's file system",
-        "To force the victim to perform unwanted actions on another website"
-      ],
-      "correctAnswer": 1,
-      "explanation": "The goal of an XSS attack is to inject a code fragment (scripting language) into an input field so that it is executed within the browser of a user visiting the site."
-    },
-    {
-      "id": 32,
-      "question": "Which type of XSS attack involves the malicious script being stored on the server and executed whenever users visit the affected page?",
-      "options": [
-        "Persistent cross-site scripting",
-        "Reflected cross-site scripting",
-        "DOM-based XSS attack",
-        "Server-side XSS"
-      ],
-      "correctAnswer": 0,
-      "explanation": "In persistent cross-site scripting, the malicious script is stored on the server and is automatically executed when users visit the compromised page."
-    },
-    {
-      "id": 33,
-      "question": "What type of web threat exploits vulnerabilities in XML parsers to potentially access server files?",
-      "options": [
-        "SQL Injection (SQLi)",
-        "Cross-Site Scripting (XSS)",
-        "XML External Entity (XXE) Attack",
-        "Command Injection"
-      ],
-      "correctAnswer": 2,
-      "explanation": "An XML External Entity (XXE) attack exploits XML parsers that process external entity references in XML data, potentially allowing attackers to access server files."
-    },
-    {
-      "id": 34,
-      "question": "Which web threat involves taking a value from the user and passing it to a system function, potentially allowing the execution of operating system commands?",
-      "options": [
-        "SQL Injection (SQLi)",
-        "Cross-Site Scripting (XSS)",
-        "XML External Entity (XXE) Attack",
-        "Command Injection Attack"
-      ],
-      "correctAnswer": 3,
-      "explanation": "Command Injection occurs when an application takes user-provided input and passes it to a system function or evaluate function without proper validation, allowing attackers to execute arbitrary operating system commands."
-    },
-    {
-      "id": 35,
-      "question": "What is the primary goal of a File Traversal attack?",
-      "options": [
-        "To execute arbitrary SQL commands on the database",
-        "To inject malicious scripts into the victim's browser",
-        "To execute operating system commands on the server",
-        "To access files outside the web server's intended root directory"
-      ],
-      "correctAnswer": 3,
-      "explanation": "The goal of a File Traversal attack is to get out of the web server's intended directory and access other files on the system, potentially exposing sensitive information."
-    },
-    {
-      "id": 36,
-      "question": "Which web security vulnerability allows an attacker to induce a user to perform actions without their consent, by exploiting the website's trust in the user's browser?",
-      "options": [
-        "SQL Injection (SQLi)",
-        "Cross-Site Scripting (XSS)",
-        "XML External Entity (XXE) Attack",
-        "Cross-Site Request Forgery (CSRF)"
-      ],
-      "correctAnswer": 3,
-      "explanation": "Cross-Site Request Forgery (CSRF) allows an attacker to trick a user's browser into sending malicious requests to a website where the user is authenticated, thus performing actions without the user's consent."
-    },
-    {
-      "id": 37,
-      "question": "What type of application threat occurs when a process attempts to store data beyond the limits of a fixed-size buffer?",
-      "options": [
-        "Buffer Overflow Attack",
-        "Race Condition",
-        "Format String Vulnerability",
-        "Integer Overflow"
-      ],
-      "correctAnswer": 0,
-      "explanation": "A Buffer Overflow Attack happens when a program tries to write more data to a buffer than it can hold, overwriting adjacent memory locations."
-    },
-    {
-      "id": 38,
-      "question": "Which of the following is a common prevention method against SQL Injection attacks?",
-      "options": [
-        "Input sanitization for special characters in browser scripts",
-        "Use of parameterized queries (prepared statements)",
-        "Disabling external entities in XML parsers",
-        "Encoding user-supplied output in HTML"
-      ],
-      "correctAnswer": 1,
-      "explanation": "Parameterized queries (also known as prepared statements) are a key defensive coding practice to prevent SQL Injection by treating user input as data rather than executable code."
-    },
-    {
-      "id": 39,
-      "question": "What is a common countermeasure against Cross-Site Request Forgery (CSRF) attacks?",
-      "options": [
-        "Input validation on server-side parameters",
-        "Strict Content Security Policy (CSP) headers",
-        "Use of CSRF tokens (unique codes per request)",
-        "HTTP Strict Transport Security (HSTS)"
-      ],
-      "correctAnswer": 2,
-      "explanation": "Implementing CSRF tokens, which are unique, unpredictable tokens included in requests, helps prevent CSRF attacks by ensuring that the server can verify the legitimacy of the request."
-    },
-    {
-      "id": 40,
-      "question": "In the Software Development Life Cycle (SDLC), when is it most cost-effective to implement security measures?",
-      "options": [
-        "Earlier in the development life cycle (e.g., requirements and design phases)",
-        "During the coding phase",
-        "During the testing phase",
-        "After deployment and during maintenance"
-      ],
-      "correctAnswer": 0,
-      "explanation": "Implementing security earlier in the SDLC, such as during the requirements and design phases, is more cost-effective because vulnerabilities can be addressed before significant development effort is invested."
-    },
-    {
-      "id": 41,
-      "question": "Which of the following cipher modes encrypts each block of plaintext independently using the same key for every block?",
-      "options": [
-        "Cipher Block Chaining (CBC)",
-        "Counter Mode (CTR)",
-        "Electronic Code Book (ECB)",
-        "Galois/Counter Mode (GCM)"
-      ],
-      "correctAnswer": 2,
-      "explanation": "The Electronic Code Book (ECB) mode encrypts each block P[i] into ciphertext block C[i] = EK(P[i])."
-    },
-    {
-      "id": 42,
-      "question": "In Cipher Block Chaining (CBC) mode, what is combined with the current plaintext block before encryption?",
-      "options": [
-        "The encryption key",
-        "A random nonce",
-        "The previous ciphertext block",
-        "The Initialization Vector (IV) only"
-      ],
-      "correctAnswer": 2,
-      "explanation": "In Cipher Block Chaining (CBC) Mode, the previous ciphertext block is combined with the current plaintext block: C[i] = EK(C[i-1] ⊕ P[i])."
-    },
-    {
-      "id": 43,
-      "question": "What is the primary function of the Initialization Vector (IV) in CBC mode?",
-      "options": [
-        "To provide confidentiality to the first block",
-        "To ensure the key is used securely",
-        "To randomize the encryption of the first block and ensure different ciphertexts for identical plaintexts",
-        "To increase the encryption speed"
-      ],
-      "correctAnswer": 2,
-      "explanation": "C[-1] = V, a random block separately transmitted encrypted (known as the initialization vector). This ensures that even if the first plaintext block is the same across multiple encryptions, the resulting ciphertext will be different due to the varying IV."
-    },
-    {
-      "id": 44,
-      "question": "Which cipher mode can turn a block cipher into a stream cipher?",
-      "options": [
-        "Electronic Code Book (ECB)",
-        "Cipher Block Chaining (CBC)",
-        "Counter Mode (CTR)",
-        "Cipher Feedback (CFB)"
-      ],
-      "correctAnswer": 2,
-      "explanation": "The Counter Mode or CTR is a simple counter-based block cipher that encrypts each counter value and uses it as an input to XOR it with plaintext which results in ciphertext block. This turns block cipher into a stream cipher."
-    },
-    {
-      "id": 45,
-      "question": "What is the block size of the Data Encryption Standard (DES) algorithm?",
-      "options": [
-        "128 bits",
-        "64 bits",
-        "56 bits",
-        "256 bits"
-      ],
-      "correctAnswer": 1,
-      "explanation": "Data Encryption Standard (DES) is a block cipher with a block size of 64 bits—64 bits of plaintext outputs 64 bits of ciphertext."
-    },
-    {
-      "id": 46,
-      "question": "What is a key characteristic of a \"weak key\" in the context of DES?",
-      "options": [
-        "It is susceptible to brute-force attacks due to its short length.",
-        "It results in a less secure encryption than the majority of keys in the algorithm's keyspace.",
-        "It is easily predictable by an attacker.",
-        "It is not compatible with standard DES implementations."
-      ],
-      "correctAnswer": 1,
-      "explanation": "Weak key: less secure than the majority of keys allowed in the keyspace of the algorithm."
-    },
-    {
-      "id": 47,
-      "question": "How many times does the DES algorithm get applied in the 3DES encryption process?",
-      "options": [
-        "Once",
-        "Twice",
-        "Three times",
-        "It varies depending on the variant."
-      ],
-      "correctAnswer": 2,
-      "explanation": "Multiple encryption; goes through the DES algorithm three times."
-    },
-    {
-      "id": 48,
-      "question": "Which of the following algorithms is a symmetric stream cipher that was once popular for its speed and simplicity but is now deprecated due to weaknesses?",
-      "options": [
-        "3DES",
-        "AES",
-        "RC4",
-        "RSA"
-      ],
-      "correctAnswer": 2,
-      "explanation": "Rivest Cipher 4 (RC4) was popular for its remarkable speed and simplicity in software-based encryption... It is now deprecated due to its several weaknesses."
-    },
-    {
-      "id": 49,
-      "question": "What is the standard block cipher size used by the Advanced Encryption Standard (AES)?",
-      "options": [
-        "56 bits",
-        "64 bits",
-        "128 bits",
-        "256 bits"
-      ],
-      "correctAnswer": 2,
-      "explanation": "Advanced Encryption Standard (AES) is a Cryptography algorithm that uses Symmetric encryption with block cipher of 128 bits."
-    },
-    {
-      "id": 50,
-      "question": "What is the primary purpose of the Key Expansion process in AES?",
-      "options": [
-        "To encrypt the plaintext blocks.",
-        "To generate the S-Box for byte substitution.",
-        "To generate a set of round keys from the original key.",
-        "To perform the ShiftRows operation."
-      ],
-      "correctAnswer": 2,
-      "explanation": "First, Key Expansion generates a set of round keys from the original key."
-    },
-    {
-      "id": 51,
-      "question": "Which of the following operations is NOT part of the Main Rounds in the AES encryption process?",
-      "options": [
-        "SubBytes",
-        "ShiftRows",
-        "MixColumns",
-        "Initial Round (AddRoundKey only)"
-      ],
-      "correctAnswer": 3,
-      "explanation": "The Main Rounds (repeated 9/11/13 times) involve SubBytes, ShiftRows, MixColumns, and AddRoundKey. The Initial Round only involves AddRoundKey."
-    },
-    {
-      "id": 52,
-      "question": "What type of cryptography uses a pair of keys: a public key and a private key?",
-      "options": [
-        "Symmetric encryption",
-        "Asymmetric encryption",
-        "Hashing",
-        "Digital signatures"
-      ],
-      "correctAnswer": 1,
-      "explanation": "Asymmetric Encryption is commonly known as public key cryptography and uses a pair of keys: a private key that is kept secret and a public key that can be sent to anyone."
-    },
-    {
-      "id": 53,
-      "question": "The security of the RSA algorithm primarily relies on the difficulty of:",
-      "options": [
-        "Calculating modular exponentiation.",
-        "Generating large prime numbers.",
-        "Factoring the product of two very large prime numbers.",
-        "Computing the Euler totient function."
-      ],
-      "correctAnswer": 2,
-      "explanation": "RSA algorithm uses the product of two very large prime numbers and works on the principle of difficulty in factoring such large numbers."
-    },
-    {
-      "id": 54,
-      "question": "In RSA key generation, what is the purpose of calculating φ(n)?",
-      "options": [
-        "To determine the encryption key 'e'.",
-        "To determine the modulus 'n'.",
-        "To calculate the decryption key 'd'.",
-        "To ensure the primality of 'p' and 'q'."
-      ],
-      "correctAnswer": 2,
-      "explanation": "Compute φ(n) = (p − 1)(q − 1)... The modular inverse of e mod φ(n) is d to ensure that e and d are mathematically linked for encryption and decryption in RSA."
-    },
-    {
-      "id": 55,
-      "question": "What condition must be met for a plaintext message 'M' to be valid for RSA encryption?",
-      "options": [
-        "M > n",
-        "M must be a prime number.",
-        "M < n",
-        "M must be an odd number."
-      ],
-      "correctAnswer": 2,
-      "explanation": "Sender Receiver Condition: M < n. This condition ensures the mathematical validity and reversibility of RSA encryption and decryption."
-    },
-    {
-      "id": 56,
-      "question": "What is the fundamental requirement for symmetric encryption to be effective between two parties?",
-      "options": [
-        "Each party must have a unique public/private key pair.",
-        "The two parties must share the same secret key, and it must be protected from others.",
-        "Communication must occur over a secure channel.",
-        "A trusted third party must manage the key exchange."
-      ],
-      "correctAnswer": 1,
-      "explanation": "For symmetric encryption to work, the two parties to an exchange must share the same key, and that key must be protected from access by others."
-    },
-    {
-      "id": 57,
-      "question": "Which key distribution method relies on a trusted third party to manage keys?",
-      "options": [
-        "Diffie-Hellman",
-        "Public Key Infrastructure (PKI)",
-        "Key Distribution Centres (KDC)",
-        "Paper distribution"
-      ],
-      "correctAnswer": 2,
-      "explanation": "Rather than each organization creating the infrastructure to manage its own keys, a number of hosts could agree to trust a key-distribution center (KDC)."
-    },
-    {
-      "id": 58,
-      "question": "What is the primary purpose of the Diffie-Hellman key exchange protocol?",
-      "options": [
-        "To encrypt messages securely.",
-        "To digitally sign documents.",
-        "To enable two users to exchange a secret key securely over a public channel.",
-        "To authenticate users to a server."
-      ],
-      "correctAnswer": 2,
-      "explanation": "The purpose of the algorithm is to enable two users to exchange a secret key securely that can then be used for subsequent encryption of messages."
-    },
-    {
-      "id": 59,
-      "question": "In the Diffie-Hellman key exchange, what information do Alice and Bob agree on publicly?",
-      "options": [
-        "Their private keys.",
-        "The shared secret key.",
-        "A public prime number (p) and a base (g).",
-        "Their calculated public keys."
-      ],
-      "correctAnswer": 2,
-      "explanation": "Alice and Bob agree on a public prime number p and a base g."
-    },
-    {
-      "id": 60,
-      "question": "Which security service primarily does Kerberos provide?",
-      "options": [
-        "Encryption of data in transit.",
-        "Non-repudiation of actions.",
-        "Centralized authentication of users and servers.",
-        "Integrity checking of messages."
-      ],
-      "correctAnswer": 2,
-      "explanation": "Provides a centralised authentication server whose function is to authenticate users to servers and servers to users."
-    },
-    {
-      "id": 61,
-      "question": "What type of encryption does Kerberos exclusively rely on?",
-      "options": [
-        "Asymmetric encryption",
-        "Symmetric encryption",
-        "Hashing algorithms",
-        "A combination of symmetric and asymmetric encryption"
-      ],
-      "correctAnswer": 1,
-      "explanation": "Relies exclusively on symmetric encryption, making no use of public-key encryption."
-    },
-    {
-      "id": 62,
-      "question": "Which of the following is a key property of a cryptographic hash function?",
-      "options": [
-        "Reversibility: It should be easy to derive the input from the output.",
-        "Key-dependent: The output depends on a secret key.",
-        "Collision-Resistant: It should be hard to find two different inputs that produce the same output.",
-        "Variable output size: The output size changes based on the input size."
-      ],
-      "correctAnswer": 2,
-      "explanation": "A message digest must have the following properties... Collision-Resistant: Hard to find two different inputs with the same digest."
-    },
-    {
-      "id": 63,
-      "question": "What is the primary purpose of a message digest?",
-      "options": [
-        "To encrypt the message content.",
-        "To provide a fixed-size representation of a message for integrity verification.",
-        "To authenticate the sender of the message.",
-        "To ensure the confidentiality of the message."
-      ],
-      "correctAnswer": 1,
-      "explanation": "A message digest is a fixed-size numerical representation of a message... MD5 provides Integrity verification, only."
-    },
-    {
-      "id": 64,
-      "question": "What is the output size of the MD5 message digest algorithm?",
-      "options": [
-        "160 bits",
         "128 bits",
         "256 bits",
         "512 bits"
       ],
       "correctAnswer": 1,
-      "explanation": "MD5 message digest algorithm—Takes an input of any arbitrary length and generates a 128-bit message digest."
+      "explanation": "AES uses a fixed block size of 128 bits regardless of the key size variant (AES-128, AES-192, or AES-256). This standardized block size provides good security while maintaining efficient processing across different implementations.",
+      "why_others_wrong": "64 bits is the block size used by DES and 3DES, not AES. 256 bits refers to the key size in AES-256, not the block size. 512 bits is not used as a block size in AES - it might be confused with hash functions like SHA-512."
+    },
+    {
+      "id": 8,
+      "question": "In AES key expansion, what is the purpose of the RotWord operation?",
+      "options": [
+        "To encrypt the round keys",
+        "To rotate bytes within a word",
+        "To generate random numbers",
+        "To perform XOR operations"
+      ],
+      "correctAnswer": 1,
+      "explanation": "RotWord rotates the bytes within a 4-byte word during key expansion. This operation, combined with SubWord and XOR with round constants, helps generate the round keys needed for each round of AES encryption, ensuring key schedule security.",
+      "why_others_wrong": "RotWord doesn't encrypt round keys - it's part of generating them. It doesn't generate random numbers - the rotation is a deterministic transformation. While XOR operations are used in key expansion, RotWord specifically performs byte rotation, not XOR."
+    },
+    {
+      "id": 9,
+      "question": "What is the primary advantage of asymmetric encryption over symmetric encryption?",
+      "options": [
+        "Faster processing speed",
+        "Smaller key sizes",
+        "Eliminates the key distribution problem",
+        "Uses less computational resources"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Asymmetric encryption eliminates the key distribution problem because public keys can be freely shared while private keys remain secret. This solves the major challenge in symmetric encryption where both parties need to securely share the same secret key.",
+      "why_others_wrong": "Asymmetric encryption is much slower than symmetric encryption, not faster. Key sizes are typically much larger in asymmetric systems (2048+ bits vs 128-256 bits). Computational resource usage is significantly higher due to complex mathematical operations."
+    },
+    {
+      "id": 10,
+      "question": "In RSA key generation, what mathematical property makes the algorithm secure?",
+      "options": [
+        "The ease of multiplying large numbers",
+        "The difficulty of factoring large composite numbers",
+        "The speed of modular arithmetic",
+        "The randomness of prime number distribution"
+      ],
+      "correctAnswer": 1,
+      "explanation": "RSA security relies on the computational difficulty of factoring large composite numbers that are products of two large primes. While it's easy to multiply two large primes, factoring their product back into the original primes is computationally infeasible with current technology.",
+      "why_others_wrong": "The ease of multiplication is actually what makes RSA vulnerable if factoring were easy - it's the difficulty that provides security. Fast modular arithmetic makes RSA practical but doesn't provide security. Prime distribution randomness helps with key generation but isn't the core security foundation."
+    },
+    {
+      "id": 11,
+      "question": "What is the purpose of the Diffie-Hellman key exchange protocol?",
+      "options": [
+        "To encrypt messages directly",
+        "To allow two parties to establish a shared secret over an insecure channel",
+        "To create digital signatures",
+        "To generate hash values"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Diffie-Hellman allows two parties to establish a shared secret key over an insecure public channel without ever directly transmitting the secret. Each party contributes their private value to compute the same shared secret, which can then be used for symmetric encryption.",
+      "why_others_wrong": "Diffie-Hellman doesn't encrypt messages directly - it establishes keys for encryption. It doesn't create digital signatures - that requires different algorithms like RSA or ECDSA. It doesn't generate hash values - that's the purpose of hash functions like SHA-256."
+    },
+    {
+      "id": 12,
+      "question": "In Kerberos authentication, what is the primary purpose of the Ticket Granting Server (TGS)?",
+      "options": [
+        "To store user passwords",
+        "To issue service tickets after initial authentication",
+        "To encrypt all network traffic",
+        "To manage user accounts"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The TGS issues service tickets to authenticated users, allowing them to access specific services without re-entering their credentials. After initial authentication with the Authentication Server, users present their ticket-granting ticket to the TGS to obtain tickets for specific services.",
+      "why_others_wrong": "The TGS doesn't store passwords - that's typically handled by the Authentication Server and user databases. It doesn't encrypt all network traffic - encryption is handled by the applications using the tickets. User account management is typically done by directory services, not the TGS."
+    },
+    {
+      "id": 13,
+      "question": "What are the three essential properties that a cryptographic hash function must have?",
+      "options": [
+        "Fast, secure, and small",
+        "Deterministic, irreversible, and collision-resistant",
+        "Public, private, and shared",
+        "Encrypted, signed, and verified"
+      ],
+      "correctAnswer": 1,
+      "explanation": "A cryptographic hash function must be: 1) Deterministic (same input always produces same output), 2) Irreversible (computationally infeasible to find input from output), and 3) Collision-resistant (difficult to find two different inputs producing the same hash).",
+      "why_others_wrong": "Fast, secure, and small are desirable characteristics but not the fundamental security properties. Public, private, and shared refer to key management concepts, not hash function properties. Encrypted, signed, and verified are operations performed with hash functions, not inherent properties."
+    },
+    {
+      "id": 14,
+      "question": "What is the output size of the SHA-256 hash function?",
+      "options": [
+        "128 bits",
+        "160 bits",
+        "256 bits",
+        "512 bits"
+      ],
+      "correctAnswer": 2,
+      "explanation": "SHA-256 produces a fixed output size of 256 bits (32 bytes) regardless of the input size. This is indicated by the '256' in its name, distinguishing it from other SHA variants like SHA-1 (160 bits) or SHA-512 (512 bits).",
+      "why_others_wrong": "128 bits is the output size of MD5, not SHA-256. 160 bits is the output size of SHA-1. 512 bits is the output size of SHA-512, a different member of the SHA-2 family."
+    },
+    {
+      "id": 15,
+      "question": "In digital signatures, what does signing with the sender's private key provide?",
+      "options": [
+        "Confidentiality only",
+        "Authentication and non-repudiation",
+        "Integrity only",
+        "Availability only"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Signing with the sender's private key provides authentication (proves the sender's identity) and non-repudiation (sender cannot deny sending the message). Anyone can verify the signature using the sender's public key, confirming the message's authenticity.",
+      "why_others_wrong": "Confidentiality requires encryption with the receiver's public key, not signing. Integrity is provided but it's not the only benefit - authentication and non-repudiation are equally important. Availability refers to system uptime and accessibility, which digital signatures don't directly provide."
+    },
+    {
+      "id": 16,
+      "question": "What is the main difference between HMAC and digital signature for message authentication?",
+      "options": [
+        "HMAC is faster but digital signatures provide non-repudiation",
+        "Digital signatures are always more secure",
+        "HMAC only works with hash functions",
+        "Digital signatures cannot verify integrity"
+      ],
+      "correctAnswer": 0,
+      "explanation": "HMAC uses symmetric keys and is faster but cannot provide non-repudiation since both parties share the same key. Digital signatures use asymmetric cryptography, are slower, but provide non-repudiation since only the sender has the private key used for signing.",
+      "why_others_wrong": "Security depends on implementation and use case - neither is always more secure. While HMAC uses hash functions, digital signatures also typically use hash functions in their process. Digital signatures do verify integrity - that's one of their primary purposes along with authentication."
+    },
+    {
+      "id": 17,
+      "question": "Which type of cryptanalysis attack requires the attacker to have access to both plaintext and corresponding ciphertext?",
+      "options": [
+        "Ciphertext-only attack",
+        "Known plaintext attack",
+        "Chosen plaintext attack",
+        "Brute force attack"
+      ],
+      "correctAnswer": 1,
+      "explanation": "In a known plaintext attack, the attacker has access to both the plaintext and its corresponding ciphertext, which they analyze to try to determine the encryption key or algorithm weaknesses. This is more powerful than ciphertext-only attacks but less than chosen plaintext attacks.",
+      "why_others_wrong": "Ciphertext-only attacks only have access to encrypted data, not the corresponding plaintext. Chosen plaintext attacks allow the attacker to choose specific plaintexts to encrypt, which is more powerful than just knowing some plaintext-ciphertext pairs. Brute force attacks systematically try all possible keys regardless of available plaintext knowledge."
+    },
+    {
+      "id": 18,
+      "question": "What is the primary goal of a brute force attack in cryptanalysis?",
+      "options": [
+        "To find algorithm weaknesses",
+        "To try every possible key until the correct one is found",
+        "To analyze frequency patterns",
+        "To exploit implementation flaws"
+      ],
+      "correctAnswer": 1,
+      "explanation": "A brute force attack systematically tries every possible key in the keyspace until finding the correct one that decrypts the ciphertext properly. Its effectiveness depends on key length - longer keys exponentially increase the time required for successful brute force attacks.",
+      "why_others_wrong": "Finding algorithm weaknesses requires cryptanalytic techniques, not brute force. Frequency analysis looks at character patterns in the ciphertext or plaintext. Implementation flaws are exploited through side-channel attacks or other specific techniques, not systematic key testing."
+    },
+    {
+      "id": 19,
+      "question": "In Caesar cipher cryptanalysis, what method is most effective for breaking the encryption?",
+      "options": [
+        "Brute force trying all 26 possible shifts",
+        "Frequency analysis of letters",
+        "Dictionary attacks",
+        "Mathematical factorization"
+      ],
+      "correctAnswer": 0,
+      "explanation": "For Caesar cipher, brute force is most effective because there are only 26 possible shifts to try. Since this is computationally trivial, an attacker can quickly test all possibilities. Frequency analysis could also work but is unnecessary given the small keyspace.",
+      "why_others_wrong": "Frequency analysis works but is overkill when only 26 possibilities exist. Dictionary attacks target passwords, not Caesar cipher keys. Mathematical factorization is used against public key algorithms like RSA, not simple substitution ciphers like Caesar."
+    },
+    {
+      "id": 20,
+      "question": "What is SQL injection primarily designed to exploit?",
+      "options": [
+        "Network protocols",
+        "Poor input validation in web applications",
+        "Weak encryption algorithms",
+        "Operating system vulnerabilities"
+      ],
+      "correctAnswer": 1,
+      "explanation": "SQL injection exploits poor input validation where user input is directly incorporated into SQL queries without proper sanitization. This allows attackers to inject malicious SQL code that can bypass authentication, extract data, or modify database contents.",
+      "why_others_wrong": "Network protocols are targeted by different attack types like man-in-the-middle or packet injection. Encryption algorithm weaknesses are exploited through cryptanalysis, not SQL injection. Operating system vulnerabilities are exploited through privilege escalation or buffer overflow attacks, not database query manipulation."
+    },
+    {
+      "id": 21,
+      "question": "In a SQL injection attack, what does the payload '1=1' typically achieve?",
+      "options": [
+        "It encrypts the database",
+        "It makes a condition always evaluate to true",
+        "It deletes all records",
+        "It creates a new user account"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The condition '1=1' always evaluates to true in SQL logic. When injected into a WHERE clause, it can bypass authentication checks or return all records instead of filtered results, effectively breaking the intended query logic.",
+      "why_others_wrong": "SQL injection doesn't encrypt databases - it exploits them. Deleting records requires specific DELETE statements with DROP or DELETE commands. Creating user accounts requires specific CREATE USER or INSERT statements into user tables, not just logical conditions."
+    },
+    {
+      "id": 22,
+      "question": "What is the primary difference between persistent and reflected Cross-Site Scripting (XSS)?",
+      "options": [
+        "The programming language used",
+        "Whether the malicious script is stored on the server or embedded in URLs",
+        "The browser compatibility",
+        "The encryption method used"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Persistent XSS stores malicious scripts on the server (like in database comments) that execute when other users view the content. Reflected XSS embeds scripts in URLs that execute immediately when victims click malicious links, without server storage.",
+      "why_others_wrong": "Programming language doesn't determine XSS type - both can use JavaScript, HTML, or other client-side languages. Browser compatibility affects XSS execution but doesn't define the type. XSS attacks don't involve encryption methods - they exploit script execution vulnerabilities."
+    },
+    {
+      "id": 23,
+      "question": "What type of vulnerability does XML External Entity (XXE) attack exploit?",
+      "options": [
+        "Buffer overflow in XML parsers",
+        "Insecure XML parser configuration allowing external entity processing",
+        "Weak XML encryption",
+        "SQL injection in XML databases"
+      ],
+      "correctAnswer": 1,
+      "explanation": "XXE attacks exploit XML parsers that are configured to process external entities. Attackers can reference external files or internal resources through crafted XML, potentially accessing sensitive files like /etc/passwd or causing denial of service.",
+      "why_others_wrong": "Buffer overflows are memory corruption vulnerabilities, not XML entity processing issues. XML encryption weakness would be a cryptographic issue, not an entity processing vulnerability. SQL injection targets database queries, while XXE targets XML parsing - they're different attack vectors."
+    },
+    {
+      "id": 24,
+      "question": "In command injection attacks, what character is commonly used to chain multiple commands?",
+      "options": [
+        "&",
+        "&&",
+        ";",
+        "All of the above"
+      ],
+      "correctAnswer": 3,
+      "explanation": "All these characters can chain commands in different ways: ';' executes commands sequentially, '&&' executes the second command only if the first succeeds, and '&' runs commands in parallel. Attackers use these to append malicious commands to legitimate ones.",
+      "why_others_wrong": "Each individual character is correct but incomplete - attackers use all of these operators depending on their specific goals and the target system's shell behavior."
+    },
+    {
+      "id": 25,
+      "question": "What is the primary purpose of the '../' sequence in file traversal attacks?",
+      "options": [
+        "To encrypt file paths",
+        "To navigate up directory levels",
+        "To create new directories",
+        "To compress file contents"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The '../' sequence represents 'parent directory' in file systems. Attackers use multiple '../' sequences to traverse up directory levels and escape the intended web root directory, potentially accessing sensitive system files outside the web application's scope.",
+      "why_others_wrong": "File path encryption would prevent traversal attacks, not enable them. Creating directories requires specific commands like 'mkdir', not directory traversal sequences. File compression uses different tools and commands, not path traversal operators."
+    },
+    {
+      "id": 26,
+      "question": "Cross-Site Request Forgery (CSRF) attacks exploit which aspect of web applications?",
+      "options": [
+        "Poor encryption",
+        "The trust a website has in a user's browser",
+        "Weak password policies",
+        "Unpatched software vulnerabilities"
+      ],
+      "correctAnswer": 1,
+      "explanation": "CSRF exploits the trust that websites have in authenticated users' browsers. When users are logged into a site, malicious pages can trigger unwanted actions by sending forged requests that appear to come from the legitimate user's session.",
+      "why_others_wrong": "Poor encryption affects data confidentiality but doesn't enable CSRF attacks. Weak passwords make accounts vulnerable to takeover but CSRF works even with strong passwords. Unpatched software creates various vulnerabilities but CSRF is specifically about request forgery, not software flaws."
+    },
+    {
+      "id": 27,
+      "question": "What is the most effective defense against SQL injection attacks?",
+      "options": [
+        "Using strong passwords",
+        "Implementing input validation and parameterized queries",
+        "Encrypting the database",
+        "Using HTTPS connections"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Parameterized queries (prepared statements) are the most effective defense because they separate SQL code from user data. Input validation provides additional protection by filtering malicious input before it reaches the database query construction.",
+      "why_others_wrong": "Strong passwords protect accounts but don't prevent SQL code injection into queries. Database encryption protects stored data but doesn't prevent query manipulation. HTTPS encrypts transmission but the SQL injection occurs server-side during query processing."
+    },
+    {
+      "id": 28,
+      "question": "Buffer overflow attacks primarily target which aspect of program execution?",
+      "options": [
+        "Network communication",
+        "Memory management",
+        "File system access",
+        "User authentication"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Buffer overflow attacks exploit improper memory management where programs write more data to a buffer than it can hold. This can overwrite adjacent memory locations, potentially corrupting program data, changing execution flow, or allowing arbitrary code execution.",
+      "why_others_wrong": "Network communication vulnerabilities include man-in-the-middle or protocol attacks, not buffer overflows. File system attacks target file permissions or directory traversal. Authentication attacks target login mechanisms, not memory corruption."
+    },
+    {
+      "id": 29,
+      "question": "What is the main difference between stack-based and heap-based buffer overflows?",
+      "options": [
+        "The programming language used",
+        "The memory region where the overflow occurs",
+        "The size of the buffer",
+        "The type of data being overflowed"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Stack-based overflows occur in the stack memory region affecting local variables and return addresses, while heap-based overflows occur in dynamically allocated heap memory. Stack overflows often target return addresses for control flow hijacking, while heap overflows may corrupt data structures.",
+      "why_others_wrong": "Programming language affects implementation but both overflow types can occur in the same language. Buffer size doesn't determine the overflow type - both can involve various buffer sizes. Data type doesn't determine memory region - the allocation method determines whether it's stack or heap."
+    },
+    {
+      "id": 30,
+      "question": "Which of the following is NOT a recommended secure coding practice?",
+      "options": [
+        "Input validation",
+        "Using parameterized queries",
+        "Hardcoding encryption keys in source code",
+        "Implementing proper error handling"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Hardcoding encryption keys in source code is a serious security vulnerability as keys become visible to anyone with access to the code. Keys should be stored securely separate from code, using key management systems or secure configuration files.",
+      "why_others_wrong": "Input validation prevents injection attacks and is essential for security. Parameterized queries prevent SQL injection and are a fundamental secure coding practice. Proper error handling prevents information disclosure and improves application security."
+    },
+    {
+      "id": 31,
+      "question": "What is the primary security benefit of implementing Content Security Policy (CSP)?",
+      "options": [
+        "Prevents SQL injection",
+        "Mitigates Cross-Site Scripting attacks",
+        "Encrypts web traffic",
+        "Prevents buffer overflows"
+      ],
+      "correctAnswer": 1,
+      "explanation": "CSP helps prevent XSS attacks by controlling which resources (scripts, styles, images) can be loaded and executed by web pages. It acts as a whitelist mechanism that blocks unauthorized script execution, significantly reducing XSS attack impact.",
+      "why_others_wrong": "SQL injection is prevented by parameterized queries and input validation, not CSP. Web traffic encryption is handled by HTTPS/TLS, not CSP. Buffer overflows are memory corruption issues prevented by secure coding practices, not browser security policies."
+    },
+    {
+      "id": 32,
+      "question": "In the context of session management, what is session fixation?",
+      "options": [
+        "Using the same session ID for all users",
+        "An attack where an attacker sets a known session ID for a victim",
+        "Encrypting session data",
+        "Storing sessions in databases"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Session fixation occurs when an attacker provides a victim with a predetermined session ID. If the victim logs in using this ID, the attacker can hijack their authenticated session since they know the session identifier.",
+      "why_others_wrong": "Using the same session ID for all users would be a general security flaw, not session fixation specifically. Encrypting session data is a security measure, not an attack. Database session storage is a legitimate implementation choice, not a security vulnerability."
+    },
+    {
+      "id": 33,
+      "question": "What is the purpose of salting in password storage?",
+      "options": [
+        "To make passwords longer",
+        "To prevent rainbow table attacks",
+        "To encrypt the database",
+        "To improve login speed"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Salt adds random data to passwords before hashing, ensuring that identical passwords produce different hash values. This prevents rainbow table attacks where precomputed hash tables are used to crack common passwords.",
+      "why_others_wrong": "Salting doesn't make passwords longer - it adds random data to the hash input. Database encryption is a separate security measure. Salting actually slows down login slightly due to additional processing, but provides crucial security benefits."
+    },
+    {
+      "id": 34,
+      "question": "Which HTTP header is used to prevent clickjacking attacks?",
+      "options": [
+        "Content-Type",
+        "X-Frame-Options",
+        "Authorization",
+        "Accept-Encoding"
+      ],
+      "correctAnswer": 1,
+      "explanation": "X-Frame-Options header prevents clickjacking by controlling whether a page can be embedded in frames or iframes. Values like 'DENY' or 'SAMEORIGIN' prevent malicious sites from embedding the page to trick users into clicking hidden elements.",
+      "why_others_wrong": "Content-Type specifies the media type of content, not framing restrictions. Authorization carries authentication credentials, not frame control. Accept-Encoding handles compression preferences, not security policies."
+    },
+    {
+      "id": 35,
+      "question": "What is the main security risk of using HTTP instead of HTTPS?",
+      "options": [
+        "Slower performance",
+        "Data transmitted in plaintext can be intercepted",
+        "Requires more server resources",
+        "Incompatible with modern browsers"
+      ],
+      "correctAnswer": 1,
+      "explanation": "HTTP transmits data in plaintext, making it vulnerable to eavesdropping, man-in-the-middle attacks, and data tampering. HTTPS encrypts data using TLS/SSL, protecting confidentiality and integrity of transmitted information.",
+      "why_others_wrong": "HTTP is actually faster than HTTPS due to no encryption overhead. Server resource usage is lower with HTTP, not higher. Modern browsers support both HTTP and HTTPS, though they warn about HTTP insecurity."
+    },
+    {
+      "id": 36,
+      "question": "In web application security testing, what is the difference between black box and white box testing?",
+      "options": [
+        "The tools used for testing",
+        "Whether the tester has access to source code and system architecture",
+        "The type of vulnerabilities found",
+        "The cost of testing"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Black box testing is performed without knowledge of internal system details, simulating external attacker perspective. White box testing includes full access to source code, architecture, and documentation, allowing more thorough analysis of internal security mechanisms.",
+      "why_others_wrong": "Both approaches can use similar tools, though white box may use code analysis tools. Both can find various vulnerability types, though white box may find more implementation-specific issues. Cost varies based on scope and methodology, not just the box color approach."
+    },
+    {
+      "id": 37,
+      "question": "What is the primary purpose of input sanitization in web applications?",
+      "options": [
+        "To improve application performance",
+        "To remove or neutralize potentially malicious characters from user input",
+        "To compress data for storage",
+        "To format data for display"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Input sanitization removes or neutralizes potentially dangerous characters or patterns from user input before processing. This prevents various injection attacks by ensuring that user input cannot be interpreted as code or commands.",
+      "why_others_wrong": "Performance improvement is a side effect, not the primary security purpose. Data compression is handled by separate mechanisms. Display formatting is output encoding, which is different from input sanitization."
+    },
+    {
+      "id": 38,
+      "question": "What type of encoding should be used when displaying user input in HTML context to prevent XSS?",
+      "options": [
+        "Base64 encoding",
+        "HTML entity encoding",
+        "URL encoding",
+        "Binary encoding"
+      ],
+      "correctAnswer": 1,
+      "explanation": "HTML entity encoding converts special characters like <, >, &, and quotes into their HTML entity equivalents (&lt;, &gt;, &amp;, etc.). This prevents browsers from interpreting user input as HTML or JavaScript code, effectively blocking XSS attacks.",
+      "why_others_wrong": "Base64 encoding is for data transmission, not XSS prevention, and doesn't neutralize HTML characters. URL encoding is for URL parameters, not HTML content display. Binary encoding doesn't address HTML character interpretation issues."
+    },
+    {
+      "id": 39,
+      "question": "Which of the following best describes a zero-day vulnerability?",
+      "options": [
+        "A vulnerability that takes zero days to exploit",
+        "A vulnerability unknown to security vendors and without available patches",
+        "A vulnerability in zero-configuration systems",
+        "A vulnerability that causes zero downtime"
+      ],
+      "correctAnswer": 1,
+      "explanation": "A zero-day vulnerability is one that is unknown to software vendors and security community, meaning no patches or fixes are available. Attackers can exploit these vulnerabilities without detection until they're discovered and patched.",
+      "why_others_wrong": "Exploitation time varies and isn't related to 'zero-day' naming. Zero-configuration systems can have various vulnerability types, not specifically zero-day. Downtime impact isn't related to zero-day classification - it refers to the lack of patches."
+    },
+    {
+      "id": 40,
+      "question": "What is the main advantage of using HTTPS over HTTP for web applications?",
+      "options": [
+        "Faster page loading",
+        "Encryption of data in transit",
+        "Better search engine ranking",
+        "Reduced server load"
+      ],
+      "correctAnswer": 1,
+      "explanation": "HTTPS encrypts data between client and server using TLS/SSL, protecting against eavesdropping, tampering, and man-in-the-middle attacks. This encryption ensures confidentiality and integrity of sensitive data like login credentials and personal information.",
+      "why_others_wrong": "HTTPS is typically slower due to encryption overhead, not faster. While search engines may favor HTTPS, that's a secondary benefit, not the main security advantage. Server load is actually higher due to encryption processing."
+    },
+    {
+      "id": 41,
+      "question": "In AES encryption, how many rounds does AES-256 use?",
+      "options": [
+        "10 rounds",
+        "12 rounds",
+        "14 rounds",
+        "16 rounds"
+      ],
+      "correctAnswer": 2,
+      "explanation": "AES-256 uses 14 rounds of encryption. The number of rounds varies by key size: AES-128 uses 10 rounds, AES-192 uses 12 rounds, and AES-256 uses 14 rounds. More rounds provide additional security for longer keys.",
+      "why_others_wrong": "10 rounds is used by AES-128, not AES-256. 12 rounds is used by AES-192. 16 rounds exceeds what any standard AES variant uses - the maximum is 14 for AES-256."
+    },
+    {
+      "id": 42,
+      "question": "What is the purpose of the SubBytes operation in AES?",
+      "options": [
+        "To rotate row data",
+        "To substitute bytes using the S-Box for confusion",
+        "To mix column data",
+        "To add the round key"
+      ],
+      "correctAnswer": 1,
+      "explanation": "SubBytes provides confusion by substituting each byte with another byte using the AES S-Box (substitution box). This non-linear transformation makes the relationship between input and output complex, contributing significantly to AES security.",
+      "why_others_wrong": "Row rotation is performed by ShiftRows operation, not SubBytes. Column mixing is done by MixColumns operation. Round key addition is performed by AddRoundKey operation."
+    },
+    {
+      "id": 43,
+      "question": "In RSA, if p=5 and q=7, what is the value of n?",
+      "options": [
+        "12",
+        "35",
+        "24",
+        "42"
+      ],
+      "correctAnswer": 1,
+      "explanation": "In RSA, n = p × q where p and q are prime numbers. Therefore, n = 5 × 7 = 35. The value n is used as the modulus for both public key and private key operations in RSA encryption.",
+      "why_others_wrong": "12 would be p + q, not p × q. 24 might be confused with φ(n) = (p-1)(q-1) = 4×6 = 24. 42 doesn't correspond to any standard RSA calculation with these values."
+    },
+    {
+      "id": 44,
+      "question": "What is the main weakness of using the same key for multiple 3DES operations?",
+      "options": [
+        "Performance degradation",
+        "Meet-in-the-middle attacks become possible",
+        "Increased memory usage",
+        "Compatibility issues"
+      ],
+      "correctAnswer": 1,
+      "explanation": "When the same key is used multiple times, meet-in-the-middle attacks become more feasible. These attacks can reduce the effective key length by exploiting patterns in repeated encryptions, potentially compromising security despite 3DES's longer key length.",
+      "why_others_wrong": "Performance doesn't degrade from key reuse - it's consistent. Memory usage isn't affected by key reuse. Compatibility issues are related to implementation differences, not key reuse patterns."
+    },
+    {
+      "id": 45,
+      "question": "What is a collision in the context of hash functions?",
+      "options": [
+        "When two different inputs produce the same hash output",
+        "When a hash function crashes",
+        "When inputs are too large",
+        "When hash computation takes too long"
+      ],
+      "correctAnswer": 0,
+      "explanation": "A collision occurs when two different inputs produce identical hash outputs. Strong cryptographic hash functions should be collision-resistant, making it computationally infeasible to find such collisions, as they could undermine digital signatures and integrity verification.",
+      "why_others_wrong": "Function crashes are implementation errors, not collisions. Large inputs are handled by hash functions through padding and processing blocks. Slow computation is a performance issue, not a collision."
+    },
+    {
+      "id": 46,
+      "question": "In Kerberos, what information does the Ticket Granting Ticket (TGT) contain?",
+      "options": [
+        "User's password",
+        "Session key and user identity information",
+        "Server's private key",
+        "Database access credentials"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The TGT contains a session key for communication with the TGS and user identity information, all encrypted with the TGS's secret key. This allows the user to request service tickets without re-authenticating with their password.",
+      "why_others_wrong": "User passwords are never stored in tickets for security reasons. Server private keys are kept secret by servers, not distributed in tickets. Database credentials are specific to applications, not part of Kerberos authentication tickets."
+    },
+    {
+      "id": 47,
+      "question": "What is the primary advantage of using dictionary attacks over brute force attacks?",
+      "options": [
+        "They always succeed",
+        "They are much faster when targeting common passwords",
+        "They work against all encryption algorithms",
+        "They don't require any computational resources"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Dictionary attacks are faster because they test likely passwords first (common words, previously leaked passwords) rather than systematically trying all possible combinations. They exploit human tendency to use predictable passwords, making them more efficient than pure brute force.",
+      "why_others_wrong": "Dictionary attacks can fail if the password isn't in the dictionary. They work against password-based systems but not all encryption algorithms. They still require computational resources, just less than brute force for common passwords."
+    },
+    {
+      "id": 48,
+      "question": "What does Perfect Forward Secrecy (PFS) provide in key exchange protocols?",
+      "options": [
+        "Faster key generation",
+        "Protection of past communications even if long-term keys are compromised",
+        "Smaller key sizes",
+        "Elimination of key exchange requirements"
+      ],
+      "correctAnswer": 1,
+      "explanation": "PFS ensures that compromise of long-term private keys cannot decrypt past communications. This is achieved by using ephemeral keys for each session that are deleted after use, so even if the permanent private key is compromised, historical data remains secure.",
+      "why_others_wrong": "PFS typically requires additional computation for ephemeral key generation, not faster generation. Key sizes aren't necessarily smaller - security requirements remain the same. Key exchange is still required, but uses ephemeral keys in addition to long-term keys."
+    },
+    {
+      "id": 49,
+      "question": "In web application firewalls (WAF), what is the primary method for detecting SQL injection attempts?",
+      "options": [
+        "Monitoring database performance",
+        "Pattern matching against known SQL injection signatures",
+        "Checking user authentication",
+        "Analyzing network bandwidth"
+      ],
+      "correctAnswer": 1,
+      "explanation": "WAFs use pattern matching to identify malicious payloads by comparing incoming requests against databases of known attack signatures. They look for SQL keywords, comment patterns, and injection techniques to block malicious requests before they reach the application.",
+      "why_others_wrong": "Database performance monitoring helps detect successful attacks but doesn't prevent them. User authentication verifies identity but doesn't detect malicious SQL in requests. Network bandwidth analysis detects traffic anomalies, not specific attack patterns."
+    },
+    {
+      "id": 50,
+      "question": "What is the main difference between symmetric and asymmetric key distribution challenges?",
+      "options": [
+        "Asymmetric keys are always longer",
+        "Symmetric keys require secure channels for distribution, asymmetric keys can use public channels",
+        "Symmetric keys are more secure",
+        "Asymmetric keys cannot be distributed"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Symmetric cryptography requires secure channels to distribute shared secret keys since both parties need the same key. Asymmetric cryptography allows public key distribution over insecure channels since public keys can be freely shared while private keys remain secret.",
+      "why_others_wrong": "Key length varies by algorithm and security requirements, not just symmetric vs asymmetric. Security depends on implementation and use case. Asymmetric keys can definitely be distributed - public keys are meant to be widely distributed."
+    },
+    {
+      "id": 51,
+      "question": "What is the purpose of key stretching in password-based encryption?",
+      "options": [
+        "To make keys longer",
+        "To slow down brute force attacks by increasing computation time",
+        "To compress keys for storage",
+        "To make keys more random"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Key stretching deliberately slows down key derivation by requiring many iterations of a hash function. This makes brute force attacks significantly more time-consuming and expensive, as attackers must perform the same computational work for each password attempt.",
+      "why_others_wrong": "Key stretching doesn't change key length - it increases computation time. Key compression would weaken security, not strengthen it. Randomness comes from the original password and salt, not from the stretching process."
+    },
+    {
+      "id": 52,
+      "question": "In Cross-Site Scripting (XSS) attacks, what is the difference between stored and DOM-based XSS?",
+      "options": [
+        "The browser used for the attack",
+        "Where the malicious script is processed - server vs client-side",
+        "The programming language of the script",
+        "The encryption method used"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Stored XSS involves server-side storage and processing of malicious scripts that execute when pages are served to users. DOM-based XSS occurs entirely on the client-side when JavaScript modifies the DOM based on user input, without server involvement.",
+      "why_others_wrong": "Browser type doesn't determine XSS classification - both types work across browsers. Both typically use JavaScript, so programming language isn't the distinguishing factor. XSS attacks don't involve encryption methods."
+    },
+    {
+      "id": 53,
+      "question": "What is the main security benefit of using Content Security Policy (CSP) nonces?",
+      "options": [
+        "They encrypt script content",
+        "They provide unique identifiers to allow only specific scripts to execute",
+        "They improve script performance",
+        "They compress script size"
+      ],
+      "correctAnswer": 1,
+      "explanation": "CSP nonces are unique, unpredictable values that must be included in script tags for them to execute. This prevents XSS attacks because attackers cannot predict the nonce value, so their injected scripts will be blocked by the CSP policy.",
+      "why_others_wrong": "Nonces don't encrypt content - they're authorization tokens. Performance and compression are not security benefits provided by nonces - they're purely for access control."
+    },
+    {
+      "id": 54,
+      "question": "What type of attack does input validation primarily defend against?",
+      "options": [
+        "Denial of Service attacks",
+        "Injection attacks (SQL, XSS, Command injection)",
+        "Man-in-the-middle attacks",
+        "Brute force attacks"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Input validation primarily defends against injection attacks by ensuring that user input conforms to expected formats and doesn't contain malicious code. It prevents SQL injection, XSS, command injection, and other attacks that rely on inserting malicious content through user input fields.",
+      "why_others_wrong": "DoS attacks often target resource exhaustion, not input processing. Man-in-the-middle attacks target network communication, not input validation. Brute force attacks target authentication mechanisms, not input validation."
+    },
+    {
+      "id": 55,
+      "question": "In password storage, what is the advantage of using bcrypt over simple SHA-256 hashing?",
+      "options": [
+        "Bcrypt produces shorter hashes",
+        "Bcrypt includes built-in salting and is computationally expensive",
+        "Bcrypt is faster to compute",
+        "Bcrypt works with any input size"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Bcrypt includes automatic salt generation and is designed to be computationally expensive with adjustable work factors. This makes it much more resistant to brute force attacks compared to fast hash functions like SHA-256, which can be computed millions of times per second.",
+      "why_others_wrong": "Bcrypt hashes are similar length to SHA-256, not shorter. Bcrypt is intentionally slower, not faster, to resist brute force attacks. Both bcrypt and SHA-256 can handle various input sizes."
+    },
+    {
+      "id": 56,
+      "question": "What is the primary purpose of the Same-Origin Policy in web browsers?",
+      "options": [
+        "To improve page loading speed",
+        "To prevent scripts from one origin accessing data from another origin",
+        "To compress web content",
+        "To manage browser cache"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Same-Origin Policy prevents scripts loaded from one domain from accessing data or resources from another domain without permission. This fundamental security mechanism protects against cross-site attacks and unauthorized data access between different websites.",
+      "why_others_wrong": "Same-Origin Policy can actually slow down some operations by preventing certain cross-origin requests. It doesn't compress content or manage caching - those are separate browser functions."
+    },
+    {
+      "id": 57,
+      "question": "What is the main security risk of SQL injection in terms of the CIA triad?",
+      "options": [
+        "Only confidentiality",
+        "All three: confidentiality, integrity, and availability",
+        "Only integrity",
+        "Only availability"
+      ],
+      "correctAnswer": 1,
+      "explanation": "SQL injection can compromise all three aspects of the CIA triad: confidentiality (unauthorized data access), integrity (data modification or deletion), and availability (database corruption or DoS through resource exhaustion).",
+      "why_others_wrong": "SQL injection affects more than just confidentiality - it can modify or delete data and crash systems. It impacts more than just integrity or availability individually - all three aspects can be compromised."
+    },
+    {
+      "id": 58,
+      "question": "In Diffie-Hellman key exchange, what makes it secure against eavesdropping?",
+      "options": [
+        "The communications are encrypted",
+        "The discrete logarithm problem makes it hard to derive private values from public exchanges",
+        "Multiple keys are used simultaneously",
+        "The algorithm changes the keys frequently"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Security comes from the discrete logarithm problem - given g^x mod p, it's computationally difficult to find x. Even though attackers can see the public values exchanged, they cannot efficiently compute the private values needed to derive the shared secret.",
+      "why_others_wrong": "The initial exchange isn't encrypted - security comes from mathematical difficulty. Multiple keys aren't used simultaneously in basic Diffie-Hellman. Key frequency changes aren't part of the core algorithm security."
+    },
+    {
+      "id": 59,
+      "question": "What is a rainbow table attack and how does salting defend against it?",
+      "options": [
+        "A network attack; salting encrypts network traffic",
+        "A precomputed hash lookup attack; salting makes each password hash unique",
+        "A brute force attack; salting increases password length",
+        "A dictionary attack; salting randomizes passwords"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Rainbow tables contain precomputed hashes of common passwords. Salting adds random data to passwords before hashing, ensuring identical passwords produce different hashes, making precomputed rainbow tables ineffective since attackers would need separate tables for each salt.",
+      "why_others_wrong": "Rainbow tables are password cracking tools, not network attacks. Salting doesn't increase password length - it adds random data to the hash input. Salting doesn't change the original passwords, just their hash computation."
+    },
+    {
+      "id": 60,
+      "question": "What is the primary security weakness of ECB mode compared to CBC mode?",
+      "options": [
+        "ECB is slower than CBC",
+        "ECB reveals patterns in plaintext data",
+        "ECB requires larger keys",
+        "ECB cannot handle large files"
+      ],
+      "correctAnswer": 1,
+      "explanation": "ECB encrypts identical plaintext blocks to identical ciphertext blocks, revealing patterns in the original data. This makes it possible to identify repeated content and potentially reconstruct parts of the original message, while CBC mode eliminates these patterns through chaining.",
+      "why_others_wrong": "ECB is actually faster than CBC because it doesn't require chaining between blocks. Key sizes are determined by the cipher algorithm, not the mode. Both modes can handle large files."
+    },
+    {
+      "id": 61,
+      "question": "In digital signatures, what happens if the message hash doesn't match after verification?",
+      "options": [
+        "The signature is automatically regenerated",
+        "The signature verification fails, indicating tampering or wrong key",
+        "The message is automatically corrected",
+        "A new hash is generated"
+      ],
+      "correctAnswer": 1,
+      "explanation": "If the computed hash of the received message doesn't match the hash obtained by decrypting the digital signature, verification fails. This indicates either the message was tampered with, the wrong verification key was used, or the signature itself was corrupted.",
+      "why_others_wrong": "Signatures cannot be automatically regenerated without the private key. Messages aren't automatically corrected - integrity verification detects but doesn't fix tampering. Hash mismatch indicates a problem, not a need for new hash generation."
+    },
+    {
+      "id": 62,
+      "question": "What is the main advantage of using parameterized queries over dynamic SQL construction?",
+      "options": [
+        "Better performance",
+        "SQL injection prevention through separation of code and data",
+        "Smaller query size",
+        "Better error handling"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Parameterized queries separate SQL code from user data by using placeholders for parameters. The database engine treats parameters as data only, never as executable code, completely preventing SQL injection regardless of the malicious content in user input.",
+      "why_others_wrong": "Performance benefits exist but aren't the primary security advantage. Query size isn't necessarily smaller. Error handling is improved but isn't the main security benefit - injection prevention is."
+    },
+    {
+      "id": 63,
+      "question": "What is the purpose of the MixColumns operation in AES?",
+      "options": [
+        "To add round keys",
+        "To provide diffusion by mixing data within columns",
+        "To substitute bytes",
+        "To rotate rows"
+      ],
+      "correctAnswer": 1,
+      "explanation": "MixColumns provides diffusion by mixing bytes within each column of the state matrix. This operation ensures that a small change in input affects multiple bytes in the output, making cryptanalysis more difficult by spreading the influence of each plaintext bit.",
+      "why_others_wrong": "Round key addition is done by AddRoundKey operation. Byte substitution is performed by SubBytes operation. Row rotation is handled by ShiftRows operation."
+    },
+    {
+      "id": 64,
+      "question": "What is the main difference between authentication and authorization?",
+      "options": [
+        "They are the same thing",
+        "Authentication verifies identity, authorization determines permissions",
+        "Authentication is faster than authorization",
+        "Authorization happens before authentication"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Authentication verifies 'who you are' (identity verification), while authorization determines 'what you can do' (permission verification). Authentication typically happens first to establish identity, then authorization determines what resources that authenticated identity can access.",
+      "why_others_wrong": "They serve different purposes in access control. Speed varies by implementation, not by the security function. Authentication must happen before authorization to establish identity first."
     },
     {
       "id": 65,
-      "question": "Which Secure Hashing Algorithm variant produces a 256-bit hash value?",
+      "question": "In CSRF attacks, what makes the attack possible?",
       "options": [
-        "SHA-1",
-        "MD5",
-        "SHA256",
-        "SHA-512"
+        "Weak passwords",
+        "Browsers automatically including authentication cookies with requests",
+        "Unencrypted connections",
+        "Outdated software"
       ],
-      "correctAnswer": 2,
-      "explanation": "SHA256 with a digest size of 256 bits is one the program that accepts an most widely used hash algorithms."
+      "correctAnswer": 1,
+      "explanation": "CSRF attacks work because browsers automatically include authentication cookies and credentials with requests to a domain, even when the request originates from a malicious third-party site. This automatic inclusion allows attackers to perform actions on behalf of authenticated users.",
+      "why_others_wrong": "Strong passwords don't prevent CSRF since the attack doesn't target passwords directly. Encryption doesn't prevent CSRF - it can occur over HTTPS. Software updates help but CSRF is a fundamental web behavior issue, not just a patch-able vulnerability."
     },
     {
       "id": 66,
-      "question": "What cryptographic primitive is used in conjunction with hashing functions to create a digital signature?",
+      "question": "What is the primary purpose of code signing certificates?",
       "options": [
-        "Symmetric encryption",
-        "Asymmetric cryptography",
-        "Key exchange protocols",
-        "Random number generators"
+        "To encrypt source code",
+        "To verify the authenticity and integrity of software",
+        "To compress executable files",
+        "To improve software performance"
       ],
       "correctAnswer": 1,
-      "explanation": "Digital Signatures are based on hashing functions and asymmetric cryptography."
+      "explanation": "Code signing certificates provide digital signatures for software, allowing users to verify that code comes from a trusted source and hasn't been tampered with. This helps prevent malware distribution and gives users confidence in software authenticity.",
+      "why_others_wrong": "Code signing doesn't encrypt source code - it signs compiled executables. File compression is handled by separate tools. Performance isn't affected by code signing certificates."
     },
     {
       "id": 67,
-      "question": "In a digital signature scheme, whose private key is used to sign a message?",
+      "question": "What is the main security benefit of using HTTPS Strict Transport Security (HSTS)?",
       "options": [
-        "The recipient's private key.",
-        "The sender's private key.",
-        "A trusted third party's private key.",
-        "The server's private key."
+        "Faster page loading",
+        "Prevents protocol downgrade attacks and ensures HTTPS is always used",
+        "Reduces server load",
+        "Improves SEO rankings"
       ],
       "correctAnswer": 1,
-      "explanation": "The hash value of a message is encrypted with a user’s private key. Sender sign the hash with Sender Private key."
+      "explanation": "HSTS prevents protocol downgrade attacks by instructing browsers to always use HTTPS when connecting to a domain. This eliminates man-in-the-middle attacks that try to force users to connect via unencrypted HTTP instead of encrypted HTTPS.",
+      "why_others_wrong": "HSTS doesn't improve loading speed - it enforces security. Server load isn't reduced by HSTS. SEO benefits are secondary to the primary security purpose."
     },
     {
       "id": 68,
-      "question": "How is the authenticity of a digitally signed message typically verified?",
+      "question": "What type of vulnerability is primarily addressed by output encoding in web applications?",
       "options": [
-        "By decrypting the entire message with the sender's public key.",
-        "By comparing the hash of the received message with the hash of the original message.",
-        "By decrypting the digital signature with the sender's public key and comparing it to the hash of the received message.",
-        "By encrypting the message with the recipient's private key."
+        "SQL injection",
+        "Cross-Site Scripting (XSS)",
+        "CSRF",
+        "Authentication bypass"
       ],
-      "correctAnswer": 2,
-      "explanation": "Anyone who knows the user’s public key can verify the integrity of the message... Decrypt hash with of sender public key... Verify the signed hash by comparing hashes."
+      "correctAnswer": 1,
+      "explanation": "Output encoding primarily prevents XSS attacks by ensuring that user-supplied data is properly encoded when displayed in web pages. This prevents browsers from interpreting user data as executable HTML or JavaScript code.",
+      "why_others_wrong": "SQL injection is prevented by parameterized queries and input validation. CSRF is prevented by tokens and SameSite cookies. Authentication bypass requires access control fixes, not output encoding."
     },
     {
       "id": 69,
-      "question": "Which security property does a digital signature provide that a simple hash of a message does not?",
+      "question": "In cryptography, what does 'semantic security' mean?",
       "options": [
-        "Integrity",
-        "Confidentiality",
-        "Non-repudiation",
-        "Availability"
+        "The algorithm is open source",
+        "An attacker cannot derive meaningful information from ciphertext",
+        "The key can be easily distributed",
+        "The algorithm is fast to compute"
       ],
-      "correctAnswer": 2,
-      "explanation": "Digital Signature without Confidentiality provides authentication. It also provides a digital signature because only the sender could have produced the encrypted hash code. Non-repudiation is a key aspect of digital signatures, ensuring the sender cannot deny having sent the message. While the table explicitly compares Hashes authentication methods vs Digital Signatures, the text implies non-repudiation is a result of the private key usage."
+      "correctAnswer": 1,
+      "explanation": "Semantic security means that an attacker who sees only the ciphertext cannot derive any meaningful information about the plaintext, even with unlimited computational resources. This is a strong security notion that goes beyond just preventing key recovery.",
+      "why_others_wrong": "Open source refers to code availability, not security properties. Easy key distribution is about key management, not semantic security. Computational speed is a performance characteristic, not a security property."
     },
     {
       "id": 70,
-      "question": "In a digital signature scheme with confidentiality, what additional step is typically involved besides hashing and signing with the sender's private key?",
+      "question": "What is the main purpose of using a Web Application Firewall (WAF)?",
       "options": [
-        "Encrypting the hash with the sender's public key.",
-        "Encrypting the combined message and signature with the recipient's public key.",
-        "Hashing the signature again.",
-        "Signing the message with the recipient's private key."
+        "To encrypt web traffic",
+        "To filter and monitor HTTP traffic to protect web applications",
+        "To improve website performance",
+        "To manage user authentication"
       ],
-      "correctAnswer": 2,
-      "explanation": "Digital Signature example with Confidentiality involves Encrypt with receiver public key. The message and the digital signature are often concatenated and then encrypted for confidentiality."
+      "correctAnswer": 1,
+      "explanation": "A WAF filters, monitors, and blocks HTTP traffic to and from web applications based on security rules. It provides an additional layer of protection by detecting and blocking common web attacks like SQL injection, XSS, and other OWASP Top 10 vulnerabilities.",
+      "why_others_wrong": "Traffic encryption is handled by HTTPS/TLS, not WAFs. Performance improvement is a potential side effect but not the primary purpose. User authentication is handled by the application itself, not the WAF."
     },
     {
       "id": 71,
-      "question": "Which of the following is highlighted as a significant reason to care about web threats?",
+      "question": "What is the security importance of proper session timeout implementation?",
       "options": [
-        "They primarily affect outdated systems.",
-        "A large percentage of breaches exploit web flaws.",
-        "Modern firewalls can effectively block all web threats.",
-        "Web threats are less common than network-based attacks."
+        "It improves application performance",
+        "It prevents session hijacking by limiting exposure time",
+        "It reduces server memory usage",
+        "It improves user experience"
       ],
       "correctAnswer": 1,
-      "explanation": "The source explicitly states, \"Why care? 80% of breaches exploit web flaws (2024 estimate)\"."
+      "explanation": "Proper session timeout limits the window of opportunity for session hijacking attacks. By automatically terminating inactive sessions, it reduces the risk that stolen session tokens can be used maliciously, especially in cases where users don't properly log out.",
+      "why_others_wrong": "Performance improvement is a side effect, not the primary security purpose. Memory usage reduction is an operational benefit, not a security benefit. User experience might actually be worse due to forced re-authentication."
     },
     {
       "id": 72,
-      "question": "According to OWASP Top 10, which category involves vulnerabilities related to insufficient access rights enforcement?",
+      "question": "What is the main security advantage of using public key cryptography for key exchange?",
       "options": [
-        "Cryptographic Failures",
-        "Injection",
-        "Broken Access Control",
-        "Security Misconfiguration"
+        "It's faster than symmetric cryptography",
+        "It eliminates the need for a secure channel to establish shared secrets",
+        "It uses smaller keys",
+        "It's easier to implement"
       ],
-      "correctAnswer": 2,
-      "explanation": "The \"OWASP TOP 10\" list includes \"A1- Broken Access Control\"."
+      "correctAnswer": 1,
+      "explanation": "Public key cryptography allows secure key exchange over insecure channels because public keys can be freely shared while private keys remain secret. This solves the key distribution problem that exists with symmetric cryptography where both parties need to securely share the same secret key.",
+      "why_others_wrong": "Public key cryptography is much slower than symmetric encryption. Keys are typically much larger (2048+ bits vs 128-256 bits). Implementation is more complex due to mathematical operations involved."
     },
     {
       "id": 73,
-      "question": "Which type of web threat aims to manipulate databases by inserting malicious SQL queries?",
+      "question": "In the context of web security, what is the purpose of the X-Content-Type-Options header?",
       "options": [
-        "Cross-Site Scripting (XSS)",
-        "XML External Entity (XXE)",
-        "SQL Injection (SQLi)",
-        "Command Injection"
+        "To improve page loading speed",
+        "To prevent MIME type sniffing attacks",
+        "To enable caching",
+        "To set character encoding"
       ],
-      "correctAnswer": 2,
-      "explanation": "The source defines \"SQL Injection (SQLi)\" as a threat that \"Manipulates databases\" and involves the \"insertion\" of a \"SQL query\"."
+      "correctAnswer": 1,
+      "explanation": "The X-Content-Type-Options header with 'nosniff' value prevents browsers from MIME-sniffing responses away from the declared Content-Type. This prevents attacks where malicious content is disguised as innocent file types but executed as dangerous content types.",
+      "why_others_wrong": "Page loading speed isn't affected by MIME type controls. Caching is controlled by different headers like Cache-Control. Character encoding is set by the charset parameter in Content-Type header."
     },
     {
       "id": 74,
-      "question": "What is the primary goal of a Cross-Site Scripting (XSS) attack?",
+      "question": "What is the primary weakness of MD5 that led to its deprecation for security applications?",
       "options": [
-        "To gain unauthorized access to server files.",
-        "To execute operating system commands on the server.",
-        "To execute malicious scripts within the victim's browser.",
-        "To directly modify database records."
+        "It's too slow",
+        "It's vulnerable to collision attacks",
+        "It produces too long hashes",
+        "It only works with small inputs"
       ],
-      "correctAnswer": 2,
-      "explanation": "The source explains that XSS \"Targets browsers\" and injects code to be \"executed within the browser of a user\"."
+      "correctAnswer": 1,
+      "explanation": "MD5 is vulnerable to collision attacks where two different inputs can produce the same hash output. This breaks the collision resistance property required for secure hash functions, making it unsuitable for digital signatures, certificates, and other security applications.",
+      "why_others_wrong": "MD5 is actually very fast, which is why it's still used for non-security applications. It produces 128-bit hashes, which are shorter than many modern hash functions. It can handle inputs of any size."
     },
     {
       "id": 75,
-      "question": "An XML External Entity (XXE) attack primarily aims to:",
+      "question": "What is the main purpose of certificate pinning in mobile applications?",
       "options": [
-        "Inject malicious scripts into web pages.",
-        "Forge user requests to perform unwanted actions.",
-        "Exploit vulnerabilities in XML parsers to access server files.",
-        "Bypass authentication mechanisms using SQL queries."
+        "To improve app performance",
+        "To prevent man-in-the-middle attacks by validating specific certificates",
+        "To reduce network usage",
+        "To enable offline functionality"
       ],
-      "correctAnswer": 2,
-      "explanation": "The source states that XXE \"Exploits XML parsers\" and has the goal to \"Access server files\"."
+      "correctAnswer": 1,
+      "explanation": "Certificate pinning prevents man-in-the-middle attacks by requiring applications to validate that the server's certificate matches a pre-known certificate or public key. This prevents attacks using rogue certificates, even if they're signed by trusted Certificate Authorities.",
+      "why_others_wrong": "Certificate pinning doesn't improve performance - it adds validation overhead. Network usage isn't reduced by certificate validation. Offline functionality isn't provided by certificate pinning."
     },
     {
       "id": 76,
-      "question": "Which type of web threat involves injecting commands into the operating system through a vulnerable application?",
+      "question": "In stream ciphers, what is the main requirement for the keystream?",
       "options": [
-        "File Traversal",
-        "Cross-Site Request Forgery (CSRF)",
-        "Command Injection",
-        "SQL Injection"
+        "It must be shorter than the plaintext",
+        "It must be unpredictable and never reused",
+        "It must be stored permanently",
+        "It must be generated slowly"
       ],
-      "correctAnswer": 2,
-      "explanation": "The source defines \"Command Injection\" as a threat that \"Runs OS commands\" by taking user input and passing it to \"a system function\"."
+      "correctAnswer": 1,
+      "explanation": "The keystream must be cryptographically secure (unpredictable) and never reused with the same key. Reusing keystreams or predictable patterns allows attackers to recover plaintext through statistical analysis, completely breaking the cipher's security.",
+      "why_others_wrong": "Keystream length must match or exceed plaintext length for encryption. Permanent storage would create security risks - keystreams should be generated as needed. Generation speed affects performance but not security."
     },
     {
       "id": 77,
-      "question": "What is the main objective of a File Traversal attack?",
+      "question": "What is the main security benefit of using HTTP Public Key Pinning (HPKP)?",
       "options": [
-        "To execute arbitrary code on the web server.",
-        "To steal user session cookies.",
-        "To access files and directories outside the web server's root directory.",
-        "To manipulate database queries for unauthorized data retrieval."
+        "Faster HTTPS connections",
+        "Protection against certificate authority compromise",
+        "Reduced bandwidth usage",
+        "Better search engine ranking"
       ],
-      "correctAnswer": 2,
-      "explanation": "The source indicates that the goal of a \"File Traversal\" attack is to \"Access unintended files\" and \"fles outside web root\"."
+      "correctAnswer": 1,
+      "explanation": "HPKP protects against rogue certificates issued by compromised or malicious Certificate Authorities by allowing websites to specify which public keys are valid for their domain. This prevents man-in-the-middle attacks using fraudulent certificates.",
+      "why_others_wrong": "HPKP doesn't improve connection speed - it adds validation overhead. Bandwidth usage isn't affected by key pinning. Search engine ranking is unrelated to security headers."
     },
     {
       "id": 78,
-      "question": "Cross-Site Request Forgery (CSRF) attacks exploit:",
+      "question": "What is the primary difference between vulnerability assessment and penetration testing?",
       "options": [
-        "Vulnerabilities in server-side scripting languages.",
-        "The browser's inability to distinguish between legitimate and malicious scripts.",
-        "The trust a website has in the user's browser to send legitimate requests.",
-        "Weak or absent server-side input validation."
+        "The tools used",
+        "Vulnerability assessment identifies weaknesses, penetration testing exploits them",
+        "The cost involved",
+        "The time required"
       ],
-      "correctAnswer": 2,
-      "explanation": "The source explains that CSRF \"Exploits the trust a website has in the user’s browser\"."
+      "correctAnswer": 1,
+      "explanation": "Vulnerability assessment focuses on identifying and cataloging security weaknesses without attempting to exploit them. Penetration testing goes further by actually exploiting vulnerabilities to demonstrate their impact and assess the real-world risk they pose.",
+      "why_others_wrong": "Both may use similar tools, though pentesting often uses exploitation tools. Cost and time vary based on scope and methodology, not the fundamental difference between identification and exploitation."
     },
     {
       "id": 79,
-      "question": "In the context of SQL injection, what is the purpose of injecting `' OR '1=1' --` in a login form?",
+      "question": "In the context of secure coding, what is the principle of 'defense in depth'?",
       "options": [
-        "To update the user's password in the database.",
-        "To delete all records from the user's table.",
-        "To create a condition that always evaluates to true, bypassing authentication.",
-        "To encrypt the user's credentials before submission."
+        "Using the strongest encryption available",
+        "Implementing multiple layers of security controls",
+        "Writing longer code",
+        "Using complex algorithms"
       ],
-      "correctAnswer": 2,
-      "explanation": "The provided SQL injection example demonstrates how `' OR '1=1' --'` creates a condition that is always true, thus bypassing the password check and granting access."
+      "correctAnswer": 1,
+      "explanation": "Defense in depth involves implementing multiple independent layers of security controls so that if one layer fails, others continue to provide protection. This approach assumes that no single security measure is perfect and redundant protections are necessary.",
+      "why_others_wrong": "Strong encryption is one security measure, not multiple layers. Code length doesn't improve security unless it includes additional security controls. Algorithm complexity alone doesn't provide layered security."
     },
     {
       "id": 80,
-      "question": "What is a key characteristic of a persistent (stored) XSS attack?",
+      "question": "What is the main security purpose of using prepared statements in database programming?",
       "options": [
-        "The malicious script is embedded in a URL.",
-        "The attack directly manipulates the browser's DOM.",
-        "The malicious script is stored on the server and executed for multiple users.",
-        "The script is only executed if the user clicks on a specific link."
+        "To improve query performance",
+        "To prevent SQL injection by separating code from data",
+        "To reduce database size",
+        "To simplify code maintenance"
       ],
-      "correctAnswer": 2,
-      "explanation": "The source defines \"Persistent cross-site scripting\" as when the \"Malicious script is stored on the server and automatically executed whenever users visit the affected page\"."
+      "correctAnswer": 1,
+      "explanation": "Prepared statements prevent SQL injection by separating SQL code from user data. The database pre-compiles the SQL structure, and user input is only treated as data parameters, never as executable code, regardless of malicious content in the input.",
+      "why_others_wrong": "Performance improvement is a side benefit, not the primary security purpose. Database size isn't affected by prepared statements. Code maintenance is improved but isn't the security benefit."
     },
     {
       "id": 81,
-      "question": "Which of the following is a common consequence of a successful buffer overflow attack?",
+      "question": "What is the security significance of the Same-Site cookie attribute?",
       "options": [
-        "Unauthorized modification of database records.",
-        "Exposure of sensitive server configuration files.",
-        "Execution of arbitrary code chosen by the attacker.",
-        "Unintended disclosure of user session identifiers."
+        "It improves cookie performance",
+        "It helps prevent CSRF attacks by controlling when cookies are sent",
+        "It encrypts cookie data",
+        "It increases cookie size"
       ],
-      "correctAnswer": 2,
-      "explanation": "The source explicitly states that a consequence of buffer overflow can be \"Execution of code chosen by attacker\"."
+      "correctAnswer": 1,
+      "explanation": "The SameSite attribute controls when cookies are sent with cross-site requests. Values like 'Strict' or 'Lax' prevent cookies from being sent with requests from malicious third-party sites, significantly reducing CSRF attack effectiveness.",
+      "why_others_wrong": "Cookie performance isn't affected by SameSite settings. Cookie data isn't encrypted by SameSite - it controls transmission behavior. Cookie size isn't changed by the SameSite attribute."
     },
     {
       "id": 82,
-      "question": "What is the difference between a stack buffer overflow and a heap buffer overflow?",
+      "question": "In RSA encryption, what happens if the same message is encrypted multiple times with the same public key?",
       "options": [
-        "Stack overflows affect global variables, while heap overflows affect local variables.",
-        "Stack overflows corrupt memory on the stack (local variables, return addresses), while heap overflows corrupt memory on the heap (dynamic data structures).",
-        "Stack overflows are easier to exploit than heap overflows.",
-        "Heap overflows occur during compilation, while stack overflows occur during runtime."
+        "The ciphertext is always identical",
+        "The ciphertext varies due to padding schemes like OAEP",
+        "The message becomes corrupted",
+        "The encryption fails"
       ],
       "correctAnswer": 1,
-      "explanation": "The source clearly distinguishes between the two, stating \"Stack overfows corrupt memory on the stack\" and \"Heap overfows refer to overfows that corrupt memory located on the heap\"."
+      "explanation": "Modern RSA implementations use padding schemes like OAEP (Optimal Asymmetric Encryption Padding) that include random padding. This ensures that encrypting the same message multiple times produces different ciphertexts, preventing pattern analysis attacks.",
+      "why_others_wrong": "Without padding, ciphertext would be identical, but modern implementations use padding. Messages don't become corrupted - padding ensures security. Encryption doesn't fail - padding makes it more secure."
     },
     {
       "id": 83,
-      "question": "Which of the following is a recommended countermeasure against SQL Injection attacks?",
+      "question": "What is the main security benefit of implementing proper error handling in web applications?",
       "options": [
-        "Disabling client-side scripting.",
-        "Implementing strong password policies.",
-        "Using parameterized queries (prepared statements).",
-        "Encrypting all network traffic with HTTPS."
+        "Better user experience",
+        "Prevents information disclosure that could aid attackers",
+        "Improved application performance",
+        "Easier debugging"
       ],
-      "correctAnswer": 2,
-      "explanation": "The source explicitly mentions \"Parametrised query insertion\" as a \"SQLI COUNTERMEASURES AND PREVENTION METHODS\"."
+      "correctAnswer": 1,
+      "explanation": "Proper error handling prevents information disclosure by showing generic error messages to users instead of detailed system information. Detailed error messages can reveal database schemas, file paths, and system configurations that attackers can use to plan attacks.",
+      "why_others_wrong": "User experience is improved but that's not the primary security benefit. Performance isn't directly affected by error message content. Debugging is easier during development but production systems should show generic errors for security."
     },
     {
       "id": 84,
-      "question": "What is the primary purpose of \"escaping output\" in the context of web security?",
+      "question": "What is the primary purpose of using a cryptographically secure random number generator (CSPRNG)?",
       "options": [
-        "To encrypt sensitive data before it is sent to the client.",
-        "To prevent unauthorized access to server-side resources.",
-        "To prevent the browser from interpreting user-supplied data as executable code, thus mitigating XSS.",
-        "To validate user input against a defined set of allowed characters."
+        "To generate numbers faster",
+        "To produce unpredictable random values for security applications",
+        "To generate smaller numbers",
+        "To improve system performance"
       ],
-      "correctAnswer": 2,
-      "explanation": "The source lists \"Escape Output\" as a method to \"Block XSS\"."
+      "correctAnswer": 1,
+      "explanation": "CSPRNGs produce unpredictable random values that are crucial for security applications like key generation, nonces, and initialization vectors. Regular pseudo-random generators may have predictable patterns that attackers could exploit to break cryptographic systems.",
+      "why_others_wrong": "CSPRNGs are typically slower than regular PRNGs due to additional security requirements. Number size isn't the primary concern - predictability is. System performance may actually be worse due to the additional security overhead."
     },
     {
       "id": 85,
-      "question": "How can XML External Entity (XXE) attacks be primarily prevented?",
+      "question": "What is the main security risk of using weak session identifiers?",
       "options": [
-        "By implementing strong authentication mechanisms.",
-        "By disabling external entity and DTD processing in XML parsers.",
-        "By sanitizing user input to remove potentially malicious characters.",
-        "By using a web application firewall to filter malicious traffic."
+        "Poor application performance",
+        "Session prediction and hijacking attacks",
+        "Increased server load",
+        "Compatibility issues"
       ],
       "correctAnswer": 1,
-      "explanation": "The source recommends to \"Disable Entities\" to \"Prevent XXE\"."
+      "explanation": "Weak session identifiers that are predictable or have insufficient entropy can be guessed or enumerated by attackers, allowing them to hijack legitimate user sessions. Strong session IDs should be long, random, and cryptographically secure.",
+      "why_others_wrong": "Application performance isn't affected by session ID strength. Server load isn't increased by strong session IDs. Compatibility isn't an issue with properly implemented session management."
     },
     {
       "id": 86,
-      "question": "Which of the following is a common technique to prevent File Traversal attacks?",
+      "question": "In digital certificates, what is the purpose of the Certificate Authority (CA) signature?",
       "options": [
-        "Encrypting filenames stored on the server.",
-        "Limiting the size of uploaded files.",
-        "Sanitizing user-supplied file paths by rejecting sequences like \"../\".",
-        "Using random and unpredictable filenames."
+        "To encrypt the certificate data",
+        "To provide trusted third-party validation of the certificate's authenticity",
+        "To compress the certificate",
+        "To improve certificate performance"
       ],
-      "correctAnswer": 2,
-      "explanation": "The source suggests to \"Sanitize Paths\" and \"reject ..\" to \"Block File Traversal\"."
+      "correctAnswer": 1,
+      "explanation": "The CA signature provides trusted third-party validation that the certificate is authentic and hasn't been tampered with. Users trust the CA's root certificate, which allows them to verify certificates signed by that CA, establishing a chain of trust.",
+      "why_others_wrong": "Certificate data isn't encrypted by the CA signature - it's digitally signed. Compression isn't provided by digital signatures. Performance isn't improved by CA signatures - they add validation overhead."
     },
     {
       "id": 87,
-      "question": "What is a common security measure to prevent Cross-Site Request Forgery (CSRF) attacks?",
+      "question": "What is the main advantage of using bcrypt over SHA-256 for password hashing?",
       "options": [
-        "Implementing CAPTCHA on all forms.",
-        "Using HTTP-only cookies for session management.",
-        "Including unique, unpredictable tokens in forms and verifying them on the server-side.",
-        "Limiting the number of requests a user can make within a certain timeframe."
+        "Bcrypt is faster to compute",
+        "Bcrypt includes adaptive cost and built-in salting",
+        "Bcrypt produces shorter hashes",
+        "Bcrypt uses less memory"
       ],
-      "correctAnswer": 2,
-      "explanation": "The source mentions \"CSRF Tokens: Unique codes per request\" as a defense and suggests planning them during the design phase."
+      "correctAnswer": 1,
+      "explanation": "Bcrypt is designed specifically for password hashing with adaptive cost (adjustable computational difficulty) and built-in salt generation. This makes it much more resistant to brute force attacks compared to fast general-purpose hash functions like SHA-256.",
+      "why_others_wrong": "Bcrypt is intentionally slower than SHA-256 to resist brute force attacks. Hash length is similar, not shorter. Memory usage is actually higher in bcrypt by design to resist certain types of attacks."
     },
     {
       "id": 88,
-      "question": "Input filtering is a primary countermeasure against which type of web threat?",
+      "question": "What is the security purpose of implementing rate limiting in web applications?",
       "options": [
-        "SQL Injection",
-        "Cross-Site Scripting (XSS)",
-        "XML External Entity (XXE)",
-        "Command Injection"
+        "To improve server performance",
+        "To prevent brute force attacks and DoS attacks",
+        "To reduce bandwidth usage",
+        "To improve user experience"
       ],
-      "correctAnswer": 3,
-      "explanation": "The source explicitly lists \"Input Filtering\" as a way to \"Stop Command Injection\"."
+      "correctAnswer": 1,
+      "explanation": "Rate limiting restricts the number of requests from a single source within a time period, preventing brute force attacks (like password guessing) and DoS attacks. It slows down automated attacks while allowing normal user behavior to continue unimpeded.",
+      "why_others_wrong": "Server performance protection is a side effect, not the primary security purpose. Bandwidth reduction is an operational benefit. User experience might actually be worse due to request limiting."
     },
     {
       "id": 89,
-      "question": "According to the source, at which stage of the Software Development Life Cycle (SDLC) should security considerations be integrated to be most cost-effective?",
+      "question": "What is the main security benefit of using Content Security Policy (CSP) in web applications?",
       "options": [
-        "Testing",
-        "Deployment",
-        "Requirements and Design",
-        "Maintenance"
+        "Faster page loading",
+        "Mitigation of XSS attacks by controlling resource loading",
+        "Better SEO ranking",
+        "Reduced server load"
       ],
-      "correctAnswer": 2,
-      "explanation": "The source states, \"The earlier in the development life cycle security is implemented, the cheaper software development will be\", with examples in \"Requirements\" and \"Design\" phases."
+      "correctAnswer": 1,
+      "explanation": "CSP mitigates XSS attacks by allowing developers to control which resources (scripts, styles, images) can be loaded and executed. It acts as a whitelist mechanism that prevents execution of unauthorized scripts, significantly reducing XSS attack impact.",
+      "why_others_wrong": "Page loading speed isn't improved by CSP - it may add overhead. SEO ranking is unrelated to security headers. Server load isn't reduced by client-side security policies."
     },
     {
       "id": 90,
-      "question": "What is the role of PHP Data Objects (PDO) mentioned in the context of secure coding practices?",
+      "question": "In password policy implementation, what is the security benefit of password complexity requirements?",
       "options": [
-        "A framework for building user interfaces securely.",
-        "A tool for automatically detecting and preventing XSS attacks.",
-        "A PHP extension providing a consistent and secure way to interact with databases, helping to prevent SQL injection.",
-        "A library for handling XML data securely, mitigating XXE vulnerabilities."
+        "They make passwords easier to remember",
+        "They increase the keyspace making brute force attacks more difficult",
+        "They reduce server processing load",
+        "They improve user experience"
       ],
-      "correctAnswer": 2,
-      "explanation": "The source describes PDO as a \"PHP extension that provides a consistent, secure way to interact with databases\"."
+      "correctAnswer": 1,
+      "explanation": "Password complexity requirements increase the total keyspace (possible password combinations) by requiring different character types. This exponentially increases the time required for brute force attacks, though they must be balanced with usability concerns.",
+      "why_others_wrong": "Complex passwords are typically harder to remember, not easier. Server processing load isn't significantly affected by password complexity. User experience often becomes worse with complex requirements."
     },
     {
       "id": 91,
-      "question": "What is meant by \"unvalidated input\" as a common theme in web threats?",
+      "question": "What is the main difference between encoding, encryption, and hashing?",
       "options": [
-        "Input that is not encrypted during transmission.",
-        "Input that is not checked against known malicious patterns.",
-        "Applications trusting user-supplied data without proper verification.",
-        "Input that exceeds predefined length limitations."
+        "They are all the same process",
+        "Encoding is reversible formatting, encryption is reversible security, hashing is irreversible integrity",
+        "Only encryption provides security",
+        "Hashing is the fastest method"
       ],
-      "correctAnswer": 2,
-      "explanation": "The source identifies \"Unvalidated Input: Apps trust users too much\" as a \"Common Theme\"."
+      "correctAnswer": 1,
+      "explanation": "Encoding (like Base64) is reversible data formatting for compatibility. Encryption is reversible security transformation using keys. Hashing is irreversible one-way transformation for integrity verification. Each serves different purposes in security architecture.",
+      "why_others_wrong": "They serve different purposes and aren't the same. Both encryption and hashing provide security in different ways. Speed varies by algorithm and implementation, not by the method type."
     },
     {
       "id": 92,
-      "question": "What is the primary risk associated with leaving vulnerable and outdated components in a web application?",
+      "question": "What is the primary security risk of Server-Side Request Forgery (SSRF) attacks?",
       "options": [
-        "Increased processing overhead leading to denial-of-service.",
-        "Compatibility issues with newer browsers and operating systems.",
-        "Known security vulnerabilities in those components can be exploited by attackers.",
-        "Higher licensing costs for older software versions."
+        "Data corruption",
+        "Unauthorized access to internal systems and services",
+        "Denial of service",
+        "Account lockout"
       ],
-      "correctAnswer": 2,
-      "explanation": "While not explicitly detailed, the category \"A6- Vulnerable and Outdated Components\" in the OWASP Top 10 inherently implies that these components contain exploitable weaknesses."
+      "correctAnswer": 1,
+      "explanation": "SSRF allows attackers to make requests from the server to internal systems that are normally inaccessible from the internet. This can expose internal services, cloud metadata services, or allow port scanning of internal networks from a trusted server position.",
+      "why_others_wrong": "Data corruption is possible but not the primary risk. DoS is a potential consequence but not the main risk. Account lockout isn't typically associated with SSRF attacks."
     },
     {
       "id": 93,
-      "question": "Which SQL injection technique involves adding extra malicious queries to a legitimate database request?",
+      "question": "What is the main purpose of implementing secure HTTP headers in web applications?",
       "options": [
-        "Tautology",
-        "End-of-line comment",
-        "Piggybacked queries",
-        "Inferential attack"
+        "To improve SEO rankings",
+        "To provide additional security controls against various attacks",
+        "To reduce bandwidth usage",
+        "To improve caching"
       ],
-      "correctAnswer": 2,
-      "explanation": "The source describes \"Piggybacked queries\" as when \"The attacker adds additional queries beyond the intended query\"."
+      "correctAnswer": 1,
+      "explanation": "Secure HTTP headers provide additional security controls against various attacks. Headers like CSP prevent XSS, X-Frame-Options prevents clickjacking, HSTS enforces HTTPS, and others provide defense-in-depth security layers for web applications.",
+      "why_others_wrong": "SEO benefits are secondary to security purposes. Bandwidth usage isn't reduced by security headers. Caching is controlled by different headers and isn't the primary purpose of security headers."
     },
     {
       "id": 94,
-      "question": "In an XSS attack, if the malicious script is embedded in a URL that is sent to a victim, what type of XSS is it?",
+      "question": "In the context of web application security, what is the purpose of input validation?",
       "options": [
-        "Persistent XSS",
-        "Reflected XSS",
-        "DOM-based XSS",
-        "Server-side XSS"
+        "To improve application performance",
+        "To ensure user input conforms to expected formats and prevent injection attacks",
+        "To reduce database size",
+        "To improve user interface design"
       ],
       "correctAnswer": 1,
-      "explanation": "The source defines \"Reflected cross-site scripting\" as when \"the script is embedded in a URL and executed when the victim clicks the link\"."
+      "explanation": "Input validation ensures that user input conforms to expected formats, lengths, and character sets before processing. This prevents injection attacks (SQL, XSS, command injection) and other input-based vulnerabilities by rejecting malicious or malformed data.",
+      "why_others_wrong": "Performance improvement is a side effect, not the primary security purpose. Database size isn't affected by input validation. UI design is improved but that's not the security purpose."
     },
     {
       "id": 95,
-      "question": "What is the key difference between how SQL injection and Command Injection attacks operate?",
+      "question": "What is the security importance of proper key management in cryptographic systems?",
       "options": [
-        "SQL injection targets the client-side, while command injection targets the server-side.",
-        "Command injection exploits vulnerabilities in database management systems, while SQL injection exploits operating system interfaces.",
-        "SQL injection manipulates database queries, while command injection executes operating system commands.",
-        "There is no significant difference; they are essentially the same type of attack."
+        "It improves encryption speed",
+        "Keys are often the weakest link - compromise of keys breaks the entire system",
+        "It reduces storage requirements",
+        "It simplifies algorithm implementation"
       ],
-      "correctAnswer": 2,
-      "explanation": "The source clearly states the focus of each attack: SQLi \"Manipulates databases\", and Command Injection \"Runs OS commands\"."
+      "correctAnswer": 1,
+      "explanation": "Key management is critical because cryptographic security often relies on key secrecy. Poor key management (weak generation, insecure storage, improper rotation) can completely compromise otherwise strong cryptographic systems. Keys are often the primary target for attackers.",
+      "why_others_wrong": "Encryption speed isn't improved by key management - it may actually be slower due to security overhead. Storage requirements are often higher for secure key management. Algorithm implementation becomes more complex with proper key management."
     },
     {
       "id": 96,
-      "question": "Which of the following OWASP Top 10 categories deals with issues related to protecting data at rest and in transit?",
+      "question": "What is the main security benefit of using multi-factor authentication (MFA)?",
       "options": [
-        "Injection",
-        "Cryptographic Failures",
-        "Identification and Authentication Failures",
-        "Security Logging and Monitoring Failures"
+        "Faster login process",
+        "Protection against single factor compromise by requiring multiple authentication methods",
+        "Reduced password complexity requirements",
+        "Improved user experience"
       ],
       "correctAnswer": 1,
-      "explanation": "The category \"A2- Cryptographic Failures\" directly relates to the proper implementation and use of cryptography for data protection."
+      "explanation": "MFA provides security even if one authentication factor is compromised. If a password is stolen, attackers still need the second factor (phone, token, biometric). This significantly increases security by requiring multiple independent authentication proofs.",
+      "why_others_wrong": "Login process is typically slower due to additional authentication steps. Password complexity might be reduced but that's not the primary benefit. User experience is often worse due to additional steps."
     },
     {
       "id": 97,
-      "question": "What is the primary purpose of a \"comment mark\" (like `--`) in an SQL injection attack?",
+      "question": "What is the primary purpose of using database stored procedures in secure application development?",
       "options": [
-        "To add explanatory notes to the injected code.",
-        "To encrypt the malicious SQL commands.",
-        "To prevent the execution of the legitimate SQL code that follows the injected malicious part.",
-        "To indicate the end of the injected SQL statement."
+        "To improve database performance",
+        "To reduce SQL injection risk by limiting database access to predefined operations",
+        "To reduce database size",
+        "To simplify application code"
       ],
-      "correctAnswer": 2,
-      "explanation": "The source explains that the attacker terminates the injected string with a comment mark \"--\" so that \"Subsequent text is ignored at execution time\" and demonstrates this in the injected login query."
+      "correctAnswer": 1,
+      "explanation": "Stored procedures can reduce SQL injection risk by limiting database access to predefined operations with controlled parameters. However, they must be properly written - poorly coded stored procedures can still be vulnerable to injection attacks.",
+      "why_others_wrong": "Performance improvement is a side benefit, not the primary security purpose. Database size isn't reduced by stored procedures. Application code may become simpler but that's not the security benefit."
     },
     {
       "id": 98,
-      "question": "Which type of buffer overflow affects variables, function arguments, and return addresses?",
+      "question": "What is the main security purpose of implementing proper session management?",
       "options": [
-        "Heap overflow",
-        "Global buffer overflow",
-        "Stack overflow",
-        "Static buffer overflow"
+        "To improve application performance",
+        "To prevent session hijacking and ensure only authorized users maintain access",
+        "To reduce server memory usage",
+        "To improve user experience"
       ],
-      "correctAnswer": 2,
-      "explanation": "The source states that in \"Buffer Overfow in the stack\", \"values of local variables, function arguments, and return addresses are affected\"."
+      "correctAnswer": 1,
+      "explanation": "Proper session management prevents session hijacking by using secure session IDs, implementing proper timeouts, secure transmission (HTTPS), and session invalidation. This ensures that only authorized users maintain access and sessions cannot be easily compromised or reused.",
+      "why_others_wrong": "Application performance isn't the primary security concern. Memory usage is an operational concern, not a security purpose. User experience might be worse due to security restrictions like timeouts."
     },
     {
       "id": 99,
-      "question": "What is the role of \"signature-based\" detection in preventing SQL injection attacks?",
+      "question": "What is the security significance of the principle of least privilege in web application design?",
       "options": [
-        "To analyze the structure and syntax of SQL queries at runtime.",
-        "To identify known malicious SQL injection patterns in user input.",
-        "To rewrite SQL queries to remove potentially harmful components.",
-        "To enforce the principle of least privilege for database users."
+        "It improves application performance",
+        "It minimizes potential damage by limiting access rights to the minimum necessary",
+        "It reduces development time",
+        "It simplifies system administration"
       ],
       "correctAnswer": 1,
-      "explanation": "The source lists \"Signature based\" under \"Detection\" methods for SQLi countermeasures, implying it looks for known malicious signatures."
+      "explanation": "Least privilege minimizes potential damage from compromised accounts or components by granting only the minimum access rights necessary for functionality. If an account is compromised, the attacker's capabilities are limited to what that account actually needs.",
+      "why_others_wrong": "Application performance isn't directly improved by access restrictions. Development time is often increased due to additional security considerations. System administration becomes more complex with fine-grained permissions."
     },
     {
       "id": 100,
-      "question": "Implementing proper security logging and monitoring can help in:",
+      "question": "What is the main security benefit of implementing proper logging and monitoring in web applications?",
       "options": [
-        "Preventing all types of web attacks proactively.",
-        "Detecting and responding to security incidents after they occur.",
-        "Automatically patching vulnerabilities in web application components.",
-        "Encrypting user data stored in the application database."
+        "Improved application performance",
+        "Detection of attacks and security incidents for incident response",
+        "Reduced storage requirements",
+        "Better user experience"
       ],
       "correctAnswer": 1,
-      "explanation": "While not elaborately detailed, \"A9- Security Logging and Monitoring Failures\" in the OWASP Top 10 implies that proper logging and monitoring are crucial for identifying and responding to security issues."
+      "explanation": "Proper logging and monitoring enable detection of attacks, security incidents, and suspicious activities. This allows for timely incident response, forensic analysis, and improvement of security controls. Without proper logging, attacks may go undetected for long periods.",
+      "why_others_wrong": "Application performance might be slightly reduced due to logging overhead. Storage requirements are actually increased, not reduced. User experience isn't directly affected by logging and monitoring."
     }
   ]
 }

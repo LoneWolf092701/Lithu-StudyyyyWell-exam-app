@@ -36,6 +36,18 @@ function shuffleArray<T>(array: T[]): T[] {
   return shuffled;
 }
 
+// Function to shuffle options and track correct answer
+function shuffleOptionsWithCorrectAnswer(options: string[], correctAnswerIndex: number) {
+  const correctAnswer = options[correctAnswerIndex];
+  const shuffledOptions = shuffleArray(options);
+  const newCorrectIndex = shuffledOptions.findIndex(option => option === correctAnswer);
+  
+  return {
+    shuffledOptions,
+    newCorrectIndex
+  };
+}
+
 // Define week option type
 type WeekOption = {
   id: number;
@@ -86,10 +98,11 @@ function App() {
   const [score, setScore] = useState(0);
   const [scoreText, setScoreText] = useState('');
   const [showExplanation, setShowExplanation] = useState(false);
-  const [showWhyOthersWrong, setShowWhyOthersWrong] = useState(false); // New state for toggling additional explanation
+  const [showWhyOthersWrong, setShowWhyOthersWrong] = useState(false);
   const [timeLeft, setTimeLeft] = useState(60);
   const [isActive, setIsActive] = useState(false);
   const [shuffledOptions, setShuffledOptions] = useState<string[]>([]);
+  const [currentCorrectIndex, setCurrentCorrectIndex] = useState<number>(0); // Track correct answer after shuffle
   const [message, setMessage] = useState('');
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [usedQuestionIndices, setUsedQuestionIndices] = useState<number[]>([]);
@@ -101,26 +114,122 @@ function App() {
   const [appState, setAppState] = useState<'welcome' | 'weekSelect' | 'quiz' | 'results'>('welcome');
   const [darkMode, setDarkMode] = useState(true);
 
+  // Local storage functions
+  const saveQuizState = () => {
+    if (selectedWeek && (appState === 'quiz' || appState === 'results')) {
+      const state = {
+        selectedWeekId: selectedWeek.id,
+        questions,
+        currentQuestion,
+        score,
+        scoreText,
+        correctAnswers,
+        wrongAnswers,
+        appState,
+        quizCompleted,
+        usedQuestionIndices
+      };
+      localStorage.setItem('cybersec-quiz-state', JSON.stringify(state));
+      
+      // Update URL
+      const url = new URL(window.location.href);
+      url.searchParams.set('week', selectedWeek.id.toString());
+      url.searchParams.set('question', currentQuestion.toString());
+      url.searchParams.set('state', appState);
+      window.history.replaceState({}, '', url.toString());
+    }
+  };
+
+  const loadQuizState = () => {
+    try {
+      // Check URL params first
+      const urlParams = new URLSearchParams(window.location.search);
+      const weekParam = urlParams.get('week');
+      const questionParam = urlParams.get('question');
+      const stateParam = urlParams.get('state');
+
+      if (weekParam && (stateParam === 'quiz' || stateParam === 'results')) {
+        const savedState = localStorage.getItem('cybersec-quiz-state');
+        if (savedState) {
+          const state = JSON.parse(savedState);
+          const week = weekOptions.find(w => w.id === parseInt(weekParam));
+          
+          if (week && state.selectedWeekId === week.id) {
+            setSelectedWeek(week);
+            setQuestions(state.questions || []);
+            setCurrentQuestion(state.currentQuestion || 0);
+            setScore(state.score || 0);
+            setScoreText(state.scoreText || '');
+            setCorrectAnswers(state.correctAnswers || []);
+            setWrongAnswers(state.wrongAnswers || []);
+            setQuizCompleted(state.quizCompleted || false);
+            setUsedQuestionIndices(state.usedQuestionIndices || []);
+            setAppState(state.appState);
+            return true;
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error loading quiz state:', error);
+    }
+    return false;
+  };
+
+  const clearQuizState = () => {
+    localStorage.removeItem('cybersec-quiz-state');
+    const url = new URL(window.location.href);
+    url.search = '';
+    window.history.replaceState({}, '', url.toString());
+  };
+
+  // Load saved state on component mount
+  useEffect(() => {
+    const loaded = loadQuizState();
+    if (!loaded) {
+      // If no saved state, check if we should show welcome or week select
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('state') === 'weekSelect') {
+        setAppState('weekSelect');
+      }
+    }
+  }, []);
+
   // Initialize questions when a week is selected
   useEffect(() => {
     if (selectedWeek && selectedWeek.data && Array.isArray(selectedWeek.data.questions)) {
-      const allQuestions = selectedWeek.data.questions;
-      setQuestions(shuffleArray(allQuestions));
-      setUsedQuestionIndices([]);
-      setQuizCompleted(false);
-      setCorrectAnswers([]);
-      setWrongAnswers([]);
+      // Only shuffle if we don't have saved questions
+      if (questions.length === 0) {
+        const allQuestions = selectedWeek.data.questions;
+        setQuestions(shuffleArray(allQuestions));
+        setUsedQuestionIndices([]);
+        setQuizCompleted(false);
+        setCorrectAnswers([]);
+        setWrongAnswers([]);
+      }
       setTimeLeft(selectedWeek.title === "Give me God of War" ? 30 : 60);
-    } else {
+    } else if (selectedWeek) {
       console.error("Questions data is missing or not an array!");
       setQuestions([]);
     }
   }, [selectedWeek]);
 
+  // Save state whenever important changes occur
+  useEffect(() => {
+    if (selectedWeek && (appState === 'quiz' || appState === 'results')) {
+      saveQuizState();
+    }
+  }, [selectedWeek, currentQuestion, score, correctAnswers, wrongAnswers, appState, quizCompleted]);
+
   // Set up shuffled options when current question changes
   useEffect(() => {
     if (appState === 'quiz' && questions.length > 0 && currentQuestion < questions.length) {
-      setShuffledOptions(shuffleArray(questions[currentQuestion].options));
+      const currentQ = questions[currentQuestion];
+      const { shuffledOptions: newShuffledOptions, newCorrectIndex } = shuffleOptionsWithCorrectAnswer(
+        currentQ.options, 
+        currentQ.correctAnswer
+      );
+      setShuffledOptions(newShuffledOptions);
+      setCurrentCorrectIndex(newCorrectIndex);
     }
   }, [currentQuestion, questions, appState]);
 
@@ -146,7 +255,8 @@ function App() {
 
   const handleAnswer = (option: string) => {
     setSelectedOption(option);
-    const isCorrect = option === questions[currentQuestion].options[questions[currentQuestion].correctAnswer];
+    // Use the shuffled options and correct index
+    const isCorrect = option === shuffledOptions[currentCorrectIndex];
 
     let newScore;
     if (isCorrect) {
@@ -172,7 +282,7 @@ function App() {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion((prev) => prev + 1);
       setShowExplanation(false);
-      setShowWhyOthersWrong(false); // Reset the "why others wrong" state
+      setShowWhyOthersWrong(false);
       setTimeLeft(selectedWeek?.title === "Give me God of War" ? 30 : 60);
       setIsActive(true);
       setMessage('');
@@ -185,6 +295,10 @@ function App() {
 
   const goToWeekSelect = () => {
     setAppState('weekSelect');
+    // Update URL for week select
+    const url = new URL(window.location.href);
+    url.searchParams.set('state', 'weekSelect');
+    window.history.replaceState({}, '', url.toString());
   };
 
   const selectWeek = (week: WeekOption) => {
@@ -193,7 +307,7 @@ function App() {
     setScore(0);
     setScoreText('');
     setShowExplanation(false);
-    setShowWhyOthersWrong(false); // Reset additional explanation state
+    setShowWhyOthersWrong(false);
     setTimeLeft(week.title === "Give me God of War" ? 30 : 60);
     setIsActive(true);
     setMessage('');
@@ -202,39 +316,103 @@ function App() {
     setQuizCompleted(false);
     setCorrectAnswers([]);
     setWrongAnswers([]);
+    setQuestions(shuffleArray(week.data.questions));
     setAppState('quiz');
   };
 
   const resetQuiz = () => {
     if (selectedWeek) {
-      setQuestions(shuffleArray(selectedWeek.data.questions));
+      const newQuestions = shuffleArray(selectedWeek.data.questions);
+      setQuestions(newQuestions);
+      setCurrentQuestion(0);
+      setScore(0);
+      setScoreText('');
+      setShowExplanation(false);
+      setShowWhyOthersWrong(false);
+      setTimeLeft(selectedWeek?.title === "Give me God of War" ? 30 : 60);
+      setIsActive(true);
+      setMessage('');
+      setSelectedOption(null);
+      setUsedQuestionIndices([]);
+      setQuizCompleted(false);
+      setCorrectAnswers([]);
+      setWrongAnswers([]);
+      setAppState('quiz');
     }
+  };
+
+  const backToWeekSelect = () => {
+    // Clear saved state when user explicitly goes back to week selection
+    clearQuizState();
+    setSelectedWeek(null);
+    setQuestions([]);
     setCurrentQuestion(0);
     setScore(0);
     setScoreText('');
     setShowExplanation(false);
-    setShowWhyOthersWrong(false); // Reset additional explanation state
-    setTimeLeft(selectedWeek?.title === "Give me God of War" ? 30 : 60);
-    setIsActive(true);
+    setShowWhyOthersWrong(false);
+    setIsActive(false);
     setMessage('');
     setSelectedOption(null);
     setUsedQuestionIndices([]);
     setQuizCompleted(false);
     setCorrectAnswers([]);
     setWrongAnswers([]);
-    setAppState('quiz');
+    setAppState('weekSelect');
+    
+    // Update URL
+    const url = new URL(window.location.href);
+    url.searchParams.set('state', 'weekSelect');
+    window.history.replaceState({}, '', url.toString());
   };
 
-  const backToWeekSelect = () => {
-    setAppState('weekSelect');
+  const backToWelcomePage = () => {
+    // Clear saved state when user explicitly goes back to week selection
+    clearQuizState();
+    setSelectedWeek(null);
+    setQuestions([]);
+    setCurrentQuestion(0);
+    setScore(0);
+    setScoreText('');
+    setShowExplanation(false);
+    setShowWhyOthersWrong(false);
     setIsActive(false);
+    setMessage('');
+    setSelectedOption(null);
+    setUsedQuestionIndices([]);
+    setQuizCompleted(false);
+    setCorrectAnswers([]);
+    setWrongAnswers([]);
+    setAppState('welcome');
+
+    // Update URL
+    const url = new URL(window.location.href);
+    window.history.replaceState({}, '', url.toString());
   };
+
+  // Handle browser navigation
+  useEffect(() => {
+    const handlePopState = () => {
+      const loaded = loadQuizState();
+      if (!loaded) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const stateParam = urlParams.get('state');
+        if (stateParam === 'weekSelect') {
+          setAppState('weekSelect');
+        } else {
+          setAppState('welcome');
+        }
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   const toggleTheme = () => {
     setDarkMode(!darkMode);
   };
 
-  // Toggle function for "why others wrong" section
   const toggleWhyOthersWrong = () => {
     setShowWhyOthersWrong(!showWhyOthersWrong);
   };
@@ -253,9 +431,8 @@ function App() {
   const correctBg = darkMode ? 'bg-green-900 border-green-700' : 'bg-green-100 border-green-500';
   const incorrectBg = darkMode ? 'bg-red-900 border-red-700' : 'bg-red-100 border-red-500';
   const explanationBg = darkMode ? 'bg-gray-900' : 'bg-blue-50';
-  const whyWrongBg = darkMode ? 'bg-gray-800' : 'bg-orange-50'; // Different background for "why others wrong" section
+  const whyWrongBg = darkMode ? 'bg-gray-800' : 'bg-orange-50';
   
-  // Define score color based on score value
   const scoreColor = score < 0 ? 'text-red-500' : darkMode ? 'text-white' : 'text-gray-900';
 
   // Theme toggle button component
@@ -325,18 +502,20 @@ function App() {
             <p className="text-xl mb-8">Parama Padi da!</p>
 
             <div className="mb-12 flex justify-center">
-              <div className="relative rounded-lg overflow-hidden" style={{ maxWidth: "100%", height: "300px" }}>
-                <img
+              <div className="relative rounded-lg overflow-hidden bg-gray-200" style={{ maxWidth: "100%", height: "400px", width: "1200px" }}>
+                <div className="flex items-center justify-center w-full h-full text-gray-500">
+                  <img
                   src={VaaAnnamalai}
                   alt="Cybersecurity Quiz"
                   className="object-cover w-full h-full"
                 />
+                </div>
               </div>
             </div>
 
             <div className="text-lg mb-8">
               <p className="mb-2">• Timed responses & negative scores for wrong answers</p>
-              <p className="mb-2">• Ellarum Nanmai Adaika! 🙌🏽</p>
+              <p className="mb-2">• Randomized answer options to prevent memorization</p>
             </div>
 
             <button
@@ -382,7 +561,7 @@ function App() {
 
             <div className="flex justify-center">
               <button
-                onClick={() => setAppState('welcome')}
+                onClick={backToWelcomePage}
                 className={`px-6 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors`}
               >
                 Back to Welcome
@@ -438,7 +617,7 @@ function App() {
 
               <div className="space-y-3">
                 {shuffledOptions.map((option, index) => {
-                  const isCorrectAnswer = option === questions[currentQuestion]?.options[questions[currentQuestion]?.correctAnswer];
+                  const isCorrectAnswer = index === currentCorrectIndex;
                   const isSelected = option === selectedOption;
                   const showWrongAnswer = showExplanation && isSelected && !isCorrectAnswer;
 

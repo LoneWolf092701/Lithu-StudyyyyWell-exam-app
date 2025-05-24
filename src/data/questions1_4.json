@@ -11,7 +11,7 @@
       ],
       "correctAnswer": 3,
       "explanation": "The CIA triad traditionally includes Confidentiality, Integrity, and Availability as the three core security objectives. While Authenticity is an important security concept mentioned in the notes, it is considered an additional objective alongside Accountability, not part of the original CIA triad.",
-      "why_others_wrong": "Confidentiality ensures only authorized subjects can access protected data and is a core CIA objective. Integrity ensures only authorized subjects can modify protected data and is a core CIA objective. Availability ensures information and resources are available on demand to authorized subjects and is a core CIA objective. Authenticity, while important, is an additional security objective beyond the traditional CIA triad."
+      "why_others_wrong": "Confidentiality ensures only authorized subjects can access protected data and is a core CIA objective. Integrity ensures only authorized subjects can modify protected data and is a core CIA objective. Availability ensures information and resources are available on demand to authorized subjects and is a core CIA objective."
     },
     {
       "id": 2,
@@ -24,18 +24,18 @@
       ],
       "correctAnswer": 1,
       "explanation": "The NIST Computer Security Handbook defines cyber security as 'The protection afforded to an automated information system in order to attain the applicable objectives of preserving the integrity, availability, and confidentiality of information system resources (includes hardware, software, firmware, information/data, and telecommunications)'.",
-      "why_others_wrong": "Only hardware components is too narrow as NIST includes software, firmware, data, and telecommunications. Only software applications excludes hardware, firmware, data, and telecommunications components. Physical security of buildings is just one aspect of overall security, while cyber security encompasses the complete information system including digital components and data."
+      "why_others_wrong": "Only hardware components is too narrow as NIST includes software, firmware, data, and telecommunications. Only software applications excludes hardware, firmware, data, and telecommunications components. Physical security of buildings is just one aspect of overall security, while cyber security encompasses the complete information system."
     },
     {
       "id": 3,
       "question": "Which type of hacker is characterized as using other people's tools with limited knowledge?",
       "options": [
+        "Script Kiddies",
         "Hacktivists",
         "State-sponsored hackers",
-        "Script Kiddies",
         "Professional hackers"
       ],
-      "correctAnswer": 2,
+      "correctAnswer": 0,
       "explanation": "Script Kiddies are defined in the notes as hackers who use other people's tools with limited knowledge and often perform attacks without actually understanding them.",
       "why_others_wrong": "Hacktivists are activists who conduct hacking for political or ideological goals and typically have moderate understanding of security techniques. State-sponsored hackers are government-backed professionals who conduct advanced cyberattacks and have high expertise. Professional hackers (also called crackers) are highly experienced individuals who exploit complex vulnerabilities for financial gain."
     },
@@ -57,11 +57,11 @@
       "question": "Which security design principle suggests that access decisions should be based on permission rather than exclusion?",
       "options": [
         "Least Privilege",
-        "Fail-Safe Defaults",
         "Complete Mediation", 
-        "Open Design"
+        "Open Design",
+        "Fail-Safe Defaults"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "Fail-Safe Defaults principle states that 'Access decisions should be based on permission rather than exclusion - Default access is denied unless explicitly allowed.'",
       "why_others_wrong": "Least Privilege focuses on ensuring every process and user operates with minimal necessary permissions. Complete Mediation requires that every access must be checked against access control mechanisms. Open Design advocates that security mechanism designs should be open rather than secret."
     },
@@ -69,12 +69,12 @@
       "id": 6,
       "question": "In the DREAD threat modeling, what does the 'R' stand for?",
       "options": [
-        "Risk",
         "Reproducibility",
+        "Risk",
         "Recovery",
         "Responsibility"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 0,
       "explanation": "In DREAD threat modeling, the 'R' stands for Reproducibility, which measures how easy it is for the attack to occur or to replicate. The DREAD model consists of Damage, Reproducibility, Exploitability, Affected Users, and Discoverability.",
       "why_others_wrong": "Risk is a general security concept but not what the R represents in DREAD. Recovery relates to incident response but is not part of the DREAD model. Responsibility relates to accountability but is not a component of DREAD threat modeling."
     },
@@ -83,11 +83,11 @@
       "question": "Which type of attack surface refers to vulnerabilities created by personnel or outsiders through social engineering?",
       "options": [
         "Network attack surface",
-        "Software attack surface", 
         "Human attack surface",
+        "Software attack surface", 
         "Physical attack surface"
       ],
-      "correctAnswer": 2,
+      "correctAnswer": 1,
       "explanation": "Human attack surface refers to vulnerabilities created by personnel or outsiders, such as social engineering, human error, and trusted insiders.",
       "why_others_wrong": "Network attack surface refers to vulnerabilities over enterprise networks, WANs, or Internet connections. Software attack surface involves vulnerabilities in application, utility, or operating system code. Physical attack surface, while related to human interaction, specifically refers to physical access vulnerabilities rather than social engineering."
     },
@@ -96,11 +96,11 @@
       "question": "What type of social engineering involves 'the subtle extraction of information during an apparently normal and innocent conversation'?",
       "options": [
         "Pretexting",
-        "Elicitation",
         "Influence",
+        "Elicitation",
         "Baiting"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 2,
       "explanation": "Elicitation is defined in the notes as 'the subtle extraction of information during an apparently normal and innocent conversation.'",
       "why_others_wrong": "Pretexting involves creating a fabricated scenario or story during a social engineering engagement. Influence focuses on persuasion techniques involving emotions and beliefs. Baiting involves leaving malicious items (like USB drives) for victims to find and use."
     },
@@ -108,12 +108,12 @@
       "id": 9,
       "question": "Which security control category includes policies, guidelines, and manuals?",
       "options": [
-        "Technical controls",
         "Administrative controls",
+        "Technical controls",
         "Physical controls", 
         "Operational controls"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 0,
       "explanation": "Administrative controls are non-technical controls that include policies, guidelines, manuals, and other management-focused security measures.",
       "why_others_wrong": "Technical controls involve hardware and software security capabilities like firewalls and encryption. Physical controls include locks, cameras, security guards, and physical barriers. Operational controls address implementation and use of security policies through procedures primarily implemented by people."
     },
@@ -135,11 +135,11 @@
       "question": "What is the primary purpose of a Local Area Network (LAN)?",
       "options": [
         "Connect systems over large geographic areas",
-        "Provide network connectivity for computers in the same geographic area",
         "Connect personal devices like smartphones",
+        "Provide network connectivity for computers in the same geographic area",
         "Provide internet access only"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 2,
       "explanation": "LANs provide network connectivity for computers located in the same geographic area, typically connected through devices like hubs and switches.",
       "why_others_wrong": "Connecting systems over large geographic areas is the purpose of WANs (Wide Area Networks). Connecting personal devices like smartphones is the purpose of PANs (Personal Area Networks). Providing internet access only is too narrow since LANs provide local network connectivity and can function without internet access."
     },
@@ -187,11 +187,11 @@
       "question": "What does encapsulation mean in networking?",
       "options": [
         "Removing headers from packets",
-        "A packet of one protocol being placed as payload in another protocol's packet",
         "Encrypting data",
+        "A packet of one protocol being placed as payload in another protocol's packet",
         "Compressing data"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 2,
       "explanation": "Encapsulation occurs when 'A packet p1 of N1 is encapsulated into a packet p2 of N2' where 'The payload of p2 is p1'. This allows one protocol to use the services of another protocol.",
       "why_others_wrong": "Removing headers from packets is de-encapsulation, not encapsulation. Encrypting data is a security function, not the networking concept of encapsulation. Compressing data is a data optimization technique, not encapsulation."
     },
@@ -200,11 +200,11 @@
       "question": "Which HTTP response status code indicates 'OK' (success)?",
       "options": [
         "404",
-        "200",
         "301",
+        "200",
         "500"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 2,
       "explanation": "HTTP status code 200 means 'OK' indicating successful completion of the request.",
       "why_others_wrong": "404 means 'Not Found' indicating the requested resource doesn't exist. 301 means 'Moved Permanently' indicating the resource has been relocated. 500 indicates an internal server error."
     },
@@ -214,10 +214,10 @@
       "options": [
         "TCP is faster than UDP",
         "UDP is connection-oriented, TCP is connectionless",
-        "TCP is connection-oriented and reliable, UDP is connectionless",
-        "There is no difference"
+        "There is no difference",
+        "TCP is connection-oriented and reliable, UDP is connectionless"
       ],
-      "correctAnswer": 2,
+      "correctAnswer": 3,
       "explanation": "TCP is connection-oriented and reliable, providing sequence numbers, timeouts, and retransmissions. UDP is connectionless and lightweight with no connection to create/maintain and no guarantee of packet delivery.",
       "why_others_wrong": "TCP is actually slower than UDP due to its overhead and reliability mechanisms. UDP is connectionless while TCP is connection-oriented, not the reverse. There are significant differences between these protocols in terms of reliability, connection management, and overhead."
     },
@@ -225,12 +225,12 @@
       "id": 18,
       "question": "In the TCP three-way handshake, what is the correct order of flags?",
       "options": [
-        "ACK, SYN, FIN",
         "SYN, SYN-ACK, ACK",
+        "ACK, SYN, FIN",
         "SYN, ACK, FIN",
         "FIN, ACK, SYN"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 0,
       "explanation": "The TCP three-way handshake follows the sequence: (1) Client sends SYN, (2) Server sends SYN-ACK, (3) Client sends ACK. This establishes a reliable connection before data transfer begins.",
       "why_others_wrong": "ACK, SYN, FIN is incorrect as ACK cannot come before SYN establishment. SYN, ACK, FIN includes FIN which is for connection termination, not establishment. FIN, ACK, SYN starts with connection termination rather than establishment."
     },
@@ -252,11 +252,11 @@
       "question": "How many bits is a MAC address?",
       "options": [
         "32 bits",
-        "48 bits",
         "64 bits", 
-        "128 bits"
+        "128 bits",
+        "48 bits"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "A MAC address is a 48-bit number usually represented in hexadecimal format (e.g., 00-1A-92-D4-BF-86).",
       "why_others_wrong": "32 bits is the length of IPv4 addresses, not MAC addresses. 64 bits is not the standard MAC address length. 128 bits is the length of IPv6 addresses, not MAC addresses."
     },
@@ -291,11 +291,11 @@
       "question": "Which network device knows the MAC address of systems connected to each port?",
       "options": [
         "Hub",
-        "Switch",
         "Router", 
-        "Repeater"
+        "Repeater",
+        "Switch"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "Switches maintain a MAC address table that maps MAC addresses to specific ports, allowing them to intelligently forward frames to the correct destination port.",
       "why_others_wrong": "Hubs operate at the physical layer and simply repeat signals to all ports without intelligence about MAC addresses. Routers work with IP addresses at Layer 3, not MAC addresses at Layer 2. Repeaters simply amplify signals without processing addresses."
     },
@@ -304,11 +304,11 @@
       "question": "What does DNS stand for and what is its primary function?",
       "options": [
         "Data Network Service - transfers data",
-        "Domain Name System - maps domain names to IP addresses",
         "Dynamic Network Security - provides security", 
-        "Distributed Network Storage - stores files"
+        "Distributed Network Storage - stores files",
+        "Domain Name System - maps domain names to IP addresses"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "DNS (Domain Name System) is an application-layer protocol for mapping domain names to IP addresses. It provides a distributed database that stores various resource records.",
       "why_others_wrong": "Data Network Service would be about data transfer, not name resolution. Dynamic Network Security would be about security services, not name resolution. Distributed Network Storage would be about file storage, not name resolution."
     },
@@ -330,11 +330,11 @@
       "question": "What type of attack involves sending packets from one IP address that appear to originate from another?",
       "options": [
         "Session hijacking",
-        "IP Spoofing",
         "ARP poisoning",
+        "IP Spoofing",
         "DNS pharming"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 2,
       "explanation": "IP Spoofing is an attempt by an intruder to send packets from one IP address that appear to originate from another IP address.",
       "why_others_wrong": "Session hijacking involves taking over an existing authenticated session. ARP poisoning involves manipulating MAC address mappings, not IP addresses. DNS pharming involves redirecting DNS queries to malicious servers."
     },
@@ -343,11 +343,11 @@
       "question": "Which type of port scan is described as 'half open' because it doesn't complete the full TCP connection?",
       "options": [
         "TCP Connect scan",
-        "TCP SYN scan", 
         "UDP scan",
-        "FIN scan"
+        "FIN scan",
+        "TCP SYN scan"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "TCP SYN scan is commonly referred to as 'half open' because it sends SYN packets but doesn't complete the full three-way handshake, making it stealthier than full connection scans.",
       "why_others_wrong": "TCP Connect scan completes the full three-way handshake, making it 'fully open'. UDP scan doesn't use TCP connections at all. FIN scan sends FIN packets to closed connections, not SYN packets for half-open connections."
     },
@@ -369,11 +369,11 @@
       "question": "What is the main goal of a Man-in-the-Middle (MITM) attack?",
       "options": [
         "To crash the server",
-        "To intercept and potentially modify communications between two hosts",
         "To steal passwords only",
+        "To intercept and potentially modify communications between two hosts",
         "To flood the network with traffic"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 2,
       "explanation": "In a MITM attack, an attacker positions themselves between two communicating parties to intercept, monitor, and potentially modify their communications.",
       "why_others_wrong": "Crashing the server would be a denial of service attack, not MITM. Stealing passwords only is too narrow since MITM can intercept all communications. Flooding the network with traffic describes a DDoS attack, not MITM."
     },
@@ -395,11 +395,11 @@
       "question": "What is the primary characteristic of a sniffer in promiscuous mode?",
       "options": [
         "It only captures encrypted traffic",
-        "It captures all traffic regardless of destination address",
         "It only captures traffic from specific IP addresses", 
-        "It cannot capture any traffic"
+        "It cannot capture any traffic",
+        "It captures all traffic regardless of destination address"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "When a network adapter is in promiscuous mode, a sniffer captures all traffic it can hear on the network segment, regardless of the intended destination address.",
       "why_others_wrong": "Capturing only encrypted traffic would miss unencrypted communications. Capturing traffic from specific IP addresses describes filtered monitoring, not promiscuous mode. Being unable to capture any traffic would make the sniffer useless."
     },
@@ -421,11 +421,11 @@
       "question": "What is the goal of MAC flooding attack?",
       "options": [
         "To steal MAC addresses",
-        "To overwhelm the switch's CAM table causing it to fail",
         "To change MAC addresses",
-        "To encrypt MAC addresses"
+        "To encrypt MAC addresses",
+        "To overwhelm the switch's CAM table causing it to fail"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "MAC flooding aims to flood the switch with fake MAC addresses, overwhelming the Content Addressable Memory (CAM) table and causing the switch to fail or operate in hub mode.",
       "why_others_wrong": "Stealing MAC addresses would be reconnaissance, not flooding. Changing MAC addresses is MAC spoofing, not flooding. Encrypting MAC addresses is not the purpose of MAC flooding attacks."
     },
@@ -447,11 +447,11 @@
       "question": "What characterizes a SYN flood attack?",
       "options": [
         "Completing TCP handshakes normally",
-        "Sending SYN packets without completing the handshake",
         "Sending only ACK packets",
-        "Sending FIN packets"
+        "Sending FIN packets",
+        "Sending SYN packets without completing the handshake"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "A SYN flood attack sends numerous SYN packets to initiate TCP connections but never completes the handshake, exhausting the server's connection resources as it waits for responses that never come.",
       "why_others_wrong": "Completing TCP handshakes normally would not constitute an attack. Sending only ACK packets without established connections would be ignored by the server. Sending FIN packets attempts to close connections that don't exist."
     },
@@ -472,12 +472,12 @@
       "id": 37,
       "question": "What is a botnet in the context of DDoS attacks?",
       "options": [
-        "A single infected computer",
         "A network of infected devices (zombies) controlled by an attacker", 
+        "A single infected computer",
         "A type of firewall",
         "An antivirus program"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 0,
       "explanation": "A botnet is a network of compromised devices (called zombies or bots) that are remotely controlled by an attacker and can be commanded to participate in coordinated attacks like DDoS.",
       "why_others_wrong": "A single infected computer would be just one bot, not a botnet which requires multiple devices. A firewall is a defensive security device, not an attack network. An antivirus program is security software designed to detect and remove malware."
     },
@@ -538,11 +538,11 @@
       "question": "In cryptography, what is the difference between confusion and diffusion?",
       "options": [
         "No difference",
-        "Confusion obscures plaintext-key relationship, diffusion spreads changes throughout ciphertext",
         "Confusion is weaker than diffusion", 
-        "They are the same operation"
+        "They are the same operation",
+        "Confusion obscures plaintext-key relationship, diffusion spreads changes throughout ciphertext"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "Confusion occurs when the relationship between plaintext and key is complex, making it hard to determine the key. Diffusion occurs when a change in plaintext results in multiple, widespread changes throughout the ciphertext.",
       "why_others_wrong": "There are significant differences between confusion and diffusion - they serve different purposes. Neither is inherently weaker than the other as they address different security aspects. They are distinctly different operations with different goals."
     },
@@ -629,11 +629,11 @@
       "question": "What is a brute force attack in cryptanalysis?",
       "options": [
         "Breaking physical locks",
-        "Trying every possible key until the correct one is found",
         "Using social engineering",
+        "Trying every possible key until the correct one is found",
         "Attacking network protocols"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 2,
       "explanation": "A brute force attack systematically tries every possible key combination until the correct one is found, which is why longer keys provide exponentially better security.",
       "why_others_wrong": "Breaking physical locks is physical security, not cryptanalysis. Using social engineering is a human-based attack, not cryptanalysis. Attacking network protocols is network security, not cryptographic key breaking."
     },
@@ -642,11 +642,11 @@
       "question": "What is the difference between a block cipher and a stream cipher?",
       "options": [
         "No difference",
-        "Block cipher encrypts fixed-size blocks, stream cipher encrypts bits individually",
         "Stream cipher is always faster",
-        "Block cipher is always more secure"
+        "Block cipher is always more secure",
+        "Block cipher encrypts fixed-size blocks, stream cipher encrypts bits individually"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "Block ciphers encrypt fixed-size blocks of data (typically 64 or 128 bits), while stream ciphers treat the message as a stream of bits and perform operations on each bit individually using keystream generators.",
       "why_others_wrong": "There are fundamental differences in how they process data. Stream ciphers are not always faster - performance depends on implementation and use case. Block ciphers are not always more secure - security depends on the specific algorithm and implementation."
     },
@@ -668,11 +668,11 @@
       "question": "What is the main difference between Black Box and White Box penetration testing?",
       "options": [
         "Black Box uses automated tools, White Box is manual",
-        "Black Box has no system knowledge, White Box has full system knowledge",
         "White Box is always faster",
-        "No difference"
+        "No difference",
+        "Black Box has no system knowledge, White Box has full system knowledge"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "Black Box testing simulates an external attacker's perspective with no prior system knowledge, while White Box testing provides full system knowledge including architecture, source code, and configurations.",
       "why_others_wrong": "Both Black Box and White Box testing can use automated tools or manual techniques. White Box is not always faster since having more information can mean more comprehensive testing. There are significant differences in the level of system knowledge provided."
     },
@@ -772,11 +772,11 @@
       "question": "What is the primary difference between passive and active attacks?",
       "options": [
         "Passive attacks are stronger",
-        "Passive attacks attempt to learn information without affecting system resources, active attacks attempt to alter or affect system resources",
         "Active attacks are always detected",
-        "No difference"
+        "No difference",
+        "Passive attacks attempt to learn information without affecting system resources, active attacks attempt to alter or affect system resources"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "Passive attacks attempt to learn or use information without affecting system resources (like eavesdropping), while active attacks attempt to alter system resources or affect their operation (like modifying data).",
       "why_others_wrong": "Passive attacks are not necessarily stronger - they serve different purposes. Active attacks are not always detected, though they may be more detectable. There are fundamental differences in their goals and impact on systems."
     },
@@ -850,11 +850,11 @@
       "question": "What is banner grabbing in the context of network reconnaissance?",
       "options": [
         "Stealing network banners",
-        "Probing services to obtain information about versions and configurations",
         "Creating fake banners",
+        "Probing services to obtain information about versions and configurations",
         "Hiding service banners"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 2,
       "explanation": "Banner grabbing (also called fingerprinting) involves probing network services to obtain information about their versions, configurations, and other details that could reveal vulnerabilities.",
       "why_others_wrong": "Stealing network banners is not the reconnaissance technique. Creating fake banners would be deception, not information gathering. Hiding service banners would be a defensive measure, not reconnaissance."
     },
@@ -863,11 +863,11 @@
       "question": "What characterizes a 'Connect scan' in port scanning?",
       "options": [
         "It never completes connections",
-        "It fully connects to the target with complete TCP handshake",
         "It only sends UDP packets",
-        "It's completely undetectable"
+        "It's completely undetectable",
+        "It fully connects to the target with complete TCP handshake"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "A Connect scan establishes complete TCP connections using the full three-way handshake, making it reliable but easily detected and logged.",
       "why_others_wrong": "Never completing connections describes SYN scans, not Connect scans. Sending UDP packets describes UDP scans, not TCP Connect scans. Connect scans are highly detectable, not undetectable."
     },
@@ -902,11 +902,11 @@
       "question": "What is the primary goal of active sniffing attacks?",
       "options": [
         "To remain completely undetected",
-        "To intercept and force traffic through the attacker's device",
         "To only observe traffic passively",
+        "To intercept and force traffic through the attacker's device",
         "To shut down network interfaces"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 2,
       "explanation": "Active sniffing attacks intercept and force network traffic to flow through the attacker's device, allowing them to capture traffic that wouldn't normally be visible to them.",
       "why_others_wrong": "Remaining undetected is more characteristic of passive sniffing. Only observing traffic passively describes passive sniffing, not active sniffing. Shutting down network interfaces would be a denial-of-service attack."
     },
@@ -915,11 +915,11 @@
       "question": "What does 'collision-free property' mean in hash functions?",
       "options": [
         "Hash functions never crash",
-        "It's computationally infeasible to find two different inputs that produce the same hash",
         "Hash functions work on all operating systems",
-        "Hash functions are faster than encryption"
+        "Hash functions are faster than encryption",
+        "It's computationally infeasible to find two different inputs that produce the same hash"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "The collision-free property means it's computationally infeasible to find two different inputs that produce the same hash output, which is crucial for integrity verification.",
       "why_others_wrong": "Hash functions crashing relates to software reliability, not cryptographic properties. Working on all operating systems is about portability, not security properties. Speed comparison to encryption is about performance, not collision resistance."
     },
@@ -941,11 +941,11 @@
       "question": "In the Vigenère cipher, what makes it more secure than a simple Caesar cipher?",
       "options": [
         "It uses larger alphabets",
-        "It uses a keyword to create multiple substitution alphabets (polyalphabetic)",
         "It's faster to compute",
-        "It uses numbers instead of letters"
+        "It uses numbers instead of letters",
+        "It uses a keyword to create multiple substitution alphabets (polyalphabetic)"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "The Vigenère cipher is polyalphabetic, using a keyword to create multiple substitution alphabets, making frequency analysis much more difficult than with Caesar cipher's single substitution.",
       "why_others_wrong": "Using larger alphabets is not the key difference. Being faster to compute doesn't make it more secure. Using numbers instead of letters is not characteristic of the Vigenère cipher."
     },
@@ -967,11 +967,11 @@
       "question": "Why are prime numbers important in cryptography?",
       "options": [
         "They are easy to calculate",
-        "The difficulty of factorizing the product of large primes ensures security",
         "They make encryption faster",
-        "They are used in all ciphers"
+        "They are used in all ciphers",
+        "The difficulty of factorizing the product of large primes ensures security"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "Prime numbers are crucial in public-key cryptography because the computational difficulty of factorizing the product of two large primes provides the mathematical foundation for security in algorithms like RSA.",
       "why_others_wrong": "Large primes are actually difficult to find and verify. Prime-based operations are typically slower than other operations. Prime numbers are not used in all ciphers - many symmetric ciphers don't use them."
     },
@@ -980,11 +980,11 @@
       "question": "What is entropy in the context of cryptography?",
       "options": [
         "The speed of encryption",
-        "The level of randomness or unpredictability in a system",
         "The size of the key",
-        "The complexity of the algorithm"
+        "The complexity of the algorithm",
+        "The level of randomness or unpredictability in a system"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "Entropy measures the level of randomness or unpredictability in a cryptographic system. Higher entropy means better security because it prevents patterns and makes attacks more difficult.",
       "why_others_wrong": "Encryption speed is about performance, not entropy. Key size contributes to entropy but is not entropy itself. Algorithm complexity is about computational requirements, not randomness."
     },
@@ -993,11 +993,11 @@
       "question": "What is the main advantage of asymmetric encryption over symmetric encryption for key distribution?",
       "options": [
         "It's faster",
-        "It solves the key distribution problem - no need to securely share keys beforehand",
         "It uses shorter keys",
-        "It's more secure in all cases"
+        "It's more secure in all cases",
+        "It solves the key distribution problem - no need to securely share keys beforehand"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "Asymmetric encryption solves the key distribution problem because public keys can be shared openly while private keys remain secret, eliminating the need to securely exchange shared keys beforehand.",
       "why_others_wrong": "Asymmetric encryption is actually slower than symmetric encryption. Asymmetric encryption typically uses longer keys, not shorter ones. Each type has security advantages in different scenarios."
     },
@@ -1019,11 +1019,11 @@
       "question": "What type of cryptanalysis attack compares input plaintext with output ciphertext?",
       "options": [
         "Brute force attack",
-        "Differential cryptanalysis",
         "Dictionary attack", 
-        "Frequency analysis"
+        "Frequency analysis",
+        "Differential cryptanalysis"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "Differential cryptanalysis compares input plaintext with output ciphertext to identify patterns and potentially determine the encryption key by analyzing how differences in input affect the output.",
       "why_others_wrong": "Brute force attacks try all possible keys systematically. Dictionary attacks use lists of common passwords or keys. Frequency analysis examines the frequency of characters or patterns in ciphertext."
     },
@@ -1032,11 +1032,11 @@
       "question": "What is a known plaintext attack?",
       "options": [
         "When the attacker knows the algorithm",
-        "When the attacker has access to both plaintext and its corresponding ciphertext",
         "When the attacker knows the key length",
-        "When the attacker has physical access"
+        "When the attacker has physical access",
+        "When the attacker has access to both plaintext and its corresponding ciphertext"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "A known plaintext attack occurs when an attacker has both the plaintext and its corresponding ciphertext, which they can analyze to potentially discover the encryption key or algorithm weaknesses.",
       "why_others_wrong": "Knowing the algorithm is assumed in cryptanalysis (Kerckhoffs's principle). Knowing key length helps but is different from having plaintext-ciphertext pairs. Physical access enables different types of attacks but not specifically known plaintext attacks."
     },
@@ -1058,11 +1058,11 @@
       "question": "What is a downgrade attack in cryptanalysis?",
       "options": [
         "Reducing the complexity of algorithms",
-        "Taking advantage of backward compatibility to downgrade security",
         "Attacking older systems only",
-        "Reducing key sizes"
+        "Reducing key sizes",
+        "Taking advantage of backward compatibility to downgrade security"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "A downgrade attack exploits backward compatibility features to force systems to use older, weaker versions of cryptographic protocols that are easier to break.",
       "why_others_wrong": "Reducing algorithm complexity is not the attack method. Attacking only older systems misses the point that new systems are forced to use old protocols. Reducing key sizes might be a result but not the attack method itself."
     },
@@ -1071,11 +1071,11 @@
       "question": "In the context of penetration testing phases, what happens during the 'Attack Phase'?",
       "options": [
         "Planning the test scope",
-        "Attempting to penetrate the network and execute attacks",
         "Writing the final report",
-        "Gathering initial reconnaissance"
+        "Gathering initial reconnaissance",
+        "Attempting to penetrate the network and execute attacks"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "The Attack Phase is when penetration testers actively attempt to penetrate the network and execute attacks based on vulnerabilities discovered during earlier phases.",
       "why_others_wrong": "Planning the test scope occurs during the Pre-Attack Phase. Writing the final report happens during the Post-Attack Phase. Gathering initial reconnaissance also occurs during the Pre-Attack Phase."
     },
@@ -1084,11 +1084,11 @@
       "question": "What should a penetration testing report typically include?",
       "options": [
         "Only technical details",
-        "Executive summary, participants, findings in order of risk, analysis and mitigation steps",
         "Only vulnerabilities found",
-        "Just screenshots"
+        "Just screenshots",
+        "Executive summary, participants, findings in order of risk, analysis and mitigation steps"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "A comprehensive penetration testing report should include an executive summary, participant information, findings ordered by risk level, detailed analysis of each finding, recommended mitigation steps, and supporting evidence.",
       "why_others_wrong": "Only technical details would miss the executive perspective needed by management. Only vulnerabilities would lack context and mitigation guidance. Just screenshots would lack analysis and recommendations."
     },
@@ -1110,11 +1110,11 @@
       "question": "What is Gray Box testing in penetration testing?",
       "options": [
         "Testing only external systems",
-        "Simulating an attack with partial system knowledge",
         "Testing without any tools",
-        "Only testing web applications"
+        "Only testing web applications",
+        "Simulating an attack with partial system knowledge"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "Gray Box testing simulates an attack scenario where the tester has partial knowledge of the system, representing a middle ground between Black Box (no knowledge) and White Box (full knowledge) approaches.",
       "why_others_wrong": "Testing only external systems describes scope, not knowledge level. Testing without tools is about methodology, not knowledge level. Testing only web applications describes target scope, not the testing approach."
     },
@@ -1123,11 +1123,11 @@
       "question": "According to the security design principles, what does 'Complete Mediation' require?",
       "options": [
         "All users must be authenticated",
-        "Every access must be checked against the access control mechanism",
         "All data must be encrypted",
-        "Only administrators can access systems"
+        "Only administrators can access systems",
+        "Every access must be checked against the access control mechanism"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "Complete Mediation requires that every access to every object must be checked against the access control mechanism to ensure no access bypasses security controls.",
       "why_others_wrong": "User authentication is important but not what Complete Mediation specifically addresses. Data encryption relates to confidentiality, not mediation. Restricting access to only administrators would violate the principle of necessary access."
     },
@@ -1136,11 +1136,11 @@
       "question": "What does the 'Open Design' security principle advocate?",
       "options": [
         "All systems should be open source",
-        "The design of security mechanisms should be open rather than secret",
         "All data should be publicly accessible",
-        "Security through obscurity is best"
+        "Security through obscurity is best",
+        "The design of security mechanisms should be open rather than secret"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "The Open Design principle states that security mechanism designs should be open and transparent rather than relying on secrecy, as security should depend on keys or passwords, not on hiding the design.",
       "why_others_wrong": "Open source software is one application but not the full meaning of Open Design. Making all data publicly accessible would violate confidentiality. Security through obscurity is the opposite of Open Design."
     },
@@ -1148,14 +1148,14 @@
       "id": 89,
       "question": "What does 'Separation of Privileges' principle require?",
       "options": [
-        "Each user has different privileges",
-        "Multiple conditions should be required to achieve access to restricted resources",
-        "Privileges should be separated by time",
-        "Only one person should have admin access"
+        "Each user should have separate accounts",
+        "Privileged users should work separately",
+        "Different types of data should be stored separately",
+        "Multiple conditions should be required to achieve access to restricted resources"
       ],
-      "correctAnswer": 1,
-      "explanation": "Separation of Privileges requires that multiple conditions or factors should be needed to access restricted resources, reducing the risk of unauthorized access through any single compromised element.",
-      "why_others_wrong": "Different privileges per user is role-based access, not separation of privileges. Time-based separation is temporal access control. Having only one admin creates a single point of failure rather than separation."
+      "correctAnswer": 3,
+      "explanation": "Separation of Privileges requires that multiple conditions or factors should be needed to access restricted resources or perform sensitive actions, reducing the risk of unauthorized access through any single compromised element.",
+      "why_others_wrong": "Different privileges per user is role-based access, not separation of privileges. Physical separation of users is temporal access control. Data storage separation is compartmentalization, not privilege separation."
     },
     {
       "id": 90,
@@ -1175,11 +1175,11 @@
       "question": "What is the main purpose of network interface cards (NICs)?",
       "options": [
         "To provide power to devices", 
-        "To connect devices to a network, whether wired or wireless",
         "To store network configuration",
-        "To encrypt network traffic"
+        "To encrypt network traffic",
+        "To connect devices to a network, whether wired or wireless"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "Network Interface Cards (NICs) enable devices to connect to networks, whether through wired Ethernet connections or wireless connections, providing the physical interface to the network.",
       "why_others_wrong": "Providing power is done by power supplies, not NICs. Storing network configuration may be a secondary function but not the main purpose. Encrypting traffic is done by software protocols, not the NIC hardware itself."
     },
@@ -1188,11 +1188,11 @@
       "question": "What is the primary difference between a hub and a switch?",
       "options": [
         "Hubs are faster",
-        "Switches know MAC addresses of connected devices and redirect data intelligently, hubs echo to all ports",
         "Switches are older technology",
-        "No difference"
+        "No difference",
+        "Switches know MAC addresses of connected devices and redirect data intelligently, hubs echo to all ports"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "Switches maintain MAC address tables and intelligently forward frames only to the intended recipient port, while hubs simply repeat all incoming frames to every port without intelligence.",
       "why_others_wrong": "Switches are actually faster and more efficient than hubs. Hubs are the older technology, not switches. There are fundamental differences in how they handle network traffic."
     },
@@ -1201,11 +1201,11 @@
       "question": "What is the purpose of routers in networking?",
       "options": [
         "To store data",
-        "To connect different networks together and perform traffic directing functions",
         "To provide power to devices",
-        "To encrypt all traffic"
+        "To encrypt all traffic",
+        "To connect different networks together and perform traffic directing functions"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "Routers connect separate networks together and make intelligent decisions about the best path for data to travel between different network segments based on routing protocols and tables.",
       "why_others_wrong": "Storing data is done by storage devices, not routers. Providing power is done by power supplies and PoE switches, not typical routers. Encrypting traffic is done by security protocols, not the router's primary function."
     },
@@ -1227,11 +1227,11 @@
       "question": "What makes LANs generally more trusted than WANs?",
       "options": [
         "LANs are always encrypted",
-        "Systems on the same LAN often trust each other and are in the same geographic area with controlled access",
         "LANs are faster",
-        "LANs use better protocols"
+        "LANs use better protocols",
+        "Systems on the same LAN often trust each other and are in the same geographic area with controlled access"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "LANs are more trusted because devices are typically in the same physical location with controlled access, managed by the same organization, and often configured with trust relationships between systems.",
       "why_others_wrong": "LANs are not automatically encrypted - encryption must be implemented separately. Speed doesn't determine trust level. Protocol quality is independent of the network scope and trust level."
     },
@@ -1240,11 +1240,11 @@
       "question": "What is the key characteristic of a Personal Area Network (PAN)?",
       "options": [
         "It covers large geographic areas",
-        "It connects devices within an individual's personal space using technologies like Bluetooth",
         "It only works with wired connections",
-        "It requires internet access"
+        "It requires internet access",
+        "It connects devices within an individual's personal space using technologies like Bluetooth"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "PANs connect devices within an individual's personal space (typically within a few meters) using short-range wireless technologies like Bluetooth, ZigBee, or infrared connections.",
       "why_others_wrong": "Covering large geographic areas describes WANs, not PANs. PANs primarily use wireless technologies, not wired connections. Internet access is not required for devices to communicate within a PAN."
     },
@@ -1266,11 +1266,11 @@
       "question": "What is encapsulation in the context of network packet transmission?",
       "options": [
         "Removing all headers from packets",
-        "Adding protocol-specific headers and footers as packets move down the protocol stack",
         "Encrypting packet contents",
+        "Adding protocol-specific headers and footers as packets move down the protocol stack",
         "Compressing packet data"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 2,
       "explanation": "Encapsulation is the process where each layer of the protocol stack adds its own headers (and sometimes trailers) to the data received from the layer above as packets move down the stack.",
       "why_others_wrong": "Removing headers is de-encapsulation, not encapsulation. Encrypting packet contents is a security function, not the general encapsulation process. Compressing data is optimization, not encapsulation."
     },
@@ -1279,11 +1279,11 @@
       "question": "What information is typically found in packet headers?",
       "options": [
         "Only the destination address",
-        "Origin and destination addresses, protocol type, sequence numbers, and acknowledgments",
         "Only the data payload",
-        "Just error checking information"
+        "Just error checking information",
+        "Origin and destination addresses, protocol type, sequence numbers, and acknowledgments"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "Packet headers contain comprehensive control information including source and destination addresses, protocol identifiers, sequence numbers, acknowledgment numbers, and other protocol-specific control data.",
       "why_others_wrong": "Only destination address would be insufficient for packet routing and processing. Data payload is carried separately from headers. Error checking is important but headers contain much more control information."
     },
@@ -1292,11 +1292,11 @@
       "question": "What is the primary purpose of footers/trailers in network packets?",
       "options": [
         "To identify the sender",
-        "To contain error-checking data and timestamps",
         "To encrypt the payload", 
-        "To compress the data"
+        "To compress the data",
+        "To contain error-checking data and timestamps"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "Footers (trailers) are placed at the end of packets and typically contain error-checking information like checksums and frame check sequences, along with timing information.",
       "why_others_wrong": "Sender identification is typically in headers, not footers. Payload encryption is done by security protocols, not footers. Data compression is handled by compression algorithms, not packet footers."
     }

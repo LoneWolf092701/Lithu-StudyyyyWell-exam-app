@@ -37,10 +37,10 @@
       "options": [
         "Reflected XSS",
         "DOM-based XSS",
-        "Persistent XSS",
-        "Self-XSS"
+        "Self-XSS",
+        "Persistent XSS"
       ],
-      "correctAnswer": 2,
+      "correctAnswer": 3,
       "explanation": "Persistent XSS (also called Stored XSS) stores malicious scripts on the server permanently. When users visit the affected page, the script executes automatically, making it particularly dangerous as it affects all users who view the compromised content.",
       "why_others_wrong": "Reflected XSS doesn't store scripts on the server but reflects them back immediately. DOM-based XSS manipulates the DOM without server storage. Self-XSS requires the victim to execute the script themselves."
     },
@@ -48,12 +48,12 @@
       "id": 4,
       "question": "What is the primary goal of a Cross-Site Request Forgery (CSRF) attack?",
       "options": [
+        "To trick users into performing unwanted actions",
         "To steal user credentials",
         "To execute malicious scripts in the browser",
-        "To trick users into performing unwanted actions",
         "To inject SQL commands into databases"
       ],
-      "correctAnswer": 2,
+      "correctAnswer": 0,
       "explanation": "CSRF attacks trick authenticated users into performing unwanted actions by exploiting the trust a website has in the user's browser. The attack forges requests that appear to come from the legitimate user.",
       "why_others_wrong": "Stealing credentials is typically done through phishing or XSS. Executing malicious scripts is XSS. SQL injection involves database commands. CSRF specifically focuses on forging legitimate user requests."
     },
@@ -74,12 +74,12 @@
       "id": 6,
       "question": "Which command injection payload would typically be used to view the contents of the /etc/passwd file on a Linux system?",
       "options": [
-        "; cat /etc/passwd",
         "; SELECT * FROM users",
         "; alert('XSS')",
-        "; DROP TABLE users"
+        "; DROP TABLE users",
+        "; cat /etc/passwd"
       ],
-      "correctAnswer": 0,
+      "correctAnswer": 3,
       "explanation": "The semicolon (;) is used to chain commands in Unix/Linux systems, and 'cat /etc/passwd' is the standard command to display the contents of the password file. This is a typical command injection payload for Linux systems.",
       "why_others_wrong": "The SELECT statement is SQL syntax, not OS commands. The alert() function is JavaScript for XSS attacks. DROP TABLE is also SQL syntax for database manipulation, not OS command injection."
     },
@@ -101,11 +101,11 @@
       "question": "According to the NIST definition, what is malware?",
       "options": [
         "Any software that requires administrator privileges",
-        "A program inserted covertly to compromise CIA properties",
         "Software that monitors network traffic",
+        "A program inserted covertly to compromise CIA properties",
         "Any program that modifies system files"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 2,
       "explanation": "NIST 800-83 defines malware as 'a program that is inserted into a system, usually covertly, with the intent of compromising the confidentiality, integrity, or availability of the victim's data, applications, or operating system.' The key aspects are covert insertion and intent to compromise CIA properties.",
       "why_others_wrong": "Programs requiring admin privileges aren't necessarily malicious. Network monitoring tools can be legitimate. File modification alone doesn't make software malicious - the covert nature and malicious intent are crucial defining factors."
     },
@@ -127,11 +127,11 @@
       "question": "Which type of malware is described as 'standalone' and can run independently once installed?",
       "options": [
         "Virus",
-        "Worm",
         "Trojan Horse",
-        "Rootkit"
+        "Rootkit",
+        "Worm"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "Worms are independent malware that can run on their own once installed on a compromised machine. They actively seek out other machines to infect and don't require a host program to function, unlike viruses.",
       "why_others_wrong": "Viruses require host programs to run. Trojan horses disguise themselves as legitimate software but still need user interaction. Rootkits typically modify existing system components rather than operating independently."
     },
@@ -166,11 +166,11 @@
       "question": "What type of virus changes its code with every infection to avoid signature-based detection?",
       "options": [
         "Stealth virus",
-        "Polymorphic virus",
         "Metamorphic virus",
+        "Polymorphic virus",
         "Encrypted virus"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 2,
       "explanation": "Polymorphic viruses mutate their code with every infection while maintaining the same functionality. This makes them difficult to detect using traditional signature-based antivirus methods that look for specific code patterns.",
       "why_others_wrong": "Stealth viruses hide but don't necessarily change code. Metamorphic viruses also change but rewrite themselves completely, not just mutate. Encrypted viruses use encryption but don't necessarily change their underlying code structure."
     },
@@ -179,11 +179,11 @@
       "question": "What is the primary difference between a metamorphic and polymorphic virus?",
       "options": [
         "Metamorphic viruses are encrypted, polymorphic are not",
-        "Metamorphic viruses completely rewrite themselves, polymorphic just mutate",
         "Metamorphic viruses target boot sectors, polymorphic target files",
-        "Metamorphic viruses spread faster than polymorphic"
+        "Metamorphic viruses spread faster than polymorphic",
+        "Metamorphic viruses completely rewrite themselves, polymorphic just mutate"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "Metamorphic viruses completely rewrite themselves at each iteration and may change behavior as well as appearance, while polymorphic viruses only mutate their code while keeping the same basic functionality and structure.",
       "why_others_wrong": "Encryption, target locations, and spreading speed are not the distinguishing factors. The key difference is the extent of code modification - complete rewriting versus mutation of existing code."
     },
@@ -193,10 +193,10 @@
       "options": [
         "Virus",
         "Worm", 
-        "Rootkit",
-        "Trojan horse"
+        "Trojan horse",
+        "Rootkit"
       ],
-      "correctAnswer": 2,
+      "correctAnswer": 3,
       "explanation": "Rootkits are designed to modify or replace existing system programs to conceal their presence and maintain persistent access. They operate at a low level to hide processes, files, and network connections from detection.",
       "why_others_wrong": "Viruses infect programs but don't necessarily hide system presence. Worms replicate across networks. Trojan horses disguise themselves as legitimate software but don't typically modify system programs for concealment."
     },
@@ -218,11 +218,11 @@
       "question": "Which social engineering technique involves extracting information during seemingly normal conversation?",
       "options": [
         "Pretexting",
-        "Elicitation", 
         "Baiting",
-        "Tailgating"
+        "Tailgating",
+        "Elicitation"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "Elicitation is defined as 'the subtle extraction of information during an apparently normal and innocent conversation.' It involves skillfully gathering sensitive information without the target realizing they're being manipulated.",
       "why_others_wrong": "Pretexting involves creating a fabricated scenario. Baiting involves offering something enticing to trigger actions. Tailgating is physical unauthorized access by following someone. Only elicitation focuses on subtle information extraction through conversation."
     },
@@ -309,11 +309,11 @@
       "question": "What type of authentication token calculates a number synchronized with an authentication server?",
       "options": [
         "Asynchronous token",
-        "Synchronous token", 
         "Smart card",
-        "USB token"
+        "USB token",
+        "Synchronous token"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "Synchronous tokens calculate numbers that are synchronized with the authentication server, either through time-based synchronization or event-based synchronization. Both the token and server generate the same number at the same time.",
       "why_others_wrong": "Asynchronous tokens don't require calculation or synchronization. Smart cards and USB tokens are physical devices that may or may not use synchronization depending on their implementation."
     },
@@ -323,10 +323,10 @@
       "options": [
         "Fingerprint scanning",
         "Iris recognition",
-        "Keystroke dynamics",
-        "Hand geometry"
+        "Hand geometry",
+        "Keystroke dynamics"
       ],
-      "correctAnswer": 2,
+      "correctAnswer": 3,
       "explanation": "Keystroke dynamics is a dynamic biometric that analyzes behavioral patterns in how you type, including timing and rhythm. Dynamic biometrics measure behavioral characteristics rather than static physical features.",
       "why_others_wrong": "Fingerprints, iris patterns, and hand geometry are static biometrics based on physical characteristics that don't change significantly over time."
     },
@@ -400,11 +400,11 @@
       "question": "What makes Attribute-Based Access Control (ABAC) more flexible than other models?",
       "options": [
         "It uses only user attributes",
-        "It considers multiple attributes of users, resources, and environment",
         "It requires fewer administrative controls",
-        "It works only with predefined roles"
+        "It works only with predefined roles",
+        "It considers multiple attributes of users, resources, and environment"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "ABAC's flexibility comes from its ability to make access decisions based on multiple attributes including user attributes, resource attributes, and environmental conditions (like time of day, location, etc.), allowing for very granular and context-aware access control.",
       "why_others_wrong": "Using only user attributes would be limiting, not flexible. ABAC actually requires more complex administration due to its granular nature. It doesn't rely on predefined roles like RBAC does."
     },
@@ -439,11 +439,11 @@
       "question": "What advantage does TACACS+ have over RADIUS?",
       "options": [
         "Uses UDP for faster transmission",
-        "Provides more sophisticated authentication and authorization control",
         "Requires less network bandwidth",
-        "Works only with Cisco devices"
+        "Works only with Cisco devices",
+        "Provides more sophisticated authentication and authorization control"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "TACACS+ provides more sophisticated authentication steps and tighter control over complex authorization activities compared to RADIUS. It also uses TCP, which provides more reliable transmission than RADIUS's UDP.",
       "why_others_wrong": "TACACS+ uses TCP, not UDP. It typically uses more bandwidth due to TCP overhead. While developed by Cisco, TACACS+ is not limited to Cisco devices."
     },
@@ -530,11 +530,11 @@
       "question": "What is the primary characteristic of a botnet?",
       "options": [
         "It encrypts files for ransom",
-        "It's a collection of compromised computers controlled remotely",
         "It monitors network traffic",
-        "It modifies system files"
+        "It modifies system files",
+        "It's a collection of compromised computers controlled remotely"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "A botnet is a collection of compromised computers (bots or zombies) that can be controlled remotely by cybercriminals to perform coordinated attacks like DDoS, send spam, or mine cryptocurrency.",
       "why_others_wrong": "File encryption for ransom is characteristic of ransomware. Network monitoring is done by legitimate tools or spyware. System file modification is done by various malware types, but doesn't define botnets specifically."
     },
@@ -608,11 +608,11 @@
       "question": "What is the purpose of the UNION operator in SQL injection attacks?",
       "options": [
         "To delete database records",
-        "To combine results from multiple SELECT statements",
         "To update existing records",
-        "To create new database tables"
+        "To create new database tables",
+        "To combine results from multiple SELECT statements"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "The UNION operator in SQL is used to combine the results of two or more SELECT statements. In SQL injection attacks, it's used to append additional SELECT queries to extract data from other tables or databases.",
       "why_others_wrong": "DELETE removes records, UPDATE modifies existing records, and CREATE creates new objects. UNION specifically combines query results, making it useful for extracting additional data in injections."
     },
@@ -1297,11 +1297,11 @@
       "question": "In the OWASP Top 10 2021, which category addresses issues with how applications verify user identity?",
       "options": [
         "A1 - Broken Access Control",
-        "A7 - Identification and Authentication Failures",
         "A2 - Cryptographic Failures",
-        "A10 - Server-Side Request Forgery"
+        "A10 - Server-Side Request Forgery",
+        "A7 - Identification and Authentication Failures"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "A7 - Identification and Authentication Failures specifically addresses issues with how applications verify user identity, including weak authentication mechanisms, credential management problems, and session management flaws.",
       "why_others_wrong": "A1 covers access control after authentication. A2 covers cryptographic implementation issues. A10 covers SSRF attacks. A7 specifically focuses on identity verification problems."
     }

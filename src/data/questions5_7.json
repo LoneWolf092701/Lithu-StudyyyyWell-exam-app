@@ -18,11 +18,11 @@
       "question": "What is the primary purpose of the initialization vector (IV) in Cipher Block Chaining (CBC) mode?",
       "options": [
         "To encrypt the final block",
-        "To provide randomness for the first block encryption",
         "To verify data integrity",
+        "To provide randomness for the first block encryption",
         "To generate the encryption key"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 2,
       "explanation": "The IV provides randomness for encrypting the first block since there's no previous ciphertext block to XOR with. This ensures that identical plaintexts produce different ciphertexts when encrypted with different IVs, preventing pattern recognition attacks.",
       "why_others_wrong": "The IV doesn't encrypt the final block - it only affects the first block's encryption. Data integrity verification is handled by separate mechanisms like MACs or digital signatures, not IVs. The IV doesn't generate encryption keys - keys are generated through separate key generation processes."
     },
@@ -44,11 +44,11 @@
       "question": "What is the key length used in the Data Encryption Standard (DES)?",
       "options": [
         "64 bits",
-        "56 bits",
         "128 bits",
-        "256 bits"
+        "256 bits",
+        "56 bits"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 3,
       "explanation": "DES uses a 56-bit key length, although the key is often represented as 64 bits with 8 parity bits. The 56-bit key length is now considered insufficient for modern security requirements, which is why DES has been largely replaced by more secure algorithms like AES.",
       "why_others_wrong": "64 bits includes parity bits but the effective key length is 56 bits. 128 bits and 256 bits are key lengths used by AES, not DES. These longer key lengths were developed later to address DES's security weaknesses."
     },
@@ -71,10 +71,10 @@
       "options": [
         "It's too slow for practical use",
         "It only works with small key sizes",
-        "It has several identified security weaknesses",
-        "It requires too much memory"
+        "It requires too much memory",
+        "It has several identified security weaknesses"
       ],
-      "correctAnswer": 2,
+      "correctAnswer": 3,
       "explanation": "RC4 has been deprecated due to several identified security weaknesses, including biased keystream generation and vulnerabilities in key scheduling. These weaknesses made it unsuitable for secure applications, leading to its removal from protocols like TLS.",
       "why_others_wrong": "RC4 was actually known for being fast, not slow - speed was one of its advantages. It supports key lengths up to 2048 bits, not just small keys. Memory usage isn't excessive - RC4 was designed to be lightweight and efficient in terms of resources."
     },
@@ -82,12 +82,12 @@
       "id": 7,
       "question": "What block size does AES use?",
       "options": [
-        "64 bits",
         "128 bits",
+        "64 bits",
         "256 bits",
         "512 bits"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 0,
       "explanation": "AES uses a fixed block size of 128 bits regardless of the key size variant (AES-128, AES-192, or AES-256). This standardized block size provides good security while maintaining efficient processing across different implementations.",
       "why_others_wrong": "64 bits is the block size used by DES and 3DES, not AES. 256 bits refers to the key size in AES-256, not the block size. 512 bits is not used as a block size in AES - it might be confused with hash functions like SHA-512."
     },
@@ -110,12 +110,12 @@
       "options": [
         "Faster processing speed",
         "Smaller key sizes",
-        "Eliminates the key distribution problem",
-        "Uses less computational resources"
+        "Uses less computational resources",
+        "Eliminates the key distribution problem"
       ],
-      "correctAnswer": 2,
+      "correctAnswer": 3,
       "explanation": "Asymmetric encryption eliminates the key distribution problem because public keys can be freely shared while private keys remain secret. This solves the major challenge in symmetric encryption where both parties need to securely share the same secret key.",
-      "why_others_wrong": "Asymmetric encryption is much slower than symmetric encryption, not faster. Key sizes are typically much larger in asymmetric systems (2048+ bits vs 128-256 bits). Computational resource usage is significantly higher due to complex mathematical operations."
+      "why_others_wrong": "Asymmetric encryption is much slower than symmetric encryption, not faster. Keys are typically much larger (2048+ bits vs 128-256 bits). Computational resource usage is significantly higher due to complex mathematical operations."
     },
     {
       "id": 10,
@@ -148,11 +148,11 @@
       "question": "In Kerberos authentication, what is the primary purpose of the Ticket Granting Server (TGS)?",
       "options": [
         "To store user passwords",
-        "To issue service tickets after initial authentication",
         "To encrypt all network traffic",
+        "To issue service tickets after initial authentication",
         "To manage user accounts"
       ],
-      "correctAnswer": 1,
+      "correctAnswer": 2,
       "explanation": "The TGS issues service tickets to authenticated users, allowing them to access specific services without re-entering their credentials. After initial authentication with the Authentication Server, users present their ticket-granting ticket to the TGS to obtain tickets for specific services.",
       "why_others_wrong": "The TGS doesn't store passwords - that's typically handled by the Authentication Server and user databases. It doesn't encrypt all network traffic - encryption is handled by the applications using the tickets. User account management is typically done by directory services, not the TGS."
     },
@@ -934,7 +934,7 @@
       ],
       "correctAnswer": 1,
       "explanation": "Public key cryptography allows secure key exchange over insecure channels because public keys can be freely shared while private keys remain secret. This solves the key distribution problem that exists with symmetric cryptography where both parties need to securely share the same secret key.",
-      "why_others_wrong": "Public key cryptography is much slower than symmetric encryption. Keys are typically much larger (2048+ bits vs 128-256 bits). Implementation is more complex due to mathematical operations involved."
+      "why_others_wrong": "Public key cryptography is much slower than symmetric encryption, not faster. Keys are typically much larger (2048+ bits vs 128-256 bits). Implementation is more complex due to mathematical operations involved."
     },
     {
       "id": 73,

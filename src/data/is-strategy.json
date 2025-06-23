@@ -1,0 +1,112 @@
+{
+  "title": "IS Strategy & Strategic Management",
+  "description": "Information Systems Strategy and Strategic Planning",
+  "lectureCode": "is-strategy",
+  "questions": [
+    {
+      "id": 1,
+      "question": "Differentiate between the aim and scope of Business Strategy, IS Strategy, and IT Strategy. Analyse the interrelationships and dependencies among these strategies. You may want to utilise a framework or diagram to support your answer.",
+      "marks": 15,
+      "correctAnswer": "Business Strategy focuses on competitive advantage and market positioning, defining how an organization competes in its chosen markets through value creation and resource allocation. IS Strategy aligns information systems with business objectives, ensuring IT supports business goals through appropriate information flows, data management, and process automation. IT Strategy deals with technology infrastructure, platforms, and technical capabilities including hardware, software, and network architectures. The interrelationships show IS Strategy as a bridge between Business and IT Strategy, with dependencies flowing from business needs through information requirements to technical implementation. Strategic alignment models like Henderson and Venkatraman's framework illustrate these relationships, showing how business strategy drives IS strategy, which in turn influences IT strategy. Dependencies include: business strategy determining information needs, IS strategy defining technology requirements, and IT strategy enabling business capabilities.",
+      "keywords": ["business strategy", "IS strategy", "IT strategy", "competitive advantage", "alignment", "dependencies", "strategic planning", "technology infrastructure", "Henderson Venkatraman", "value creation", "information flows"]
+    },
+    {
+      "id": 2,
+      "question": "Define the concept of 'Information Resource' and explain distinct categories of information resources using real-life examples.",
+      "marks": 14,
+      "correctAnswer": "Information Resources are organizational assets comprising data, information systems, technology infrastructure, and human expertise used to support business operations, decision-making, and competitive advantage. Categories include: 1) Data Resources - structured and unstructured data like customer databases (Amazon's customer profiles), financial records (bank transaction data), operational data (Uber's ride data); 2) Hardware Resources - physical infrastructure like servers (Google's data centers), networks (Cisco's routing equipment), devices (Apple's iPhone ecosystem); 3) Software Resources - applications (Microsoft Office 365), operating systems (Windows), databases (Oracle); 4) Human Resources - IT staff (programmers, analysts), users (business professionals), consultants (Accenture consultants); 5) Network Resources - internet connectivity, intranets (corporate networks), telecommunications (5G networks). These resources create value through integration and strategic utilization.",
+      "keywords": ["information resource", "data resources", "hardware", "software", "human resources", "network resources", "organizational assets", "business operations", "competitive advantage", "structured data", "unstructured data"]
+    },
+    {
+      "id": 3,
+      "question": "Discuss what makes Information Resources valuable from a strategic standpoint.",
+      "marks": 10,
+      "correctAnswer": "Information Resources become strategically valuable when they satisfy the VRIN framework: Valuable (create economic value), Rare (not easily available to competitors), Inimitable (difficult to replicate), and Non-substitutable (no equivalent alternatives). Strategic value derives from: competitive advantage creation through unique insights, cost reduction via automation and efficiency, revenue enhancement through better customer targeting, market differentiation via superior service delivery, operational efficiency through process optimization, innovation enablement via data analytics, and strategic decision support through business intelligence. Resources must be aligned with business strategy and provide sustainable competitive advantages. Examples include Netflix's recommendation algorithm (rare and inimitable), Amazon's logistics network (valuable and non-substitutable), and Tesla's over-the-air updates (innovative and differentiating).",
+      "keywords": ["VRIN framework", "strategic value", "competitive advantage", "valuable", "rare", "inimitable", "non-substitutable", "cost reduction", "revenue enhancement", "differentiation", "innovation", "business intelligence"]
+    },
+    {
+      "id": 4,
+      "question": "Explain the concept of digital transformation and its impact on traditional business models. Provide examples of companies that have successfully transformed their operations.",
+      "marks": 12,
+      "correctAnswer": "Digital transformation involves integrating digital technologies into all business areas, fundamentally changing operations and value delivery to customers. It impacts traditional business models by: enabling new revenue streams (subscriptions vs. one-time sales), creating direct customer relationships (bypassing intermediaries), enabling data-driven decision making, automating processes, and facilitating global reach. Examples include: Netflix transforming from DVD rental to streaming platform, Domino's becoming a technology company that happens to sell pizza with online ordering and tracking, BMW's shift to mobility services beyond car manufacturing, and banks like JPMorgan Chase implementing digital banking platforms. Success factors include customer-centric approach, agile methodologies, cultural change management, and strategic technology investments.",
+      "keywords": ["digital transformation", "business models", "revenue streams", "customer relationships", "data-driven", "automation", "Netflix", "Domino's", "BMW", "customer-centric", "agile methodologies"]
+    },
+    {
+      "id": 5,
+      "question": "Analyze the role of data governance in ensuring information quality and compliance within organizations.",
+      "marks": 11,
+      "correctAnswer": "Data governance establishes policies, procedures, and controls for managing data assets throughout their lifecycle to ensure quality, security, and compliance. Key components include: data stewardship (assigning ownership and accountability), data quality management (accuracy, completeness, consistency), privacy protection (GDPR compliance), security controls (access management), and metadata management (data lineage tracking). Benefits include improved decision-making through reliable data, regulatory compliance (avoiding fines), risk mitigation (data breaches), operational efficiency, and competitive advantage through better insights. Implementation requires executive sponsorship, cross-functional teams, clear policies, technology tools, and continuous monitoring. Examples include financial institutions implementing Basel III compliance or healthcare organizations ensuring HIPAA compliance.",
+      "keywords": ["data governance", "data quality", "compliance", "data stewardship", "GDPR", "data security", "metadata management", "regulatory compliance", "data lineage", "HIPAA", "Basel III"]
+    },
+    {
+      "id": 6,
+      "question": "Examine the strategic implications of cloud computing adoption for organizational IS strategy.",
+      "marks": 13,
+      "correctAnswer": "Cloud computing adoption significantly impacts IS strategy by shifting from capital to operational expenditure models, enabling scalability and flexibility, and facilitating innovation. Strategic implications include: cost optimization through pay-per-use models, improved agility via rapid deployment capabilities, enhanced collaboration through anywhere access, disaster recovery improvements, and focus shift from infrastructure management to strategic initiatives. Models include IaaS (infrastructure flexibility), PaaS (development platform), and SaaS (application delivery). Challenges involve data security concerns, vendor lock-in risks, compliance requirements, and integration complexities. Success requires cloud-first strategy, multi-cloud approaches, strong governance frameworks, and skills development. Examples include Netflix's AWS migration enabling global expansion and Salesforce's SaaS model revolutionizing CRM.",
+      "keywords": ["cloud computing", "IS strategy", "scalability", "flexibility", "cost optimization", "IaaS", "PaaS", "SaaS", "vendor lock-in", "data security", "compliance", "multi-cloud", "AWS", "Salesforce"]
+    },
+    {
+      "id": 7,
+      "question": "Discuss the concept of information systems alignment and its importance for organizational performance.",
+      "marks": 12,
+      "correctAnswer": "Information systems alignment refers to the degree to which IS strategies, objectives, and activities support and are supported by business strategies and objectives. It involves strategic alignment (linking IS and business strategies), operational alignment (integrating IS and business processes), and cultural alignment (sharing values and communication). Importance includes: improved organizational performance through coordinated efforts, better resource utilization, enhanced competitive advantage, reduced conflicts between business and IT, and increased ROI on technology investments. Factors affecting alignment include top management support, shared understanding between business and IT, communication effectiveness, and organizational culture. Measurement approaches include strategic alignment maturity models and balanced scorecard frameworks. Successful alignment requires ongoing dialogue, shared governance structures, and regular strategy reviews.",
+      "keywords": ["information systems alignment", "strategic alignment", "operational alignment", "organizational performance", "business strategies", "competitive advantage", "ROI", "top management support", "shared governance", "balanced scorecard"]
+    },
+    {
+      "id": 8,
+      "question": "Evaluate the role of emerging technologies (AI, IoT, Blockchain) in shaping future IS strategies.",
+      "marks": 14,
+      "correctAnswer": "Emerging technologies fundamentally reshape IS strategies by enabling new capabilities and business models. AI enables intelligent automation, predictive analytics, and personalized experiences, requiring data strategy evolution and ethical considerations. IoT creates vast data streams from connected devices, necessitating edge computing and real-time processing capabilities. Blockchain provides decentralized trust mechanisms, enabling new transaction models and supply chain transparency. Strategic implications include: need for new technical skills, infrastructure modernization, data management evolution, security framework updates, and business model innovation. Organizations must develop technology roadmaps, invest in talent development, establish partnerships, and create governance frameworks for emerging tech adoption. Examples include Amazon's Alexa (AI), GE's Predix platform (IoT), and Walmart's food traceability (Blockchain).",
+      "keywords": ["emerging technologies", "AI", "IoT", "Blockchain", "intelligent automation", "predictive analytics", "edge computing", "decentralized trust", "technology roadmaps", "talent development", "Alexa", "Predix", "food traceability"]
+    },
+    {
+      "id": 9,
+      "question": "Analyze the impact of cybersecurity threats on IS strategy development and implementation.",
+      "marks": 13,
+      "correctAnswer": "Cybersecurity threats significantly influence IS strategy by requiring security-by-design approaches, risk management frameworks, and incident response capabilities. Impact areas include: strategic planning integration (security as a business enabler), technology architecture decisions (zero-trust models), vendor selection criteria (security assessments), and operational procedures (security monitoring). Threats like ransomware, data breaches, and insider threats require comprehensive security strategies including prevention, detection, response, and recovery capabilities. IS strategy must address: security governance structures, compliance requirements (SOX, GDPR), business continuity planning, and stakeholder communication. Investment priorities shift toward security technologies, training programs, and security-aware culture development. Examples include Target's post-breach transformation and Equifax's security overhaul following their data breach.",
+      "keywords": ["cybersecurity threats", "IS strategy", "security-by-design", "risk management", "zero-trust", "ransomware", "data breaches", "security governance", "business continuity", "Target", "Equifax", "incident response"]
+    },
+    {
+      "id": 10,
+      "question": "Examine the challenges and opportunities of implementing enterprise resource planning (ERP) systems within IS strategy.",
+      "marks": 12,
+      "correctAnswer": "ERP implementation presents strategic challenges and opportunities for organizations. Opportunities include: integrated business processes across departments, real-time data visibility for decision-making, standardized procedures and best practices, improved efficiency through automation, and enhanced customer service through better information access. Challenges involve: high implementation costs and time requirements, business process reengineering needs, user resistance to change, data migration complexities, and customization versus standardization decisions. Strategic considerations include: alignment with business strategy, vendor selection (SAP, Oracle, Microsoft), implementation methodology (big bang vs. phased), change management approaches, and success metrics definition. Critical success factors include executive sponsorship, user training, data quality, and realistic timeline expectations. Examples include Hershey's initial ERP failure and subsequent success, and Walmart's supply chain optimization through ERP integration.",
+      "keywords": ["ERP systems", "enterprise resource planning", "integrated processes", "real-time data", "business process reengineering", "change management", "SAP", "Oracle", "Microsoft", "executive sponsorship", "Hershey", "Walmart"]
+    },
+    {
+      "id": 11,
+      "question": "Discuss the strategic importance of business intelligence and analytics in modern organizations.",
+      "marks": 11,
+      "correctAnswer": "Business intelligence and analytics provide strategic value by transforming data into actionable insights for decision-making. Components include data warehousing, ETL processes, OLAP cubes, reporting tools, and advanced analytics. Strategic importance encompasses: competitive advantage through data-driven insights, operational efficiency via performance monitoring, customer understanding through behavioral analysis, risk management through predictive modeling, and innovation opportunities via pattern recognition. Modern approaches include self-service BI, real-time analytics, and machine learning integration. Implementation challenges involve data quality issues, user adoption, and technical complexity. Success factors include clear business objectives, data governance, user training, and executive support. Examples include Amazon's recommendation engine, Netflix's content decisions, and Starbucks' location optimization through analytics.",
+      "keywords": ["business intelligence", "analytics", "data warehousing", "ETL", "OLAP", "competitive advantage", "predictive modeling", "self-service BI", "machine learning", "Amazon", "Netflix", "Starbucks"]
+    },
+    {
+      "id": 12,
+      "question": "Evaluate the impact of mobile technologies on organizational IS strategies and business processes.",
+      "marks": 10,
+      "correctAnswer": "Mobile technologies revolutionize IS strategies by enabling ubiquitous access, real-time communication, and location-based services. Strategic impacts include: workforce mobility enhancement, customer engagement transformation, operational process optimization, and new business model enablement. Organizations must address: mobile device management (MDM), security frameworks (BYOD policies), application development strategies (native vs. web), and infrastructure scalability. Business process changes involve: field service optimization, mobile customer service, location-based marketing, and real-time inventory management. Challenges include security risks, device fragmentation, network dependency, and user experience consistency. Success requires mobile-first thinking, responsive design principles, and integrated mobile strategies. Examples include FedEx's package tracking, Uber's platform model, and Starbucks' mobile payment system.",
+      "keywords": ["mobile technologies", "ubiquitous access", "workforce mobility", "customer engagement", "MDM", "BYOD", "mobile-first", "responsive design", "FedEx", "Uber", "Starbucks", "location-based services"]
+    },
+    {
+      "id": 13,
+      "question": "Analyze the role of information systems in supporting sustainable business practices and green IT initiatives.",
+      "marks": 12,
+      "correctAnswer": "Information systems play crucial roles in sustainability by enabling monitoring, optimization, and reporting of environmental impacts. Green IT initiatives include: energy-efficient data centers, virtualization technologies, cloud computing adoption, and electronic document management. IS supports sustainability through: supply chain transparency systems, carbon footprint tracking, energy management systems, and waste reduction analytics. Benefits include cost savings through efficiency, regulatory compliance, brand reputation enhancement, and stakeholder satisfaction. Implementation involves: sustainability metrics integration, green technology adoption, employee engagement platforms, and supplier sustainability monitoring. Challenges include initial investment costs, complexity of measurement, and organizational culture change. Examples include Google's carbon-neutral operations, Walmart's supply chain sustainability tracking, and Microsoft's environmental data analytics platform.",
+      "keywords": ["sustainable business", "green IT", "energy efficiency", "virtualization", "carbon footprint", "supply chain transparency", "sustainability metrics", "Google", "Walmart", "Microsoft", "environmental analytics"]
+    },
+    {
+      "id": 14,
+      "question": "Examine the strategic considerations for IS outsourcing decisions and vendor management.",
+      "marks": 13,
+      "correctAnswer": "IS outsourcing involves strategic decisions about transferring IT functions to external providers. Strategic considerations include: core competency focus (retaining strategic capabilities), cost optimization through economies of scale, access to specialized skills and technologies, risk distribution, and flexibility enhancement. Evaluation criteria encompass: vendor capabilities and reputation, cost-benefit analysis, security and compliance requirements, cultural fit, and service level agreements. Vendor management requires: governance structures, performance monitoring, relationship management, and contract management. Risks include vendor dependency, loss of control, security vulnerabilities, and hidden costs. Success factors include clear objectives, robust contracts, effective communication, and continuous monitoring. Examples include IBM's outsourcing services, Accenture's digital transformation partnerships, and government outsourcing to Capgemini.",
+      "keywords": ["IS outsourcing", "vendor management", "core competency", "cost optimization", "specialized skills", "service level agreements", "governance structures", "vendor dependency", "IBM", "Accenture", "Capgemini"]
+    },
+    {
+      "id": 15,
+      "question": "Discuss the evolution of IS strategy in the context of digital ecosystems and platform economics.",
+      "marks": 14,
+      "correctAnswer": "Digital ecosystems and platform economics transform IS strategy from linear value chains to networked value creation. Platform strategies involve: creating multi-sided markets, enabling third-party innovation, leveraging network effects, and building API economies. IS strategy evolution includes: platform architecture development, ecosystem orchestration capabilities, data monetization strategies, and digital partnership management. Key considerations encompass: platform governance models, developer experience optimization, data sharing frameworks, and competitive positioning. Success factors include: strong technical foundation, clear value propositions, effective partner onboarding, and continuous innovation. Challenges involve: platform competition, regulatory compliance, data privacy, and ecosystem coordination. Examples include Apple's App Store ecosystem, Amazon Web Services platform, Salesforce's Trailhead community, and Microsoft's partner ecosystem enabling digital transformation across industries.",
+      "keywords": ["digital ecosystems", "platform economics", "multi-sided markets", "network effects", "API economy", "ecosystem orchestration", "data monetization", "platform governance", "Apple App Store", "AWS", "Salesforce", "Microsoft"]
+    }
+  ]
+}

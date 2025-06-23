@@ -1,570 +1,433 @@
 import React, { useState, useEffect } from 'react';
-import { Timer, CheckCircle2, XCircle, Sun, Moon, Info, ChevronDown, ChevronUp } from 'lucide-react';
-import VaaAnnamalai from './assets/VaaAnnamalai.jpg';
+import { Timer, ThumbsUp, ThumbsDown, Lightbulb, BookOpen, Play, Zap, Home, ArrowLeft } from 'lucide-react';
 
-// Import all the different question data sets
-import questions1_4 from './data/questions1_4.json';
-import questions5_7 from './data/questions5_7.json';
-import questions8_10 from './data/questions7_9.json';
-import questions11_12 from './data/questions10_12.json';
-import questionsDataAll from './data/questionsAll.json';
+// Import separate JSON files for each lecture
+import isStrategyData from './data/is-strategy.json';
+import competitiveAdvantageData from './data/competitive-advantage.json';
+import outsourcingSaasData from './data/outsourcing-saas.json';
+import remoteWorkingData from './data/remote-working.json';
+import informationResourcesData from './data/information-resources.json';
 
-// Motivational messages arrays
-const correctMessages = [
-  "Yippee! 🧠",
-  "Lucky huh?! 🌚",
-  "You're on fire! Nerupu daaa 🔥",
-  "Studied huh?! 🫦",
-  "Apudi than! 💪"
-];
-
-const incorrectMessages = [
-  "Don't be sad, sad backwards is das and das not good! 💪",
-  "Charter! Try again! 🍌",
-  "NOOOOOOOOOOOOOOOB! 🐒",
-  "Podangu! 🍆💦",
-  "Poda poi maadu mei! 🐄"
-];
-
-// Fisher-Yates shuffle algorithm
-function shuffleArray<T>(array: T[]): T[] {
-  const shuffled = [...array];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
-}
-
-// Function to shuffle options and track correct answer
-function shuffleOptionsWithCorrectAnswer(options: string[], correctAnswerIndex: number) {
-  const correctAnswer = options[correctAnswerIndex];
-  const shuffledOptions = shuffleArray(options);
-  const newCorrectIndex = shuffledOptions.findIndex(option => option === correctAnswer);
-  
-  return {
-    shuffledOptions,
-    newCorrectIndex
-  };
-}
-
-// Define week option type
-type WeekOption = {
-  id: number;
-  title: string;
-  description: string;
-  data: any;
+// Lecture data structure - loaded from separate JSON files
+const lectureData = {
+  "is-strategy": isStrategyData,
+  "competitive-advantage": competitiveAdvantageData,
+  "outsourcing-saas": outsourcingSaasData,
+  "remote-working": remoteWorkingData,
+  "information-resources": informationResourcesData
 };
 
-function App() {
-  // Define all week options
-  const weekOptions: WeekOption[] = [
+type LectureKey = keyof typeof lectureData;
+
+interface Question {
+  id: number;
+  question: string;
+  marks: number;
+  correctAnswer: string;
+  keywords: string[];
+}
+
+interface LectureData {
+  title: string;
+  description: string;
+  lectureCode: string;
+  questions: Question[];
+}
+
+interface UserAnswer {
+  questionId: number;
+  answer: string;
+  timeSpent: number;
+  score?: number;
+}
+
+interface LectureProgress {
+  lectureKey: LectureKey;
+  hintsUsed: number;
+  answersSubmitted: UserAnswer[];
+  currentQuestionIndex: number;
+  isCompleted: boolean;
+}
+
+const ExamApp: React.FC = () => {
+  // State management for the entire application
+  const [currentState, setCurrentState] = useState<'home' | 'lectureSelect' | 'modeSelect' | 'exam' | 'results'>('home');
+  const [selectedLecture, setSelectedLecture] = useState<LectureKey | null>(null);
+  const [examMode, setExamMode] = useState<'normal' | 'rapid'>('normal');
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(1200); // 20 minutes in seconds
+  const [isActive, setIsActive] = useState(false);
+  const [userAnswer, setUserAnswer] = useState('');
+  const [lectureProgress, setLectureProgress] = useState<LectureProgress | null>(null);
+  const [showFeedback, setShowFeedback] = useState(false);
+  const [feedbackType, setFeedbackType] = useState<'thumbsUp' | 'thumbsDown' | null>(null);
+  const [showHint, setShowHint] = useState(false);
+
+  // Available lecture options based on imported JSON data
+  const weekOptions = [
     {
       id: 1,
-      title: "Week 1 - 4",
-      description: "Foundations of Cybersecurity",
-      data: questions1_4
+      title: "IS Strategy & Strategic Management",
+      description: "Information Systems Strategy and Strategic Planning",
+      data: lectureData["is-strategy"]
     },
     {
       id: 2,
-      title: "Week 5 - 7",
-      description: "Network Security",
-      data: questions5_7
+      title: "Competitive Advantage & Generic Strategies", 
+      description: "Porter's Generic Strategies and Competitive Positioning",
+      data: lectureData["competitive-advantage"]
     },
     {
       id: 3,
-      title: "Week 7 - 9",
-      description: "Application Security",
-      data: questions8_10
+      title: "Outsourcing & Software as a Service",
+      description: "IT Outsourcing Models and Cloud Computing", 
+      data: lectureData["outsourcing-saas"]
     },
     {
       id: 4,
-      title: "Week 10 - 12",
-      description: "Advanced Topics",
-      data: questions11_12
+      title: "Remote Working & IT Implications",
+      description: "Digital Transformation and Remote Work Technologies",
+      data: lectureData["remote-working"] 
     },
     {
       id: 5,
-      title: "Give me God of War",
-      description: "All weeks combined",
-      data: questionsDataAll
+      title: "Information Resources & Management",
+      description: "Data Management and Information Asset Valuation",
+      data: lectureData["information-resources"]
     }
   ];
 
-  // States for managing the application
-  const [selectedWeek, setSelectedWeek] = useState<WeekOption | null>(null);
-  const [questions, setQuestions] = useState<any[]>([]);
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [score, setScore] = useState(0);
-  const [scoreText, setScoreText] = useState('');
-  const [showExplanation, setShowExplanation] = useState(false);
-  const [showWhyOthersWrong, setShowWhyOthersWrong] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(60);
-  const [isActive, setIsActive] = useState(false);
-  const [shuffledOptions, setShuffledOptions] = useState<string[]>([]);
-  const [currentCorrectIndex, setCurrentCorrectIndex] = useState<number>(0); // Track correct answer after shuffle
-  const [message, setMessage] = useState('');
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  const [usedQuestionIndices, setUsedQuestionIndices] = useState<number[]>([]);
-  const [quizCompleted, setQuizCompleted] = useState(false);
-  const [correctAnswers, setCorrectAnswers] = useState<number[]>([]);
-  const [wrongAnswers, setWrongAnswers] = useState<number[]>([]);
-
-  // App state management
-  const [appState, setAppState] = useState<'welcome' | 'weekSelect' | 'quiz' | 'results'>('welcome');
-  const [darkMode, setDarkMode] = useState(true);
-
-  // Local storage functions
-  const saveQuizState = () => {
-    if (selectedWeek && (appState === 'quiz' || appState === 'results')) {
-      const state = {
-        selectedWeekId: selectedWeek.id,
-        questions,
-        currentQuestion,
-        score,
-        scoreText,
-        correctAnswers,
-        wrongAnswers,
-        appState,
-        quizCompleted,
-        usedQuestionIndices
-      };
-      localStorage.setItem('cybersec-quiz-state', JSON.stringify(state));
-      
-      // Update URL
-      const url = new URL(window.location.href);
-      url.searchParams.set('week', selectedWeek.id.toString());
-      url.searchParams.set('question', currentQuestion.toString());
-      url.searchParams.set('state', appState);
-      window.history.replaceState({}, '', url.toString());
-    }
-  };
-
-  const loadQuizState = () => {
-    try {
-      // Check URL params first
-      const urlParams = new URLSearchParams(window.location.search);
-      const weekParam = urlParams.get('week');
-      const questionParam = urlParams.get('question');
-      const stateParam = urlParams.get('state');
-
-      if (weekParam && (stateParam === 'quiz' || stateParam === 'results')) {
-        const savedState = localStorage.getItem('cybersec-quiz-state');
-        if (savedState) {
-          const state = JSON.parse(savedState);
-          const week = weekOptions.find(w => w.id === parseInt(weekParam));
-          
-          if (week && state.selectedWeekId === week.id) {
-            setSelectedWeek(week);
-            setQuestions(state.questions || []);
-            setCurrentQuestion(state.currentQuestion || 0);
-            setScore(state.score || 0);
-            setScoreText(state.scoreText || '');
-            setCorrectAnswers(state.correctAnswers || []);
-            setWrongAnswers(state.wrongAnswers || []);
-            setQuizCompleted(state.quizCompleted || false);
-            setUsedQuestionIndices(state.usedQuestionIndices || []);
-            setAppState(state.appState);
-            return true;
-          }
-        }
-      }
-    } catch (error) {
-      console.error('Error loading quiz state:', error);
-    }
-    return false;
-  };
-
-  const clearQuizState = () => {
-    localStorage.removeItem('cybersec-quiz-state');
-    const url = new URL(window.location.href);
-    url.search = '';
-    window.history.replaceState({}, '', url.toString());
-  };
-
-  // Load saved state on component mount
+  // Initialize timer based on selected exam mode
   useEffect(() => {
-    const loaded = loadQuizState();
-    if (!loaded) {
-      // If no saved state, check if we should show welcome or week select
-      const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.get('state') === 'weekSelect') {
-        setAppState('weekSelect');
-      }
+    if (examMode === 'normal') {
+      setTimeLeft(1200); // 20 minutes
+    } else {
+      setTimeLeft(600); // 10 minutes
     }
-  }, []);
+  }, [examMode]);
 
-  // Initialize questions when a week is selected
+  // Timer countdown effect using React's setTimeout
   useEffect(() => {
-    if (selectedWeek && selectedWeek.data && Array.isArray(selectedWeek.data.questions)) {
-      // Only shuffle if we don't have saved questions
-      if (questions.length === 0) {
-        const allQuestions = selectedWeek.data.questions;
-        setQuestions(shuffleArray(allQuestions));
-        setUsedQuestionIndices([]);
-        setQuizCompleted(false);
-        setCorrectAnswers([]);
-        setWrongAnswers([]);
-      }
-      setTimeLeft(selectedWeek.title === "Give me God of War" ? 30 : 60);
-    } else if (selectedWeek) {
-      console.error("Questions data is missing or not an array!");
-      setQuestions([]);
-    }
-  }, [selectedWeek]);
-
-  // Save state whenever important changes occur
-  useEffect(() => {
-    if (selectedWeek && (appState === 'quiz' || appState === 'results')) {
-      saveQuizState();
-    }
-  }, [selectedWeek, currentQuestion, score, correctAnswers, wrongAnswers, appState, quizCompleted]);
-
-  // Set up shuffled options when current question changes
-  useEffect(() => {
-    if (appState === 'quiz' && questions.length > 0 && currentQuestion < questions.length) {
-      const currentQ = questions[currentQuestion];
-      const { shuffledOptions: newShuffledOptions, newCorrectIndex } = shuffleOptionsWithCorrectAnswer(
-        currentQ.options, 
-        currentQ.correctAnswer
-      );
-      setShuffledOptions(newShuffledOptions);
-      setCurrentCorrectIndex(newCorrectIndex);
-    }
-  }, [currentQuestion, questions, appState]);
-
-  // Timer effect
-  useEffect(() => {
-    let interval: number | undefined;
-
+    let timeoutId: ReturnType<typeof setTimeout>;
+    
     if (isActive && timeLeft > 0) {
-      interval = setInterval(() => {
-        setTimeLeft((time) => time - 1);
+      timeoutId = setTimeout(() => {
+        setTimeLeft((prevTime) => prevTime - 1);
       }, 1000);
     } else if (timeLeft === 0 && isActive) {
-      setIsActive(false);
-      setShowExplanation(true);
-      setMessage(incorrectMessages[Math.floor(Math.random() * incorrectMessages.length)]);
-      setWrongAnswers(prev => [...prev, currentQuestion]);
+      handleTimeUp();
     }
-
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [timeLeft, isActive, currentQuestion]);
-
-  const handleAnswer = (option: string) => {
-    setSelectedOption(option);
-    // Use the shuffled options and correct index
-    const isCorrect = option === shuffledOptions[currentCorrectIndex];
-
-    let newScore;
-    if (isCorrect) {
-      newScore = score + 1;
-      setScore(newScore);
-      setMessage(correctMessages[Math.floor(Math.random() * correctMessages.length)]);
-      setCorrectAnswers(prev => [...prev, currentQuestion]);
-    } else {
-      newScore = score - 1;
-      setScore(newScore);
-      setMessage(incorrectMessages[Math.floor(Math.random() * incorrectMessages.length)]);
-      setWrongAnswers(prev => [...prev, currentQuestion]);
-    }
-
-    // Set score text based on the new score value
-    setScoreText(newScore === 0 ? "" : newScore >= 1 ? "Come on Velu!" : "IIT bathroom cleaner vacancy available!");
-
-    setShowExplanation(true);
-    setIsActive(false);
-  };
-
-  const nextQuestion = () => {
-    if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion((prev) => prev + 1);
-      setShowExplanation(false);
-      setShowWhyOthersWrong(false);
-      setTimeLeft(selectedWeek?.title === "Give me God of War" ? 30 : 60);
-      setIsActive(true);
-      setMessage('');
-      setSelectedOption(null);
-    } else {
-      setQuizCompleted(true);
-      setAppState('results');
-    }
-  };
-
-  const goToWeekSelect = () => {
-    setAppState('weekSelect');
-    // Update URL for week select
-    const url = new URL(window.location.href);
-    url.searchParams.set('state', 'weekSelect');
-    window.history.replaceState({}, '', url.toString());
-  };
-
-  const selectWeek = (week: WeekOption) => {
-    setSelectedWeek(week);
-    setCurrentQuestion(0);
-    setScore(0);
-    setScoreText('');
-    setShowExplanation(false);
-    setShowWhyOthersWrong(false);
-    setTimeLeft(week.title === "Give me God of War" ? 30 : 60);
-    setIsActive(true);
-    setMessage('');
-    setSelectedOption(null);
-    setUsedQuestionIndices([]);
-    setQuizCompleted(false);
-    setCorrectAnswers([]);
-    setWrongAnswers([]);
-    setQuestions(shuffleArray(week.data.questions));
-    setAppState('quiz');
-  };
-
-  const resetQuiz = () => {
-    if (selectedWeek) {
-      const newQuestions = shuffleArray(selectedWeek.data.questions);
-      setQuestions(newQuestions);
-      setCurrentQuestion(0);
-      setScore(0);
-      setScoreText('');
-      setShowExplanation(false);
-      setShowWhyOthersWrong(false);
-      setTimeLeft(selectedWeek?.title === "Give me God of War" ? 30 : 60);
-      setIsActive(true);
-      setMessage('');
-      setSelectedOption(null);
-      setUsedQuestionIndices([]);
-      setQuizCompleted(false);
-      setCorrectAnswers([]);
-      setWrongAnswers([]);
-      setAppState('quiz');
-    }
-  };
-
-  const backToWeekSelect = () => {
-    // Clear saved state when user explicitly goes back to week selection
-    clearQuizState();
-    setSelectedWeek(null);
-    setQuestions([]);
-    setCurrentQuestion(0);
-    setScore(0);
-    setScoreText('');
-    setShowExplanation(false);
-    setShowWhyOthersWrong(false);
-    setIsActive(false);
-    setMessage('');
-    setSelectedOption(null);
-    setUsedQuestionIndices([]);
-    setQuizCompleted(false);
-    setCorrectAnswers([]);
-    setWrongAnswers([]);
-    setAppState('weekSelect');
     
-    // Update URL
-    const url = new URL(window.location.href);
-    url.searchParams.set('state', 'weekSelect');
-    window.history.replaceState({}, '', url.toString());
-  };
-
-  const backToWelcomePage = () => {
-    // Clear saved state when user explicitly goes back to week selection
-    clearQuizState();
-    setSelectedWeek(null);
-    setQuestions([]);
-    setCurrentQuestion(0);
-    setScore(0);
-    setScoreText('');
-    setShowExplanation(false);
-    setShowWhyOthersWrong(false);
-    setIsActive(false);
-    setMessage('');
-    setSelectedOption(null);
-    setUsedQuestionIndices([]);
-    setQuizCompleted(false);
-    setCorrectAnswers([]);
-    setWrongAnswers([]);
-    setAppState('welcome');
-
-    // Update URL
-    const url = new URL(window.location.href);
-    window.history.replaceState({}, '', url.toString());
-  };
-
-  // Handle browser navigation
-  useEffect(() => {
-    const handlePopState = () => {
-      const loaded = loadQuizState();
-      if (!loaded) {
-        const urlParams = new URLSearchParams(window.location.search);
-        const stateParam = urlParams.get('state');
-        if (stateParam === 'weekSelect') {
-          setAppState('weekSelect');
-        } else {
-          setAppState('welcome');
-        }
+    // Cleanup timeout on component unmount or dependency change
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
       }
     };
+  }, [isActive, timeLeft]);
 
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
-
-  const toggleTheme = () => {
-    setDarkMode(!darkMode);
+  // Helper function to format time display (MM:SS)
+  const formatTime = (seconds: number): string => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const toggleWhyOthersWrong = () => {
-    setShowWhyOthersWrong(!showWhyOthersWrong);
+  // Initialize exam session with selected lecture and mode
+  const startExam = () => {
+    if (selectedLecture) {
+      setLectureProgress({
+        lectureKey: selectedLecture,
+        hintsUsed: 0,
+        answersSubmitted: [],
+        currentQuestionIndex: 0,
+        isCompleted: false
+      });
+      setCurrentQuestionIndex(0);
+      setIsActive(true);
+      setCurrentState('exam');
+      setUserAnswer('');
+    }
   };
 
-  // Define styles based on theme
-  const bgColor = darkMode ? 'bg-black' : 'bg-gray-100';
-  const textColor = darkMode ? 'text-white' : 'text-gray-900';
-  const cardBg = darkMode ? 'bg-gray-900' : 'bg-white';
-  const cardBorder = darkMode ? 'border-gray-700' : 'border-gray-200';
-  const btnPrimary = darkMode ? 'bg-blue-600 hover:bg-blue-700' : 'bg-blue-500 hover:bg-blue-600';
-  const btnSecondary = darkMode ? 'bg-purple-600 hover:bg-purple-700' : 'bg-purple-500 hover:bg-purple-600';
-  const btnSuccess = darkMode ? 'bg-green-600 hover:bg-green-700' : 'bg-green-500 hover:bg-green-600';
-  const btnDanger = darkMode ? 'bg-red-400 hover:bg-red-500' : 'bg-red-200 hover:bg-red-400';
-  const btnWarning = darkMode ? 'bg-yellow-600 hover:bg-yellow-700' : 'bg-yellow-500 hover:bg-yellow-600';
-  const optionBg = darkMode ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-50 hover:bg-gray-100';
-  const correctBg = darkMode ? 'bg-green-900 border-green-700' : 'bg-green-100 border-green-500';
-  const incorrectBg = darkMode ? 'bg-red-900 border-red-700' : 'bg-red-100 border-red-500';
-  const explanationBg = darkMode ? 'bg-gray-900' : 'bg-blue-50';
-  const whyWrongBg = darkMode ? 'bg-gray-800' : 'bg-orange-50';
-  
-  const scoreColor = score < 0 ? 'text-red-500' : darkMode ? 'text-white' : 'text-gray-900';
+  // Process and score user's submitted answer
+  const submitAnswer = () => {
+    if (!selectedLecture || !lectureProgress) return;
 
-  // Theme toggle button component
-  const ThemeToggleButton = ({ className = "" }) => (
-    <button
-      onClick={toggleTheme}
-      className={`p-2 rounded-full ${darkMode ? 'bg-gray-800' : 'bg-gray-200'} ${className}`}
-      aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
-    >
-      {darkMode ? <Sun className="w-6 h-6 text-yellow-300" /> : <Moon className="w-6 h-6 text-gray-700" />}
-    </button>
-  );
+    const currentQuestion = lectureData[selectedLecture].questions[currentQuestionIndex];
+    const timeSpent = (examMode === 'normal' ? 1200 : 600) - timeLeft;
+    
+    // Calculate score using enhanced scoring algorithm
+    const score = calculateScore(userAnswer, currentQuestion.correctAnswer, currentQuestion.keywords);
+    
+    const userAnswerObj: UserAnswer = {
+      questionId: currentQuestion.id,
+      answer: userAnswer,
+      timeSpent,
+      score
+    };
 
-  // Results Page
-  const renderResults = () => {
-    const totalQuestions = questions.length;
-    const finalScore = score;
-    const correctPercentage = (totalQuestions > 0) ? ((correctAnswers.length / totalQuestions) * 100).toFixed(2) : 0;
+    // Update lecture progress with new answer
+    const updatedProgress = {
+      ...lectureProgress,
+      answersSubmitted: [...lectureProgress.answersSubmitted, userAnswerObj]
+    };
 
+    setLectureProgress(updatedProgress);
+    setShowFeedback(true);
+    setFeedbackType(score >= 70 ? 'thumbsUp' : 'thumbsDown');
+    setIsActive(false);
+  };
+
+  // Enhanced scoring algorithm for written answers
+  const calculateScore = (userAnswer: string, correctAnswer: string, keywords: string[]): number => {
+    if (!userAnswer.trim()) return 0;
+    
+    const userWords = userAnswer.toLowerCase().split(/\s+/);
+    const userText = userAnswer.toLowerCase();
+    
+    // Keyword matching component (40% of total score)
+    const keywordMatches = keywords.filter(keyword => 
+      userText.includes(keyword.toLowerCase()) || 
+      userWords.some(word => word.includes(keyword.toLowerCase()) || keyword.toLowerCase().includes(word))
+    );
+    const keywordScore = (keywordMatches.length / keywords.length) * 40;
+    
+    // Length and comprehensiveness component (30% of total score)
+    const lengthScore = Math.min((userAnswer.length / 800) * 30, 30);
+    
+    // Structure and organization component (20% of total score)
+    const sentences = userAnswer.split(/[.!?]+/).filter(s => s.trim().length > 10);
+    const hasStructure = sentences.length >= 3 && userAnswer.includes('.');
+    const hasExamples = /example|such as|for instance|including|like/i.test(userAnswer);
+    const structureScore = (hasStructure ? 10 : 0) + (hasExamples ? 10 : 0);
+    
+    // Critical thinking indicators component (10% of total score)
+    const criticalThinking = /however|although|therefore|consequently|furthermore|moreover|in contrast|on the other hand/i.test(userAnswer);
+    const thinkingScore = criticalThinking ? 10 : 5;
+    
+    const totalScore = Math.min(keywordScore + lengthScore + structureScore + thinkingScore, 100);
+    return Math.round(totalScore);
+  };
+
+  // Navigate to next question or complete exam
+  const nextQuestion = () => {
+    if (!selectedLecture || !lectureProgress) return;
+    
+    const nextIndex = currentQuestionIndex + 1;
+    const totalQuestions = lectureData[selectedLecture].questions.length;
+    
+    if (nextIndex < totalQuestions) {
+      // Move to next question
+      setCurrentQuestionIndex(nextIndex);
+      setUserAnswer('');
+      setShowFeedback(false);
+      setFeedbackType(null);
+      setShowHint(false);
+      setIsActive(true);
+      
+      // Reset timer for new question
+      setTimeLeft(examMode === 'normal' ? 1200 : 600);
+    } else {
+      // Complete the exam and show results
+      const updatedProgress = {
+        ...lectureProgress,
+        isCompleted: true,
+        currentQuestionIndex: nextIndex
+      };
+      setLectureProgress(updatedProgress);
+      setCurrentState('results');
+    }
+  };
+
+  // Use one of the available hints (maximum 4 per lecture)
+  const useHint = () => {
+    if (!lectureProgress || !selectedLecture) return;
+    
+    if (lectureProgress.hintsUsed < 4) {
+      setShowHint(true);
+      setLectureProgress({
+        ...lectureProgress,
+        hintsUsed: lectureProgress.hintsUsed + 1
+      });
+    }
+  };
+
+  // Handle timer expiration
+  const handleTimeUp = () => {
+    setIsActive(false);
+    if (userAnswer.trim()) {
+      // Auto-submit if user has written something
+      submitAnswer();
+    } else {
+      // Show negative feedback for no answer
+      setShowFeedback(true);
+      setFeedbackType('thumbsDown');
+    }
+  };
+
+  // Reset entire application to home state
+  const resetApp = () => {
+    setCurrentState('home');
+    setSelectedLecture(null);
+    setLectureProgress(null);
+    setCurrentQuestionIndex(0);
+    setUserAnswer('');
+    setShowFeedback(false);
+    setFeedbackType(null);
+    setShowHint(false);
+    setIsActive(false);
+  };
+
+  // Get current question object
+  const getCurrentQuestion = (): Question | null => {
+    if (!selectedLecture) return null;
+    return lectureData[selectedLecture].questions[currentQuestionIndex] || null;
+  };
+
+  const currentQuestion = getCurrentQuestion();
+
+  // Render Home Screen
+  if (currentState === 'home') {
     return (
-      <div className={`min-h-screen ${bgColor} ${textColor} flex flex-col`}>
-        <div className="absolute top-4 right-4">
-          <ThemeToggleButton />
-        </div>
-
-        <div className="flex-1 flex flex-col items-center justify-center p-6">
-          <div className={`max-w-4xl w-full ${cardBg} rounded-lg shadow-2xl border ${cardBorder} p-8 text-center`}>
-            <h1 className="text-4xl font-bold mb-4">Quiz Completed!</h1>
-            <p className="text-xl mb-8">Here are your results:</p>
-
-            <div className="mb-8">
-              <p className="text-2xl font-semibold">Final Score: <span className={scoreColor}>{finalScore}</span></p>
-              <p className="text-lg">Correct Answers: {correctAnswers.length} / {totalQuestions} ({correctPercentage}%)</p>
-              <p className="text-lg">Wrong Answers: {wrongAnswers.length} / {totalQuestions}</p>
-            </div>
-
-            <button
-              onClick={resetQuiz}
-              className={`px-8 py-3 ${btnSuccess} text-white rounded-lg text-xl font-semibold transition-colors mb-4`}
-            >
-              Retake Quiz
-            </button>
-
-            <button
-              onClick={backToWeekSelect}
-              className={`px-6 py-2 ${btnSecondary} text-white rounded-lg text-xl transition-colors`}
-            >
-              Back to Week Selection
-            </button>
+      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 flex items-center justify-center p-4">
+        <div className="max-w-4xl w-full bg-white rounded-lg shadow-2xl p-8 text-center">
+          <div className="mb-8">
+            <BookOpen className="w-16 h-16 mx-auto mb-4 text-blue-600" />
+            <h1 className="text-4xl font-bold text-gray-800 mb-2">
+              Strategic Management of Information Systems
+            </h1>
+            <p className="text-xl text-gray-600">6BUIS019 - Exam Practice System</p>
+            <p className="text-lg text-gray-500 mt-2">University of Westminster</p>
           </div>
+          
+          <div className="bg-blue-50 rounded-lg p-6 mb-8">
+            <h2 className="text-2xl font-semibold text-blue-800 mb-4">Exam Features</h2>
+            <div className="grid md:grid-cols-2 gap-4 text-left">
+              <div className="flex items-center space-x-3">
+                <Timer className="w-5 h-5 text-blue-600" />
+                <span>20min Normal / 10min Rapid Mode</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <Lightbulb className="w-5 h-5 text-yellow-600" />
+                <span>4 Hints per lecture available</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <ThumbsUp className="w-5 h-5 text-green-600" />
+                <span>Real-time feedback system</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <BookOpen className="w-5 h-5 text-purple-600" />
+                <span>Written answer questions</span>
+              </div>
+            </div>
+          </div>
+
+          <button
+            onClick={() => setCurrentState('lectureSelect')}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-lg text-xl transition-colors duration-200 shadow-lg"
+          >
+            Start Practice Exam
+          </button>
         </div>
       </div>
     );
-  };
+  }
 
-  // Render welcome page
-  if (appState === 'welcome') {
+  // Render Lecture Selection Screen
+  if (currentState === 'lectureSelect') {
     return (
-      <div className={`min-h-screen ${bgColor} ${textColor} flex flex-col`}>
-        <div className="absolute top-4 right-4">
-          <ThemeToggleButton />
-        </div>
-
-        <div className="flex-1 flex flex-col items-center justify-center p-6">
-          <div className={`max-w-4xl w-full ${cardBg} rounded-lg shadow-2xl border ${cardBorder} p-8 text-center`}>
-            <h1 className="text-4xl font-bold mb-4">Cybersecurity Quizzz</h1>
-            <p className="text-xl mb-8">Parama Padi da!</p>
-
-            <div className="mb-12 flex justify-center">
-              <div className="relative rounded-lg overflow-hidden bg-gray-200" style={{ maxWidth: "100%", height: "400px", width: "1200px" }}>
-                <div className="flex items-center justify-center w-full h-full text-gray-500">
-                  <img
-                  src={VaaAnnamalai}
-                  alt="Cybersecurity Quiz"
-                  className="object-cover w-full h-full"
-                />
-                </div>
-              </div>
+      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 p-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white rounded-lg shadow-2xl p-8">
+            <div className="flex items-center justify-between mb-8">
+              <h1 className="text-3xl font-bold text-gray-800">Select Lecture Topic</h1>
+              <button
+                onClick={resetApp}
+                className="flex items-center space-x-2 text-gray-600 hover:text-gray-800"
+              >
+                <Home className="w-5 h-5" />
+                <span>Home</span>
+              </button>
             </div>
 
-            <div className="text-lg mb-8">
-              <p className="mb-2">• Timed responses & negative scores for wrong answers</p>
-              <p className="mb-2">• Randomized answer options to prevent memorization</p>
+            <div className="grid gap-6">
+              {weekOptions.map((option) => (
+                <button
+                  key={option.id}
+                  onClick={() => {
+                    setSelectedLecture(Object.keys(lectureData)[option.id - 1] as LectureKey);
+                    setCurrentState('modeSelect');
+                  }}
+                  className="bg-gradient-to-r from-blue-50 to-purple-50 hover:from-blue-100 hover:to-purple-100 rounded-lg p-6 text-left transition-all duration-200 border border-gray-200 hover:border-blue-300 hover:shadow-lg"
+                >
+                  <h3 className="text-xl font-semibold text-gray-800 mb-2">{option.title}</h3>
+                  <p className="text-gray-600 mb-3">{option.description}</p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-blue-600 font-medium">
+                      {option.data.questions.length} Questions Available
+                    </span>
+                    <Play className="w-5 h-5 text-blue-600" />
+                  </div>
+                </button>
+              ))}
             </div>
-
-            <button
-              onClick={goToWeekSelect}
-              className={`px-8 py-3 ${btnPrimary} text-white rounded-lg text-xl font-semibold transition-colors`}
-            >
-              Start Quiz
-            </button>
           </div>
         </div>
       </div>
     );
   }
 
-  // Render week selection page
-  if (appState === 'weekSelect') {
+  // Render Mode Selection Screen
+  if (currentState === 'modeSelect') {
     return (
-      <div className={`min-h-screen ${bgColor} ${textColor} flex flex-col`}>
-        <div className="absolute top-4 right-4">
-          <ThemeToggleButton />
-        </div>
-
-        <div className="flex-1 flex flex-col items-center justify-center p-6">
-          <div className={`max-w-4xl w-full ${cardBg} rounded-lg shadow-2xl border ${cardBorder} p-8`}>
-            <h1 className="text-3xl font-bold mb-6 text-center">Select Week Range</h1>
-
-            <div className="space-y-4 mb-8">
-              {weekOptions.map((week) => (
-                <button
-                  key={week.id}
-                  onClick={() => selectWeek(week)}
-                  className={`w-full p-4 rounded-lg transition-colors border ${
-                    week.id === 5
-                      ? `${btnDanger} text-white`
-                      : `${cardBg} ${textColor} hover:bg-opacity-80 border-${darkMode ? 'gray-700' : 'gray-300'}`
-                  } flex flex-col items-start`}
-                >
-                  <span className="text-xl font-bold mb-1">{week.title}</span>
-                  <span className="text-sm opacity-80">{week.description}</span>
-                </button>
-              ))}
+      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 p-4">
+        <div className="max-w-2xl mx-auto">
+          <div className="bg-white rounded-lg shadow-2xl p-8">
+            <div className="flex items-center justify-between mb-8">
+              <h1 className="text-3xl font-bold text-gray-800">Select Exam Mode</h1>
+              <button
+                onClick={() => setCurrentState('lectureSelect')}
+                className="flex items-center space-x-2 text-gray-600 hover:text-gray-800"
+              >
+                <ArrowLeft className="w-5 h-5" />
+                <span>Back</span>
+              </button>
             </div>
 
-            <div className="flex justify-center">
+            <div className="space-y-6">
               <button
-                onClick={backToWelcomePage}
-                className={`px-6 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors`}
+                onClick={() => {
+                  setExamMode('normal');
+                  startExam();
+                }}
+                className="w-full bg-gradient-to-r from-green-50 to-blue-50 hover:from-green-100 hover:to-blue-100 rounded-lg p-6 text-left transition-all duration-200 border border-gray-200 hover:border-green-300"
               >
-                Back to Welcome
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-xl font-semibold text-gray-800 mb-2">Normal Mode</h3>
+                    <p className="text-gray-600">20 minutes per session</p>
+                    <p className="text-sm text-green-600 mt-1">Recommended for thorough practice</p>
+                  </div>
+                  <Timer className="w-8 h-8 text-green-600" />
+                </div>
+              </button>
+
+              <button
+                onClick={() => {
+                  setExamMode('rapid');
+                  startExam();
+                }}
+                className="w-full bg-gradient-to-r from-orange-50 to-red-50 hover:from-orange-100 hover:to-red-100 rounded-lg p-6 text-left transition-all duration-200 border border-gray-200 hover:border-orange-300"
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-xl font-semibold text-gray-800 mb-2">Rapid Mode</h3>
+                    <p className="text-gray-600">10 minutes per session</p>
+                    <p className="text-sm text-orange-600 mt-1">Quick practice under time pressure</p>
+                  </div>
+                  <Zap className="w-8 h-8 text-orange-600" />
+                </div>
               </button>
             </div>
           </div>
@@ -573,139 +436,165 @@ function App() {
     );
   }
 
-  // Render quiz content
-  if (appState === 'quiz') {
+  // Render Exam Screen
+  if (currentState === 'exam' && currentQuestion && lectureProgress) {
     return (
-      <div className={`min-h-screen ${bgColor} py-8`}>
-        <div className="max-w-3xl mx-auto px-4">
-          <div className={`${cardBg} rounded-lg shadow-lg p-6 ${textColor} border ${cardBorder}`}>
-            <div className="flex justify-between items-center mb-6">
+      <div className="min-h-screen bg-gray-50 p-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <div className="flex items-center justify-between mb-6">
               <div>
-                <div className={`text-xl font-semibold ${scoreColor}`}>Score: {score} {scoreText}</div>
-                <div className="text-sm opacity-70 mt-1">{selectedWeek?.title}</div>
+                <h2 className="text-xl font-semibold text-gray-800">
+                  {selectedLecture && lectureData[selectedLecture].title}
+                </h2>
+                <p className="text-sm text-gray-600">
+                  Question {currentQuestionIndex + 1} of {selectedLecture && lectureData[selectedLecture].questions.length}
+                </p>
               </div>
-              <div className="flex items-center gap-4">
-                <button
-                  onClick={backToWeekSelect}
-                  className={`px-3 py-1 ${btnSecondary} text-white rounded-lg text-sm transition-colors`}
-                >
-                  Change Week
-                </button>
-                <ThemeToggleButton className="w-10 h-10" />
-                <div className="flex items-center text-lg">
-                  <Timer className="w-5 h-5 mr-2" />
-                  {timeLeft}s
+              
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2">
+                  <Timer className="w-5 h-5 text-blue-600" />
+                  <span className={`font-mono text-lg ${timeLeft < 300 ? 'text-red-600' : 'text-gray-800'}`}>
+                    {formatTime(timeLeft)}
+                  </span>
                 </div>
-              </div>
-            </div>
-
-            <div className="mb-8">
-              <h2 className="text-xl font-semibold mb-4">
-                Question {currentQuestion + 1} of {questions.length}
-              </h2>
-              <p className="text-lg mb-6">{questions[currentQuestion]?.question}</p>
-
-              {message && (
-                <div className={`mb-4 p-3 rounded-lg text-center font-medium ${
-                  message.includes("🎉") || message.includes("🌟") || message.includes("🔥") || message.includes("⭐") || message.includes("💪")
-                    ? darkMode ? "bg-green-900 text-green-300" : "bg-green-100 text-green-700"
-                    : darkMode ? "bg-blue-900 text-blue-300" : "bg-blue-100 text-blue-700"
-                }`}>
-                  {message}
-                </div>
-              )}
-
-              <div className="space-y-3">
-                {shuffledOptions.map((option, index) => {
-                  const isCorrectAnswer = index === currentCorrectIndex;
-                  const isSelected = option === selectedOption;
-                  const showWrongAnswer = showExplanation && isSelected && !isCorrectAnswer;
-
-                  return (
-                    <button
-                      key={index}
-                      onClick={() => !showExplanation && handleAnswer(option)}
-                      className={`w-full text-left p-4 rounded-lg transition-colors ${
-                        showExplanation
-                          ? isCorrectAnswer
-                            ? correctBg
-                            : showWrongAnswer
-                              ? incorrectBg
-                              : optionBg
-                          : optionBg
-                      } border ${darkMode ? 'border-gray-700' : 'border-gray-300'}`}
-                      disabled={showExplanation}
-                    >
-                      <div className="flex items-center">
-                        {showExplanation && (
-                          <>
-                            {isCorrectAnswer && <CheckCircle2 className={`w-5 h-5 ${darkMode ? 'text-green-400' : 'text-green-500'} mr-2`} />}
-                            {showWrongAnswer && <XCircle className={`w-5 h-5 ${darkMode ? 'text-red-400' : 'text-red-500'} mr-2`} />}
-                          </>
-                        )}
-                        {option}
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Enhanced explanation section with "why others wrong" feature */}
-            {showExplanation && questions[currentQuestion]?.explanation && (
-              <div className={`mb-6 p-4 ${explanationBg} rounded-lg border ${darkMode ? 'border-indigo-700' : 'border-indigo-200'}`}>
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className={`font-semibold ${darkMode ? 'text-indigo-300' : 'text-indigo-700'}`}>Explanation:</h3>
-                  {/* Info button to toggle "why others wrong" section */}
-                  {questions[currentQuestion]?.why_others_wrong && (
-                    <button
-                      onClick={toggleWhyOthersWrong}
-                      className={`flex items-center gap-1 px-2 py-1 rounded-md text-sm transition-colors ${
-                        darkMode 
-                          ? 'bg-gray-700 hover:bg-gray-600 text-gray-300' 
-                          : 'bg-gray-200 hover:bg-gray-300 text-gray-600'
-                      }`}
-                      title="Click to see why other options are wrong"
-                    >
-                      <Info className="w-4 h-4" />
-                      <span>Why others wrong?</span>
-                      {showWhyOthersWrong ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-                    </button>
-                  )}
-                </div>
-                <p className="mb-3">{questions[currentQuestion]?.explanation}</p>
                 
-                {/* Expandable "why others wrong" section */}
-                {showWhyOthersWrong && questions[currentQuestion]?.why_others_wrong && (
-                  <div className={`mt-4 p-3 ${whyWrongBg} rounded-lg border ${
-                    darkMode ? 'border-orange-700' : 'border-orange-200'
-                  } transition-all duration-300 ease-in-out`}>
-                    <h4 className={`font-medium mb-2 ${darkMode ? 'text-orange-300' : 'text-orange-700'}`}>
-                      Why the other options are incorrect:
-                    </h4>
-                    <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                      {questions[currentQuestion]?.why_others_wrong}
-                    </p>
+                <button
+                  onClick={useHint}
+                  disabled={lectureProgress.hintsUsed >= 4 || showHint}
+                  className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
+                    lectureProgress.hintsUsed >= 4 || showHint
+                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                      : 'bg-yellow-500 hover:bg-yellow-600 text-white'
+                  }`}
+                >
+                  <Lightbulb className="w-4 h-4" />
+                  <span>Hint ({4 - lectureProgress.hintsUsed} left)</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="mb-6">
+              <h3 className="text-lg font-medium text-gray-800 mb-4">
+                [{currentQuestion.marks} marks]
+              </h3>
+              <p className="text-gray-700 text-lg leading-relaxed">
+                {currentQuestion.question}
+              </p>
+            </div>
+
+            {showHint && (
+              <div className="bg-yellow-50 border-l-4 border-yellow-400 rounded-lg p-6 mb-6">
+                <div className="flex items-center mb-3">
+                  <Lightbulb className="w-6 h-6 text-yellow-600 mr-2" />
+                  <h4 className="font-semibold text-yellow-800 text-lg">💡 Hint - Model Answer</h4>
+                </div>
+                <div className="bg-white rounded p-4 border border-yellow-200">
+                  <p className="text-gray-800 leading-relaxed">{currentQuestion.correctAnswer}</p>
+                  <div className="mt-3 pt-3 border-t border-yellow-200">
+                    <p className="text-sm font-medium text-yellow-700 mb-2">Key concepts to include:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {currentQuestion.keywords.map((keyword, index) => (
+                        <span key={index} className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs font-medium">
+                          {keyword}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                )}
+                </div>
               </div>
             )}
 
-            <div className="flex justify-end space-x-4">
-              {showExplanation && currentQuestion < questions.length - 1 && (
+            <div className="mb-6">
+              <label htmlFor="answer" className="block text-sm font-medium text-gray-700 mb-2">
+                Your Answer:
+              </label>
+              <textarea
+                id="answer"
+                value={userAnswer}
+                onChange={(e) => setUserAnswer(e.target.value)}
+                placeholder="Write your comprehensive answer here..."
+                className="w-full h-48 p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                disabled={showFeedback}
+              />
+            </div>
+
+            {showFeedback && (
+              <div className={`rounded-lg p-6 mb-6 ${
+                feedbackType === 'thumbsUp' ? 'bg-green-50 border-l-4 border-green-400' : 'bg-red-50 border-l-4 border-red-400'
+              }`}>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center space-x-3">
+                    {feedbackType === 'thumbsUp' ? (
+                      <ThumbsUp className="w-8 h-8 text-green-600" />
+                    ) : (
+                      <ThumbsDown className="w-8 h-8 text-red-600" />
+                    )}
+                    <div>
+                      <span className={`text-lg font-medium ${
+                        feedbackType === 'thumbsUp' ? 'text-green-800' : 'text-red-800'
+                      }`}>
+                        {feedbackType === 'thumbsUp' ? 'Good Answer!' : 'Needs Improvement'}
+                      </span>
+                      <p className={`text-sm ${
+                        feedbackType === 'thumbsUp' ? 'text-green-700' : 'text-red-700'
+                      }`}>
+                        Score: {lectureProgress?.answersSubmitted[lectureProgress.answersSubmitted.length - 1]?.score || 0}%
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className={`text-sm ${
+                  feedbackType === 'thumbsUp' ? 'text-green-700' : 'text-red-700'
+                }`}>
+                  {feedbackType === 'thumbsUp' ? (
+                    <p>Well done! Your answer demonstrates good understanding of the key concepts.</p>
+                  ) : (
+                    <div>
+                      <p className="mb-2">To improve your answer, consider including:</p>
+                      <ul className="list-disc list-inside space-y-1">
+                        <li>More specific examples and case studies</li>
+                        <li>Clear structure with introduction, body, and conclusion</li>
+                        <li>Critical analysis showing different perspectives</li>
+                        <li>Key terminology and concepts from the course</li>
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            <div className="flex justify-between">
+              <button
+                onClick={() => setCurrentState('lectureSelect')}
+                className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg transition-colors"
+              >
+                Exit Exam
+              </button>
+              
+              {!showFeedback ? (
                 <button
-                  onClick={nextQuestion}
-                  className={`px-6 py-2 ${btnPrimary} text-white rounded-lg transition-colors`}
+                  onClick={submitAnswer}
+                  disabled={!userAnswer.trim() || !isActive}
+                  className={`px-6 py-2 rounded-lg transition-colors ${
+                    userAnswer.trim() && isActive
+                      ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  }`}
                 >
-                  Next Question
+                  Submit Answer
                 </button>
-              )}
-              {(showExplanation && currentQuestion === questions.length - 1) && (
+              ) : (
                 <button
                   onClick={nextQuestion}
-                  className={`px-6 py-2 ${btnSuccess} text-white rounded-lg transition-colors`}
+                  className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition-colors"
                 >
-                  See Results
+                  {currentQuestionIndex < (selectedLecture ? lectureData[selectedLecture].questions.length - 1 : 0)
+                    ? 'Next Question'
+                    : 'Finish Exam'
+                  }
                 </button>
               )}
             </div>
@@ -715,12 +604,79 @@ function App() {
     );
   }
 
-  //Results
-  if (appState === 'results') {
-    return renderResults();
+  // Render Results Screen
+  if (currentState === 'results' && lectureProgress) {
+    const totalQuestions = selectedLecture ? lectureData[selectedLecture].questions.length : 0;
+    const averageScore = lectureProgress.answersSubmitted.length > 0
+      ? lectureProgress.answersSubmitted.reduce((sum, answer) => sum + (answer.score || 0), 0) / lectureProgress.answersSubmitted.length
+      : 0;
+
+    return (
+      <div className="min-h-screen bg-gray-50 p-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white rounded-lg shadow-lg p-8">
+            <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Exam Results</h1>
+            
+            <div className="grid md:grid-cols-3 gap-6 mb-8">
+              <div className="bg-blue-50 rounded-lg p-6 text-center">
+                <h3 className="text-lg font-semibold text-blue-800 mb-2">Questions Completed</h3>
+                <p className="text-3xl font-bold text-blue-600">{lectureProgress.answersSubmitted.length}/{totalQuestions}</p>
+              </div>
+              
+              <div className="bg-green-50 rounded-lg p-6 text-center">
+                <h3 className="text-lg font-semibold text-green-800 mb-2">Average Score</h3>
+                <p className="text-3xl font-bold text-green-600">{averageScore.toFixed(1)}%</p>
+              </div>
+              
+              <div className="bg-yellow-50 rounded-lg p-6 text-center">
+                <h3 className="text-lg font-semibold text-yellow-800 mb-2">Hints Used</h3>
+                <p className="text-3xl font-bold text-yellow-600">{lectureProgress.hintsUsed}/4</p>
+              </div>
+            </div>
+
+            <div className="space-y-4 mb-8">
+              <h2 className="text-xl font-semibold text-gray-800">Answer Summary</h2>
+              {lectureProgress.answersSubmitted.map((answer, index) => (
+                <div key={answer.questionId} className="border border-gray-200 rounded-lg p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-medium text-gray-800">Question {index + 1}</h4>
+                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                      (answer.score || 0) >= 70
+                        ? 'bg-green-100 text-green-800'
+                        : (answer.score || 0) >= 50
+                        ? 'bg-yellow-100 text-yellow-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}>
+                      Score: {answer.score?.toFixed(1)}%
+                    </span>
+                  </div>
+                  <p className="text-gray-600 text-sm">Time spent: {Math.floor(answer.timeSpent / 60)}:{(answer.timeSpent % 60).toString().padStart(2, '0')}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex justify-center space-x-4">
+              <button
+                onClick={() => setCurrentState('lectureSelect')}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-colors"
+              >
+                Try Another Lecture
+              </button>
+              
+              <button
+                onClick={resetApp}
+                className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg transition-colors"
+              >
+                Back to Home
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
-  return <div>Error: Unknown app state</div>;
-}
+  return null;
+};
 
-export default App;
+export default ExamApp;

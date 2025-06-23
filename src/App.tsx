@@ -1,42 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Timer, ThumbsUp, ThumbsDown, Lightbulb, BookOpen, Play, Zap, Home, ArrowLeft, Eye, Trophy, Star } from 'lucide-react';
+import { Timer, ThumbsUp, ThumbsDown, Lightbulb, BookOpen, Play, Zap, Home, ArrowLeft, Eye, Trophy, Target } from 'lucide-react';
 
-// Mock data for demonstration - replace with your actual JSON imports
-const mockLectureData = {
-  "is-strategy": {
-    title: "IS Strategy & Strategic Management",
-    questions: [
-      {
-        id: 1,
-        question: "Explain the key components of an Information Systems strategy and how it aligns with business strategy.",
-        marks: 20,
-        correctAnswer: "An Information Systems strategy consists of several key components: strategic alignment with business objectives, technology infrastructure planning, resource allocation, risk management, and performance measurement. The strategy must align with business strategy through understanding organizational goals, identifying technology enablers, ensuring cost-effectiveness, and maintaining competitive advantage. Key elements include: 1) Strategic planning process that involves stakeholder engagement, 2) Technology architecture that supports business processes, 3) Investment prioritization based on business value, 4) Change management to ensure successful implementation.",
-        keywords: ["strategic alignment", "business objectives", "technology infrastructure", "resource allocation", "competitive advantage", "stakeholder engagement"]
-      },
-      {
-        id: 2,
-        question: "Discuss the challenges and benefits of digital transformation in modern organizations.",
-        marks: 15,
-        correctAnswer: "Digital transformation presents both significant challenges and benefits. Challenges include: resistance to change, legacy system integration, cybersecurity risks, skill gaps, and high implementation costs. Benefits include: improved efficiency, better customer experience, data-driven decision making, increased agility, and new revenue streams. Organizations must develop a comprehensive change management strategy, invest in employee training, ensure robust security measures, and maintain focus on customer value throughout the transformation process.",
-        keywords: ["digital transformation", "change management", "legacy systems", "cybersecurity", "customer experience", "data-driven decisions"]
-      }
-    ]
-  },
-  "competitive-advantage": {
-    title: "Competitive Advantage & Generic Strategies",
-    questions: [
-      {
-        id: 3,
-        question: "Analyze Porter's Generic Strategies and their application in the digital age.",
-        marks: 18,
-        correctAnswer: "Porter's Generic Strategies include Cost Leadership, Differentiation, and Focus strategies. In the digital age, these strategies are enhanced by technology: Cost Leadership through automation and efficiency gains, Differentiation through innovative digital products and services, and Focus through targeted digital marketing and niche market identification. Digital platforms enable companies to achieve cost advantages through economies of scale, create unique value propositions through data analytics, and target specific customer segments more effectively.",
-        keywords: ["Porter's Generic Strategies", "Cost Leadership", "Differentiation", "Focus strategy", "digital platforms", "economies of scale", "data analytics"]
-      }
-    ]
-  }
+// Import separate JSON files for each lecture
+import isStrategyData from './data/is-strategy.json';
+import competitiveAdvantageData from './data/competitive-advantage.json';
+import outsourcingSaasData from './data/outsourcing-saas.json';
+import remoteWorkingData from './data/remote-working.json';
+import informationResourcesData from './data/information-resources.json';
+
+// Lecture data structure - loaded from separate JSON files
+const lectureData = {
+  "is-strategy": isStrategyData,
+  "competitive-advantage": competitiveAdvantageData,
+  "outsourcing-saas": outsourcingSaasData,
+  "remote-working": remoteWorkingData,
+  "information-resources": informationResourcesData
 };
 
-type LectureKey = keyof typeof mockLectureData;
+type LectureKey = keyof typeof lectureData;
 
 interface Question {
   id: number;
@@ -48,6 +29,8 @@ interface Question {
 
 interface LectureData {
   title: string;
+  description: string;
+  lectureCode: string;
   questions: Question[];
 }
 
@@ -56,7 +39,7 @@ interface UserAnswer {
   answer: string;
   timeSpent: number;
   score?: number;
-  usedShowAnswer?: boolean; // Track if show answer was used
+  showAnswerUsed?: boolean; // Track if show answer was used
 }
 
 interface LectureProgress {
@@ -67,27 +50,22 @@ interface LectureProgress {
   isCompleted: boolean;
 }
 
-// Global scoring system interface
-interface GlobalScore {
+// Global statistics tracking across all lectures
+interface GlobalStats {
   totalPointsEarned: number;
   totalPointsPossible: number;
   lecturesCompleted: number;
-  totalQuestions: number;
-  averageScore: number;
-  lectureScores: Record<string, {
-    pointsEarned: number;
-    pointsPossible: number;
-    completed: boolean;
-  }>;
+  totalQuestionsAnswered: number;
+  showAnswerPenalties: number;
 }
 
 const ExamApp: React.FC = () => {
-  // Existing state management
+  // State management for the entire application
   const [currentState, setCurrentState] = useState<'home' | 'lectureSelect' | 'modeSelect' | 'exam' | 'results'>('home');
   const [selectedLecture, setSelectedLecture] = useState<LectureKey | null>(null);
   const [examMode, setExamMode] = useState<'normal' | 'rapid'>('normal');
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(1200);
+  const [timeLeft, setTimeLeft] = useState(1200); // 20 minutes in seconds
   const [isActive, setIsActive] = useState(false);
   const [userAnswer, setUserAnswer] = useState('');
   const [lectureProgress, setLectureProgress] = useState<LectureProgress | null>(null);
@@ -95,56 +73,61 @@ const ExamApp: React.FC = () => {
   const [feedbackType, setFeedbackType] = useState<'thumbsUp' | 'thumbsDown' | null>(null);
   const [showHint, setShowHint] = useState(false);
   
-  // New state for show answer feature
-  const [showAnswer, setShowAnswer] = useState(false);
-  const [usedShowAnswer, setUsedShowAnswer] = useState(false);
-  
-  // Global scoring state
-  const [globalScore, setGlobalScore] = useState<GlobalScore>({
+  // New states for show answer functionality and global scoring
+  const [showAnswerClicked, setShowAnswerClicked] = useState(false);
+  const [showModelAnswer, setShowModelAnswer] = useState(false);
+  const [globalStats, setGlobalStats] = useState<GlobalStats>({
     totalPointsEarned: 0,
     totalPointsPossible: 0,
     lecturesCompleted: 0,
-    totalQuestions: 0,
-    averageScore: 0,
-    lectureScores: {}
+    totalQuestionsAnswered: 0,
+    showAnswerPenalties: 0
   });
 
+  // Available lecture options based on imported JSON data
   const weekOptions = [
     {
       id: 1,
       title: "IS Strategy & Strategic Management",
       description: "Information Systems Strategy and Strategic Planning",
-      data: mockLectureData["is-strategy"]
+      data: lectureData["is-strategy"]
     },
     {
       id: 2,
       title: "Competitive Advantage & Generic Strategies", 
       description: "Porter's Generic Strategies and Competitive Positioning",
-      data: mockLectureData["competitive-advantage"]
+      data: lectureData["competitive-advantage"]
+    },
+    {
+      id: 3,
+      title: "Outsourcing & Software as a Service",
+      description: "IT Outsourcing Models and Cloud Computing", 
+      data: lectureData["outsourcing-saas"]
+    },
+    {
+      id: 4,
+      title: "Remote Working & IT Implications",
+      description: "Digital Transformation and Remote Work Technologies",
+      data: lectureData["remote-working"] 
+    },
+    {
+      id: 5,
+      title: "Information Resources & Management",
+      description: "Data Management and Information Asset Valuation",
+      data: lectureData["information-resources"]
     }
   ];
 
-  // Load global score from localStorage on component mount
-  useEffect(() => {
-    const savedScore = localStorage.getItem('examAppGlobalScore');
-    if (savedScore) {
-      setGlobalScore(JSON.parse(savedScore));
-    }
-  }, []);
-
-  // Save global score to localStorage whenever it changes
-  useEffect(() => {
-    localStorage.setItem('examAppGlobalScore', JSON.stringify(globalScore));
-  }, [globalScore]);
-
+  // Initialize timer based on selected exam mode
   useEffect(() => {
     if (examMode === 'normal') {
-      setTimeLeft(1200);
+      setTimeLeft(1200); // 20 minutes
     } else {
-      setTimeLeft(600);
+      setTimeLeft(600); // 10 minutes
     }
   }, [examMode]);
 
+  // Timer countdown effect using React's setTimeout
   useEffect(() => {
     let timeoutId: ReturnType<typeof setTimeout>;
     
@@ -156,6 +139,7 @@ const ExamApp: React.FC = () => {
       handleTimeUp();
     }
     
+    // Cleanup timeout on component unmount or dependency change
     return () => {
       if (timeoutId) {
         clearTimeout(timeoutId);
@@ -163,12 +147,20 @@ const ExamApp: React.FC = () => {
     };
   }, [isActive, timeLeft]);
 
+  // Helper function to format time display (MM:SS)
   const formatTime = (seconds: number): string => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
+  // Calculate global success rate for display
+  const getGlobalSuccessRate = (): number => {
+    if (globalStats.totalPointsPossible === 0) return 0;
+    return (globalStats.totalPointsEarned / globalStats.totalPointsPossible) * 100;
+  };
+
+  // Initialize exam session with selected lecture and mode
   const startExam = () => {
     if (selectedLecture) {
       setLectureProgress({
@@ -182,24 +174,35 @@ const ExamApp: React.FC = () => {
       setIsActive(true);
       setCurrentState('exam');
       setUserAnswer('');
-      setShowAnswer(false);
-      setUsedShowAnswer(false);
+      setShowAnswerClicked(false);
+      setShowModelAnswer(false);
     }
   };
 
-  // Enhanced submitAnswer function to handle show answer penalty
+  // New function to handle showing the model answer
+  const handleShowAnswer = () => {
+    setShowAnswerClicked(true);
+    setShowModelAnswer(true);
+    // Update global stats to track the penalty
+    setGlobalStats(prev => ({
+      ...prev,
+      showAnswerPenalties: prev.showAnswerPenalties + 1
+    }));
+  };
+
+  // Process and score user's submitted answer
   const submitAnswer = () => {
     if (!selectedLecture || !lectureProgress) return;
 
-    const currentQuestion = mockLectureData[selectedLecture].questions[currentQuestionIndex];
+    const currentQuestion = lectureData[selectedLecture].questions[currentQuestionIndex];
     const timeSpent = (examMode === 'normal' ? 1200 : 600) - timeLeft;
     
-    // Calculate base score
+    // Calculate score using enhanced scoring algorithm
     let score = calculateScore(userAnswer, currentQuestion.correctAnswer, currentQuestion.keywords);
     
-    // Apply penalty if show answer was used (deduct 1 point, minimum 0)
-    if (usedShowAnswer) {
-      score = Math.max(0, score - 1);
+    // Apply show answer penalty (deduct 1 point if show answer was used)
+    if (showAnswerClicked) {
+      score = Math.max(0, score - 1); // Ensure score doesn't go below 0
     }
     
     const userAnswerObj: UserAnswer = {
@@ -207,9 +210,10 @@ const ExamApp: React.FC = () => {
       answer: userAnswer,
       timeSpent,
       score,
-      usedShowAnswer
+      showAnswerUsed: showAnswerClicked
     };
 
+    // Update lecture progress with new answer
     const updatedProgress = {
       ...lectureProgress,
       answersSubmitted: [...lectureProgress.answersSubmitted, userAnswerObj]
@@ -219,27 +223,40 @@ const ExamApp: React.FC = () => {
     setShowFeedback(true);
     setFeedbackType(score >= 70 ? 'thumbsUp' : 'thumbsDown');
     setIsActive(false);
+
+    // Update global statistics
+    setGlobalStats(prev => ({
+      ...prev,
+      totalPointsEarned: prev.totalPointsEarned + score,
+      totalPointsPossible: prev.totalPointsPossible + 100, // Each question is worth 100 points max
+      totalQuestionsAnswered: prev.totalQuestionsAnswered + 1
+    }));
   };
 
+  // Enhanced scoring algorithm for written answers
   const calculateScore = (userAnswer: string, correctAnswer: string, keywords: string[]): number => {
     if (!userAnswer.trim()) return 0;
     
     const userWords = userAnswer.toLowerCase().split(/\s+/);
     const userText = userAnswer.toLowerCase();
     
+    // Keyword matching component (40% of total score)
     const keywordMatches = keywords.filter(keyword => 
       userText.includes(keyword.toLowerCase()) || 
       userWords.some(word => word.includes(keyword.toLowerCase()) || keyword.toLowerCase().includes(word))
     );
     const keywordScore = (keywordMatches.length / keywords.length) * 40;
     
+    // Length and comprehensiveness component (30% of total score)
     const lengthScore = Math.min((userAnswer.length / 800) * 30, 30);
     
+    // Structure and organization component (20% of total score)
     const sentences = userAnswer.split(/[.!?]+/).filter(s => s.trim().length > 10);
     const hasStructure = sentences.length >= 3 && userAnswer.includes('.');
     const hasExamples = /example|such as|for instance|including|like/i.test(userAnswer);
     const structureScore = (hasStructure ? 10 : 0) + (hasExamples ? 10 : 0);
     
+    // Critical thinking indicators component (10% of total score)
     const criticalThinking = /however|although|therefore|consequently|furthermore|moreover|in contrast|on the other hand/i.test(userAnswer);
     const thinkingScore = criticalThinking ? 10 : 5;
     
@@ -247,81 +264,46 @@ const ExamApp: React.FC = () => {
     return Math.round(totalScore);
   };
 
-  // Enhanced nextQuestion function to update global scoring
+  // Navigate to next question or complete exam
   const nextQuestion = () => {
     if (!selectedLecture || !lectureProgress) return;
     
     const nextIndex = currentQuestionIndex + 1;
-    const totalQuestions = mockLectureData[selectedLecture].questions.length;
+    const totalQuestions = lectureData[selectedLecture].questions.length;
     
     if (nextIndex < totalQuestions) {
+      // Move to next question
       setCurrentQuestionIndex(nextIndex);
       setUserAnswer('');
       setShowFeedback(false);
       setFeedbackType(null);
       setShowHint(false);
-      setShowAnswer(false);
-      setUsedShowAnswer(false);
+      setShowAnswerClicked(false);
+      setShowModelAnswer(false);
       setIsActive(true);
+      
+      // Reset timer for new question
       setTimeLeft(examMode === 'normal' ? 1200 : 600);
     } else {
-      // Complete the exam and update global scoring
+      // Complete the exam and show results
       const updatedProgress = {
         ...lectureProgress,
         isCompleted: true,
         currentQuestionIndex: nextIndex
       };
       setLectureProgress(updatedProgress);
-      updateGlobalScore(updatedProgress);
+      
+      // Update global stats for completed lecture
+      setGlobalStats(prev => ({
+        ...prev,
+        lecturesCompleted: prev.lecturesCompleted + 1
+      }));
+      
       setCurrentState('results');
     }
   };
 
-  // Function to update global scoring system
-  const updateGlobalScore = (completedProgress: LectureProgress) => {
-    if (!selectedLecture) return;
-
-    const lectureQuestions = mockLectureData[selectedLecture].questions;
-    const lecturePointsPossible = lectureQuestions.reduce((sum, q) => sum + q.marks, 0);
-    const lecturePointsEarned = completedProgress.answersSubmitted.reduce((sum, answer) => {
-      const questionMarks = lectureQuestions.find(q => q.id === answer.questionId)?.marks || 0;
-      return sum + ((answer.score || 0) / 100) * questionMarks;
-    }, 0);
-
-    setGlobalScore(prevScore => {
-      const newLectureScores = {
-        ...prevScore.lectureScores,
-        [selectedLecture]: {
-          pointsEarned: lecturePointsEarned,
-          pointsPossible: lecturePointsPossible,
-          completed: true
-        }
-      };
-
-      // Calculate totals across all lectures
-      const totalPointsEarned = Object.values(newLectureScores).reduce((sum, lecture) => sum + lecture.pointsEarned, 0);
-      const totalPointsPossible = Object.values(newLectureScores).reduce((sum, lecture) => sum + lecture.pointsPossible, 0);
-      const lecturesCompleted = Object.values(newLectureScores).filter(lecture => lecture.completed).length;
-      const totalQuestions = Object.values(mockLectureData).reduce((sum, lecture) => sum + lecture.questions.length, 0);
-      const averageScore = totalPointsPossible > 0 ? (totalPointsEarned / totalPointsPossible) * 100 : 0;
-
-      return {
-        totalPointsEarned,
-        totalPointsPossible,
-        lecturesCompleted,
-        totalQuestions,
-        averageScore,
-        lectureScores: newLectureScores
-      };
-    });
-  };
-
-  // New function to handle showing the answer
-  const handleShowAnswer = () => {
-    setShowAnswer(true);
-    setUsedShowAnswer(true);
-  };
-
+  // Use one of the available hints (maximum 4 per lecture)
   const useHint = () => {
     if (!lectureProgress || !selectedLecture) return;
     
@@ -334,16 +316,20 @@ const ExamApp: React.FC = () => {
     }
   };
 
+  // Handle timer expiration
   const handleTimeUp = () => {
     setIsActive(false);
     if (userAnswer.trim()) {
+      // Auto-submit if user has written something
       submitAnswer();
     } else {
+      // Show negative feedback for no answer
       setShowFeedback(true);
       setFeedbackType('thumbsDown');
     }
   };
 
+  // Reset entire application to home state
   const resetApp = () => {
     setCurrentState('home');
     setSelectedLecture(null);
@@ -353,52 +339,46 @@ const ExamApp: React.FC = () => {
     setShowFeedback(false);
     setFeedbackType(null);
     setShowHint(false);
-    setShowAnswer(false);
-    setUsedShowAnswer(false);
+    setShowAnswerClicked(false);
+    setShowModelAnswer(false);
     setIsActive(false);
   };
 
+  // Get current question object
   const getCurrentQuestion = (): Question | null => {
     if (!selectedLecture) return null;
-    return mockLectureData[selectedLecture].questions[currentQuestionIndex] || null;
+    return lectureData[selectedLecture].questions[currentQuestionIndex] || null;
   };
 
   const currentQuestion = getCurrentQuestion();
 
-  // Top Bar Component for Global Scoring
-  const TopBar = () => {
-    if (currentState === 'home') return null;
+  // Render Top Bar for Exam Screen (shows global stats)
+  const renderTopBar = () => {
+    if (currentState !== 'exam') return null;
     
     return (
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg">
-        <div className="max-w-6xl mx-auto px-4 py-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-6">
-              <div className="flex items-center space-x-2">
-                <Trophy className="w-5 h-5 text-yellow-300" />
-                <span className="font-semibold">
-                  {globalScore.totalPointsEarned.toFixed(1)} / {globalScore.totalPointsPossible.toFixed(1)} pts
-                </span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Star className="w-5 h-5 text-yellow-300" />
-                <span>
-                  Average: {globalScore.averageScore.toFixed(1)}%
-                </span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <BookOpen className="w-5 h-5 text-green-300" />
-                <span>
-                  {globalScore.lecturesCompleted} / {weekOptions.length} lectures
-                </span>
-              </div>
+      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 shadow-lg">
+        <div className="max-w-4xl mx-auto flex items-center justify-between">
+          <div className="flex items-center space-x-6">
+            <div className="flex items-center space-x-2">
+              <Trophy className="w-5 h-5" />
+              <span className="font-semibold">Overall Score:</span>
+              <span className="bg-white text-blue-600 px-3 py-1 rounded-full font-bold">
+                {getGlobalSuccessRate().toFixed(1)}%
+              </span>
             </div>
-            {currentState === 'exam' && selectedLecture && (
-              <div className="text-sm">
-                <span className="opacity-75">Current Session: </span>
-                <span className="font-semibold">{mockLectureData[selectedLecture].title}</span>
-              </div>
-            )}
+            <div className="flex items-center space-x-2">
+              <Target className="w-5 h-5" />
+              <span>
+                {globalStats.totalPointsEarned.toFixed(0)}/{globalStats.totalPointsPossible} pts
+              </span>
+            </div>
+            <div className="text-sm opacity-90">
+              Questions: {globalStats.totalQuestionsAnswered} | Lectures: {globalStats.lecturesCompleted}
+            </div>
+          </div>
+          <div className="text-sm opacity-90">
+            Show Answer Penalties: {globalStats.showAnswerPenalties}
           </div>
         </div>
       </div>
@@ -408,48 +388,65 @@ const ExamApp: React.FC = () => {
   // Render Home Screen
   if (currentState === 'home') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900">
-        <TopBar />
-        <div className="flex items-center justify-center p-4 min-h-screen">
-          <div className="max-w-4xl w-full bg-white rounded-lg shadow-2xl p-8 text-center">
-            <div className="mb-8">
-              <BookOpen className="w-16 h-16 mx-auto mb-4 text-blue-600" />
-              <h1 className="text-4xl font-bold text-gray-800 mb-2">
-                Strategic Management of Information Systems
-              </h1>
-              <p className="text-xl text-gray-600">6BUIS019 - Exam Practice System</p>
-              <p className="text-lg text-gray-500 mt-2">University of Westminster</p>
-            </div>
-            
-            <div className="bg-blue-50 rounded-lg p-6 mb-8">
-              <h2 className="text-2xl font-semibold text-blue-800 mb-4">Exam Features</h2>
-              <div className="grid md:grid-cols-2 gap-4 text-left">
-                <div className="flex items-center space-x-3">
-                  <Timer className="w-5 h-5 text-blue-600" />
-                  <span>20min Normal / 10min Rapid Mode</span>
+      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 flex items-center justify-center p-4">
+        <div className="max-w-4xl w-full bg-white rounded-lg shadow-2xl p-8 text-center">
+          <div className="mb-8">
+            <BookOpen className="w-16 h-16 mx-auto mb-4 text-blue-600" />
+            <h1 className="text-4xl font-bold text-gray-800 mb-2">
+              Strategic Management of Information Systems
+            </h1>
+            <p className="text-xl text-gray-600">6BUIS019 - Exam Practice System</p>
+            <p className="text-lg text-gray-500 mt-2">University of Westminster</p>
+          </div>
+          
+          {globalStats.totalQuestionsAnswered > 0 && (
+            <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-6 mb-8">
+              <h2 className="text-2xl font-semibold text-gray-800 mb-4">Your Progress</h2>
+              <div className="grid md:grid-cols-3 gap-4">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-blue-600">{getGlobalSuccessRate().toFixed(1)}%</div>
+                  <div className="text-sm text-gray-600">Overall Score</div>
                 </div>
-                <div className="flex items-center space-x-3">
-                  <Lightbulb className="w-5 h-5 text-yellow-600" />
-                  <span>4 Hints per lecture available</span>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-green-600">{globalStats.totalQuestionsAnswered}</div>
+                  <div className="text-sm text-gray-600">Questions Answered</div>
                 </div>
-                <div className="flex items-center space-x-3">
-                  <Eye className="w-5 h-5 text-orange-600" />
-                  <span>Show Answer (1 point penalty)</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Trophy className="w-5 h-5 text-purple-600" />
-                  <span>Global scoring across all lectures</span>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-purple-600">{globalStats.lecturesCompleted}</div>
+                  <div className="text-sm text-gray-600">Lectures Completed</div>
                 </div>
               </div>
             </div>
-
-            <button
-              onClick={() => setCurrentState('lectureSelect')}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-lg text-xl transition-colors duration-200 shadow-lg"
-            >
-              Start Practice Exam
-            </button>
+          )}
+          
+          <div className="bg-blue-50 rounded-lg p-6 mb-8">
+            <h2 className="text-2xl font-semibold text-blue-800 mb-4">Exam Features</h2>
+            <div className="grid md:grid-cols-2 gap-4 text-left">
+              <div className="flex items-center space-x-3">
+                <Timer className="w-5 h-5 text-blue-600" />
+                <span>20min Normal / 10min Rapid Mode</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <Lightbulb className="w-5 h-5 text-yellow-600" />
+                <span>4 Hints per lecture available</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <Eye className="w-5 h-5 text-orange-600" />
+                <span>Show Answer option (-1 point penalty)</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <Trophy className="w-5 h-5 text-green-600" />
+                <span>Global score tracking system</span>
+              </div>
+            </div>
           </div>
+
+          <button
+            onClick={() => setCurrentState('lectureSelect')}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-lg text-xl transition-colors duration-200 shadow-lg"
+          >
+            Start Practice Exam
+          </button>
         </div>
       </div>
     );
@@ -458,67 +455,40 @@ const ExamApp: React.FC = () => {
   // Render Lecture Selection Screen
   if (currentState === 'lectureSelect') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900">
-        <TopBar />
-        <div className="p-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-white rounded-lg shadow-2xl p-8">
-              <div className="flex items-center justify-between mb-8">
-                <h1 className="text-3xl font-bold text-gray-800">Select Lecture Topic</h1>
-                <button
-                  onClick={resetApp}
-                  className="flex items-center space-x-2 text-gray-600 hover:text-gray-800"
-                >
-                  <Home className="w-5 h-5" />
-                  <span>Home</span>
-                </button>
-              </div>
+      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 p-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white rounded-lg shadow-2xl p-8">
+            <div className="flex items-center justify-between mb-8">
+              <h1 className="text-3xl font-bold text-gray-800">Select Lecture Topic</h1>
+              <button
+                onClick={resetApp}
+                className="flex items-center space-x-2 text-gray-600 hover:text-gray-800"
+              >
+                <Home className="w-5 h-5" />
+                <span>Home</span>
+              </button>
+            </div>
 
-              <div className="grid gap-6">
-                {weekOptions.map((option) => {
-                  const lectureKey = Object.keys(mockLectureData)[option.id - 1] as LectureKey;
-                  const isCompleted = globalScore.lectureScores[lectureKey]?.completed || false;
-                  const lectureScore = globalScore.lectureScores[lectureKey];
-                  
-                  return (
-                    <button
-                      key={option.id}
-                      onClick={() => {
-                        setSelectedLecture(lectureKey);
-                        setCurrentState('modeSelect');
-                      }}
-                      className="bg-gradient-to-r from-blue-50 to-purple-50 hover:from-blue-100 hover:to-purple-100 rounded-lg p-6 text-left transition-all duration-200 border border-gray-200 hover:border-blue-300 hover:shadow-lg"
-                    >
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <h3 className="text-xl font-semibold text-gray-800 mb-2">{option.title}</h3>
-                          <p className="text-gray-600 mb-3">{option.description}</p>
-                          <div className="flex items-center justify-between">
-                            <span className="text-sm text-blue-600 font-medium">
-                              {option.data.questions.length} Questions Available
-                            </span>
-                            <Play className="w-5 h-5 text-blue-600" />
-                          </div>
-                        </div>
-                        {isCompleted && (
-                          <div className="ml-4 text-right">
-                            <div className="flex items-center space-x-1 text-green-600 mb-1">
-                              <Trophy className="w-4 h-4" />
-                              <span className="text-sm font-medium">Completed</span>
-                            </div>
-                            <div className="text-xs text-gray-600">
-                              {lectureScore.pointsEarned.toFixed(1)} / {lectureScore.pointsPossible.toFixed(1)} pts
-                            </div>
-                            <div className="text-xs text-gray-600">
-                              {((lectureScore.pointsEarned / lectureScore.pointsPossible) * 100).toFixed(1)}%
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
+            <div className="grid gap-6">
+              {weekOptions.map((option) => (
+                <button
+                  key={option.id}
+                  onClick={() => {
+                    setSelectedLecture(Object.keys(lectureData)[option.id - 1] as LectureKey);
+                    setCurrentState('modeSelect');
+                  }}
+                  className="bg-gradient-to-r from-blue-50 to-purple-50 hover:from-blue-100 hover:to-purple-100 rounded-lg p-6 text-left transition-all duration-200 border border-gray-200 hover:border-blue-300 hover:shadow-lg"
+                >
+                  <h3 className="text-xl font-semibold text-gray-800 mb-2">{option.title}</h3>
+                  <p className="text-gray-600 mb-3">{option.description}</p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-blue-600 font-medium">
+                      {option.data.questions.length} Questions Available
+                    </span>
+                    <Play className="w-5 h-5 text-blue-600" />
+                  </div>
+                </button>
+              ))}
             </div>
           </div>
         </div>
@@ -529,57 +499,54 @@ const ExamApp: React.FC = () => {
   // Render Mode Selection Screen
   if (currentState === 'modeSelect') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900">
-        <TopBar />
-        <div className="p-4">
-          <div className="max-w-2xl mx-auto">
-            <div className="bg-white rounded-lg shadow-2xl p-8">
-              <div className="flex items-center justify-between mb-8">
-                <h1 className="text-3xl font-bold text-gray-800">Select Exam Mode</h1>
-                <button
-                  onClick={() => setCurrentState('lectureSelect')}
-                  className="flex items-center space-x-2 text-gray-600 hover:text-gray-800"
-                >
-                  <ArrowLeft className="w-5 h-5" />
-                  <span>Back</span>
-                </button>
-              </div>
+      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 p-4">
+        <div className="max-w-2xl mx-auto">
+          <div className="bg-white rounded-lg shadow-2xl p-8">
+            <div className="flex items-center justify-between mb-8">
+              <h1 className="text-3xl font-bold text-gray-800">Select Exam Mode</h1>
+              <button
+                onClick={() => setCurrentState('lectureSelect')}
+                className="flex items-center space-x-2 text-gray-600 hover:text-gray-800"
+              >
+                <ArrowLeft className="w-5 h-5" />
+                <span>Back</span>
+              </button>
+            </div>
 
-              <div className="space-y-6">
-                <button
-                  onClick={() => {
-                    setExamMode('normal');
-                    startExam();
-                  }}
-                  className="w-full bg-gradient-to-r from-green-50 to-blue-50 hover:from-green-100 hover:to-blue-100 rounded-lg p-6 text-left transition-all duration-200 border border-gray-200 hover:border-green-300"
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="text-xl font-semibold text-gray-800 mb-2">Normal Mode</h3>
-                      <p className="text-gray-600">20 minutes per session</p>
-                      <p className="text-sm text-green-600 mt-1">Recommended for thorough practice</p>
-                    </div>
-                    <Timer className="w-8 h-8 text-green-600" />
+            <div className="space-y-6">
+              <button
+                onClick={() => {
+                  setExamMode('normal');
+                  startExam();
+                }}
+                className="w-full bg-gradient-to-r from-green-50 to-blue-50 hover:from-green-100 hover:to-blue-100 rounded-lg p-6 text-left transition-all duration-200 border border-gray-200 hover:border-green-300"
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-xl font-semibold text-gray-800 mb-2">Normal Mode</h3>
+                    <p className="text-gray-600">20 minutes per session</p>
+                    <p className="text-sm text-green-600 mt-1">Recommended for thorough practice</p>
                   </div>
-                </button>
+                  <Timer className="w-8 h-8 text-green-600" />
+                </div>
+              </button>
 
-                <button
-                  onClick={() => {
-                    setExamMode('rapid');
-                    startExam();
-                  }}
-                  className="w-full bg-gradient-to-r from-orange-50 to-red-50 hover:from-orange-100 hover:to-red-100 rounded-lg p-6 text-left transition-all duration-200 border border-gray-200 hover:border-orange-300"
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="text-xl font-semibold text-gray-800 mb-2">Rapid Mode</h3>
-                      <p className="text-gray-600">10 minutes per session</p>
-                      <p className="text-sm text-orange-600 mt-1">Quick practice under time pressure</p>
-                    </div>
-                    <Zap className="w-8 h-8 text-orange-600" />
+              <button
+                onClick={() => {
+                  setExamMode('rapid');
+                  startExam();
+                }}
+                className="w-full bg-gradient-to-r from-orange-50 to-red-50 hover:from-orange-100 hover:to-red-100 rounded-lg p-6 text-left transition-all duration-200 border border-gray-200 hover:border-orange-300"
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-xl font-semibold text-gray-800 mb-2">Rapid Mode</h3>
+                    <p className="text-gray-600">10 minutes per session</p>
+                    <p className="text-sm text-orange-600 mt-1">Quick practice under time pressure</p>
                   </div>
-                </button>
-              </div>
+                  <Zap className="w-8 h-8 text-orange-600" />
+                </div>
+              </button>
             </div>
           </div>
         </div>
@@ -591,17 +558,17 @@ const ExamApp: React.FC = () => {
   if (currentState === 'exam' && currentQuestion && lectureProgress) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <TopBar />
+        {renderTopBar()}
         <div className="p-4">
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
               <div className="flex items-center justify-between mb-6">
                 <div>
                   <h2 className="text-xl font-semibold text-gray-800">
-                    {selectedLecture && mockLectureData[selectedLecture].title}
+                    {selectedLecture && lectureData[selectedLecture].title}
                   </h2>
                   <p className="text-sm text-gray-600">
-                    Question {currentQuestionIndex + 1} of {selectedLecture && mockLectureData[selectedLecture].questions.length}
+                    Question {currentQuestionIndex + 1} of {selectedLecture && lectureData[selectedLecture].questions.length}
                   </p>
                 </div>
                 
@@ -626,18 +593,17 @@ const ExamApp: React.FC = () => {
                     <span>Hint ({4 - lectureProgress.hintsUsed} left)</span>
                   </button>
 
-                  {/* New Show Answer Button */}
                   <button
                     onClick={handleShowAnswer}
-                    disabled={showAnswer || showFeedback}
+                    disabled={showAnswerClicked || showFeedback}
                     className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
-                      showAnswer || showFeedback
+                      showAnswerClicked || showFeedback
                         ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                         : 'bg-orange-500 hover:bg-orange-600 text-white'
                     }`}
                   >
                     <Eye className="w-4 h-4" />
-                    <span>Show Answer (-1pt)</span>
+                    <span>Show Answer (-1 pt)</span>
                   </button>
                 </div>
               </div>
@@ -673,12 +639,11 @@ const ExamApp: React.FC = () => {
                 </div>
               )}
 
-              {/* New Show Answer Section */}
-              {showAnswer && (
+              {showModelAnswer && (
                 <div className="bg-orange-50 border-l-4 border-orange-400 rounded-lg p-6 mb-6">
                   <div className="flex items-center mb-3">
                     <Eye className="w-6 h-6 text-orange-600 mr-2" />
-                    <h4 className="font-semibold text-orange-800 text-lg">👁️ Model Answer (1 point deducted)</h4>
+                    <h4 className="font-semibold text-orange-800 text-lg">👁️ Model Answer (1 point penalty applied)</h4>
                   </div>
                   <div className="bg-white rounded p-4 border border-orange-200">
                     <p className="text-gray-800 leading-relaxed">{currentQuestion.correctAnswer}</p>
@@ -731,7 +696,9 @@ const ExamApp: React.FC = () => {
                           feedbackType === 'thumbsUp' ? 'text-green-700' : 'text-red-700'
                         }`}>
                           Score: {lectureProgress?.answersSubmitted[lectureProgress.answersSubmitted.length - 1]?.score || 0}%
-                          {usedShowAnswer && <span className="ml-2 text-orange-600">(Show Answer penalty applied)</span>}
+                          {showAnswerClicked && (
+                            <span className="ml-2 text-orange-600">(-1 pt penalty applied)</span>
+                          )}
                         </p>
                       </div>
                     </div>
@@ -782,7 +749,7 @@ const ExamApp: React.FC = () => {
                     onClick={nextQuestion}
                     className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition-colors"
                   >
-                    {currentQuestionIndex < (selectedLecture ? mockLectureData[selectedLecture].questions.length - 1 : 0)
+                    {currentQuestionIndex < (selectedLecture ? lectureData[selectedLecture].questions.length - 1 : 0)
                       ? 'Next Question'
                       : 'Finish Exam'
                     }
@@ -798,86 +765,101 @@ const ExamApp: React.FC = () => {
 
   // Render Results Screen
   if (currentState === 'results' && lectureProgress) {
-    const totalQuestions = selectedLecture ? mockLectureData[selectedLecture].questions.length : 0;
+    const totalQuestions = selectedLecture ? lectureData[selectedLecture].questions.length : 0;
     const averageScore = lectureProgress.answersSubmitted.length > 0
       ? lectureProgress.answersSubmitted.reduce((sum, answer) => sum + (answer.score || 0), 0) / lectureProgress.answersSubmitted.length
       : 0;
 
+    const showAnswerUsage = lectureProgress.answersSubmitted.filter(answer => answer.showAnswerUsed).length;
+
     return (
-      <div className="min-h-screen bg-gray-50">
-        <TopBar />
-        <div className="p-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-white rounded-lg shadow-lg p-8">
-              <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Exam Results</h1>
+      <div className="min-h-screen bg-gray-50 p-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white rounded-lg shadow-lg p-8">
+            <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Exam Results</h1>
+            
+            <div className="grid md:grid-cols-4 gap-6 mb-8">
+              <div className="bg-blue-50 rounded-lg p-6 text-center">
+                <h3 className="text-lg font-semibold text-blue-800 mb-2">Questions Completed</h3>
+                <p className="text-3xl font-bold text-blue-600">{lectureProgress.answersSubmitted.length}/{totalQuestions}</p>
+              </div>
               
-              <div className="grid md:grid-cols-4 gap-6 mb-8">
-                <div className="bg-blue-50 rounded-lg p-6 text-center">
-                  <h3 className="text-lg font-semibold text-blue-800 mb-2">Questions Completed</h3>
-                  <p className="text-3xl font-bold text-blue-600">{lectureProgress.answersSubmitted.length}/{totalQuestions}</p>
-                </div>
-                
-                <div className="bg-green-50 rounded-lg p-6 text-center">
-                  <h3 className="text-lg font-semibold text-green-800 mb-2">Average Score</h3>
-                  <p className="text-3xl font-bold text-green-600">{averageScore.toFixed(1)}%</p>
-                </div>
-                
-                <div className="bg-yellow-50 rounded-lg p-6 text-center">
-                  <h3 className="text-lg font-semibold text-yellow-800 mb-2">Hints Used</h3>
-                  <p className="text-3xl font-bold text-yellow-600">{lectureProgress.hintsUsed}/4</p>
-                </div>
-
-                <div className="bg-orange-50 rounded-lg p-6 text-center">
-                  <h3 className="text-lg font-semibold text-orange-800 mb-2">Show Answer Used</h3>
-                  <p className="text-3xl font-bold text-orange-600">
-                    {lectureProgress.answersSubmitted.filter(a => a.usedShowAnswer).length}
-                  </p>
-                </div>
+              <div className="bg-green-50 rounded-lg p-6 text-center">
+                <h3 className="text-lg font-semibold text-green-800 mb-2">Average Score</h3>
+                <p className="text-3xl font-bold text-green-600">{averageScore.toFixed(1)}%</p>
+              </div>
+              
+              <div className="bg-yellow-50 rounded-lg p-6 text-center">
+                <h3 className="text-lg font-semibold text-yellow-800 mb-2">Hints Used</h3>
+                <p className="text-3xl font-bold text-yellow-600">{lectureProgress.hintsUsed}/4</p>
               </div>
 
-              <div className="space-y-4 mb-8">
-                <h2 className="text-xl font-semibold text-gray-800">Answer Summary</h2>
-                {lectureProgress.answersSubmitted.map((answer, index) => (
-                  <div key={answer.questionId} className="border border-gray-200 rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-medium text-gray-800">Question {index + 1}</h4>
-                      <div className="flex items-center space-x-2">
-                        <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                          (answer.score || 0) >= 70
-                            ? 'bg-green-100 text-green-800'
-                            : (answer.score || 0) >= 50
-                            ? 'bg-yellow-100 text-yellow-800'
-                            : 'bg-red-100 text-red-800'
-                        }`}>
-                          Score: {answer.score?.toFixed(1)}%
+              <div className="bg-orange-50 rounded-lg p-6 text-center">
+                <h3 className="text-lg font-semibold text-orange-800 mb-2">Show Answer Used</h3>
+                <p className="text-3xl font-bold text-orange-600">{showAnswerUsage}</p>
+              </div>
+            </div>
+
+            <div className="space-y-4 mb-8">
+              <h2 className="text-xl font-semibold text-gray-800">Answer Summary</h2>
+              {lectureProgress.answersSubmitted.map((answer, index) => (
+                <div key={answer.questionId} className="border border-gray-200 rounded-lg p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-medium text-gray-800">Question {index + 1}</h4>
+                    <div className="flex items-center space-x-2">
+                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                        (answer.score || 0) >= 70
+                          ? 'bg-green-100 text-green-800'
+                          : (answer.score || 0) >= 50
+                          ? 'bg-yellow-100 text-yellow-800'
+                          : 'bg-red-100 text-red-800'
+                      }`}>
+                        Score: {answer.score?.toFixed(1)}%
+                      </span>
+                      {answer.showAnswerUsed && (
+                        <span className="px-2 py-1 bg-orange-100 text-orange-800 rounded-full text-xs">
+                          Show Answer Used
                         </span>
-                        {answer.usedShowAnswer && (
-                          <span className="px-2 py-1 bg-orange-100 text-orange-800 rounded text-xs">
-                            Show Answer Used (-1pt)
-                          </span>
-                        )}
-                      </div>
+                      )}
                     </div>
-                    <p className="text-gray-600 text-sm">Time spent: {Math.floor(answer.timeSpent / 60)}:{(answer.timeSpent % 60).toString().padStart(2, '0')}</p>
                   </div>
-                ))}
-              </div>
+                  <p className="text-gray-600 text-sm">Time spent: {Math.floor(answer.timeSpent / 60)}:{(answer.timeSpent % 60).toString().padStart(2, '0')}</p>
+                </div>
+              ))}
+            </div>
 
-              <div className="flex justify-center space-x-4">
-                <button
-                  onClick={() => setCurrentState('lectureSelect')}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-colors"
-                >
-                  Try Another Lecture
-                </button>
-                
-                <button
-                  onClick={resetApp}
-                  className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg transition-colors"
-                >
-                  Back to Home
-                </button>
+            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-6 mb-8">
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">Global Statistics Update</h3>
+              <div className="grid md:grid-cols-3 gap-4 text-center">
+                <div>
+                  <div className="text-2xl font-bold text-blue-600">{getGlobalSuccessRate().toFixed(1)}%</div>
+                  <div className="text-sm text-gray-600">Overall Success Rate</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-green-600">{globalStats.totalQuestionsAnswered}</div>
+                  <div className="text-sm text-gray-600">Total Questions</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-purple-600">{globalStats.lecturesCompleted}</div>
+                  <div className="text-sm text-gray-600">Lectures Completed</div>
+                </div>
               </div>
+            </div>
+
+            <div className="flex justify-center space-x-4">
+              <button
+                onClick={() => setCurrentState('lectureSelect')}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-colors"
+              >
+                Try Another Lecture
+              </button>
+              
+              <button
+                onClick={resetApp}
+                className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg transition-colors"
+              >
+                Back to Home
+              </button>
             </div>
           </div>
         </div>

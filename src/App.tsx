@@ -582,9 +582,9 @@ const ExamApp: React.FC = () => {
                   
                   <button
                     onClick={useHint}
-                    disabled={lectureProgress.hintsUsed >= 4 || showHint}
+                    disabled={lectureProgress.hintsUsed >= 4 || showHint || showAnswerClicked}
                     className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
-                      lectureProgress.hintsUsed >= 4 || showHint
+                      lectureProgress.hintsUsed >= 4 || showHint || showAnswerClicked
                         ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                         : 'bg-yellow-500 hover:bg-yellow-600 text-white'
                     }`}
@@ -671,7 +671,7 @@ const ExamApp: React.FC = () => {
                   onChange={(e) => setUserAnswer(e.target.value)}
                   placeholder="Write your comprehensive answer here..."
                   className="w-full h-48 p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                  disabled={showFeedback}
+                  disabled={showFeedback || showAnswerClicked}
                 />
               </div>
 
@@ -735,9 +735,9 @@ const ExamApp: React.FC = () => {
                 {!showFeedback ? (
                   <button
                     onClick={submitAnswer}
-                    disabled={!userAnswer.trim() || !isActive}
+                    disabled={(!userAnswer.trim() && !showAnswerClicked) || !isActive}
                     className={`px-6 py-2 rounded-lg transition-colors ${
-                      userAnswer.trim() && isActive
+                      (userAnswer.trim() || showAnswerClicked) && isActive
                         ? 'bg-blue-600 hover:bg-blue-700 text-white'
                         : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                     }`}

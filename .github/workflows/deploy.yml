@@ -4,6 +4,8 @@ name: Build and Deploy to GitHub Pages
 on:
   push:
     branches: [ main ]
+  # Add manual trigger option for troubleshooting
+  workflow_dispatch:
 
 # These permissions ensure our workflow can perform all necessary operations
 permissions:
@@ -11,7 +13,7 @@ permissions:
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued
+# Allow only one concurrent deployment
 concurrency:
   group: "pages"
   cancel-in-progress: false
@@ -31,7 +33,7 @@ jobs:
           cache: 'npm'
       
       - name: Install dependencies
-        run: npm install
+        run: npm ci # More reliable than npm install for CI
       
       - name: Build application
         run: npm run build
@@ -46,9 +48,7 @@ jobs:
 
   # Deploy job - this publishes your built application
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    # Remove environment reference to avoid configuration issues
     runs-on: ubuntu-latest
     needs: build
     steps:

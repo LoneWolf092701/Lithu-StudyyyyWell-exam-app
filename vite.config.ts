@@ -7,5 +7,5 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react']
   },
-  base: "/Lithu-StudyWell/",
+  base: "/Lithu-StudyyyyWell-exam-app/",
 });
